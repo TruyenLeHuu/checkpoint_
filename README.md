@@ -1,1 +1,3 @@
-# checkpoint_
+# Checkpoint
+
+Checkpoint system for UIT-CAR-RACING

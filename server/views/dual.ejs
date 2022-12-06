@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>UIT Car Racing</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="/logo/hinhxe.png">
+    <link rel="stylesheet" href="module/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/dual_css.css">
+    <link rel="stylesheet" href="module/fontawesome/css/all.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="jquery.js"></script>
+    <script src="module/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="/assets/js/process_dual.js"></script>
+</head>
+
+<body>
+    <!-- <div class="team-name-next" id="team-name-id-next">
+        <div class="team-name-info-next">Tiếp theo:<br><strong id='nameofteamnext'></strong></div>
+    </div> -->
+    <div class="versus">
+        <div class="row">
+            <div class="col-md-4 header-item" style="color: white;"> <strong>Đơn vị tổ chức</strong>
+                <div class="row" style="padding-left:30px">
+                </div>
+            </div>
+            <div class="col-md-6 header-item" style="padding-top: 5px;color: white;text-align: center;text-shadow: 5px 5px 5px rgb(0, 0, 0)"> <strong>Đơn
+                    vị</strong>
+                <br><strong>tài trợ <span style="color: #FFD700;">Vàng</span></strong>
+            </div>
+            <div class="col-md-2 header-item" style="padding-top: 5px;color: white;text-align: center;"><strong>Đơn vị</strong>
+                <br><strong>tài trợ <span style="color: silver;">Bạc</span></strong>
+            </div>
+        </div>
+        <div class="header-page row" id="myheader">
+            <div class="col-md-4 header-item" style="color: white;">
+                <div style="padding-left:30px; padding-bottom: 10px;">
+                    <img class="header-img img-responsive" src="logo/UIT/logoUIT.png" style="width: 13%;height: 13%;">
+                    <img class="header-img img-responsive" src="logo/UIT/logoCE.png" style="width: 11%;height: 11%;">
+                    <img class="header-img img-responsive" src="logo/UIT/logoDTN.png" style="width: 11%;height: 11%;">
+                    <img class="header-img img-responsive" src="logo/UIT/logoHSV.png" style="width: 11%;height: 11%;">
+                    <img class="header-img img-responsive" src="logo/UIT/CEEC.png" style="width: 11%;height: 11%;">
+                </div>  
+            </div>
+             <div class="col-md-4 header-item" style="padding-top: 0px;margin-left: 0px;color: white;">
+                <div class="row">
+                    <img class="header-img img-responsive" src="logo\taitro\Logo DEK_CMYK_UNCOATED-01.png"
+                        style="width: 20%;height: 20%;display: block;margin-top: 10px;">
+                    <img class="header-img img-responsive" src="logo\taitro\Logo GanNha-01.png"
+                        style="width: 48%;height: 48%;margin-top: 10px;">
+                    
+                </div>
+            </div>
+            <div class="col-md-4 header-item" style="padding-top: 5px;color: white;text-align: center;">
+                <div class="row" style="text-align: center;">
+                    <!-- <img class="header-img img-responsive" src="logo\taitro\Renesas Logo_Blue_nonBG.png"
+                        style="width: 50%;height: 50%;margin-top: 25px;"> -->
+                </div>
+            </div>
+            <!-- <div class="col-md-2 header-item" style="padding-top: 5px;margin-left: 10px;color: white;text-align: center;">
+                    <div class="row" style="text-align: center;">
+                        <img class="header-img img-responsive" src="logo\taitro\Logo DEK_CMYK_UNCOATED-01.png"
+                            style="width: 40%;height: 40%;display: block; margin: auto;margin-top: 20px">
+                    </div>
+                </div> -->
+            </div> 
+        <br>
+        <div style="height: 82vh;">
+            <div class="row" style="height: 100%;">
+                <div class="col-md-3">
+                    <div class="team-name" id="team-name-id">
+                        <br><strong id='nameofteam'></strong>
+                        <div id="team1"></div>
+                    </div>
+                    <div style="display: flex;">
+                        <div style="margin: auto; text-align: center;">
+                            <div><span id="timecp1"></span> <span id="checkpoint1">1</span> </div>
+                            <div><span id="timecp2"></span> <span id="checkpoint2">2</span></div>
+                            <div><span id="timecp3"></span> <span id="checkpoint3">3</span> </div>
+                            <div><span id="timecp4"></span> <span id="checkpoint4">4</span> </div>
+                            <div><span id="timecp5"></span> <span id="checkpoint5">5</span> </div>
+                            <div><span id="timecp6"></span> <span id="checkpoint6">6</span> </div>
+                            <div><span id="timecp7"></span> <span id="checkpoint7">7</span> </div>
+                            <div><span id="timecp8"></span> <span id="checkpoint8">8</span> </div>
+                            <div><span id="timecp9"></span> <span id="checkpoint9">9</span> </div>
+                            <div><span id="timecp10"></span> <span id="checkpoint10">10</span> </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="body-page col-md-6">
+                    <img src="logo\logoITCAR.png" class="img-responsive" alt=""
+                        style="max-height: 13vh; padding-top: 12px;-webkit-filter: drop-shadow(5px 5px 5px rgb(0, 0, 0) );
+                        filter: drop-shadow(5px 5px 5px rgb(0, 0, 0));">
+                    <div style="margin-top: 25px;">
+                        <strong style="font-size: 2vw;margin-top: 50px;color: #FFD700;text-shadow: 5px 5px 5px rgb(0, 0, 0)">VÒNG CHUNG KẾT
+                        </strong>
+                    </div>
+                    <div style="min-height: 19vh; text-align: center; margin: auto; display: flex;
+                    justify-content: center;
+                    align-items: center; color: white; font-size: 9vw; padding-top: 2vh;text-shadow: 2px 2px 8px #000000;">
+                        <span id="result">0</span><span style="min-width: 20vw;"></span><span id='result-1'>0</span>
+                    </div>
+                    <div id="timerCount" class="timer"></div>
+                    <div id="btnStartStop">
+                        <strong id="turn" style="margin-right: 50px;text-shadow: 5px 5px 5px rgb(0, 0, 0)">
+                            Lượt 1
+                        </strong>
+                        <button class="btn btn-success my-btn" id="start" data-toggle="modal">BẮT ĐẦU</button>
+                        <button class="fas fa-redo-alt btn disabled" id='restart'
+                            style="font-size:4vw; background-color: rgba(0, 0, 0, 0);color: #6e6d68;margin-left: 60px;"></button>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="team-name" id="team-name-id-1">
+                        <br><strong id='nameofteam-1'></strong>
+                        <div id="team2"></div>
+                    </div>
+                    <div style="display: flex;">
+                        <div style="margin: auto; text-align: center;">
+                            <div><span id="checkpoint1-1">1</span> <span id="timecp1-1"></span> </div>
+                            <div><span id="checkpoint2-1">2</span> <span id="timecp2-1"></span> </div>
+                            <div><span id="checkpoint3-1">3</span> <span id="timecp3-1"></span> </div>
+                            <div><span id="checkpoint4-1">4</span> <span id="timecp4-1"></span> </div>
+                            <div><span id="checkpoint5-1">5</span> <span id="timecp5-1"></span> </div>
+                            <div><span id="checkpoint6-1">6</span> <span id="timecp6-1"></span> </div>
+                            <div><span id="checkpoint7-1">7</span> <span id="timecp7-1"></span> </div>
+                            <div><span id="checkpoint8-1">8</span> <span id="timecp8-1"></span> </div>
+                            <div><span id="checkpoint9-1">9</span> <span id="timecp9-1"></span> </div>
+                            <div><span id="checkpoint10-1">10</span> <span id="timecp10-1"></span> </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content"  style="border-radius: 50%;">
+            <div class="modal-body" style="min-height: 40vh;">
+                <div class="counter">
+                    <div class="nums">
+                        <span class="in">3</span>
+                        <span>2</span>
+                        <span>1</span>
+                        <span>0</span>
+                    </div>
+                    <h4>Get Ready</h4>
+                    
+                </div>
+                <div class="final">
+                    <h1 style="font-size: 11vw; color:  #3498db;">GO</h1>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <div style="height: 100vh; margin-top: 18vh; padding-top: 18vh;" id="bot">
+
+    
+        <div class="body-page">
+            <img src="logo\logoITCAR.png" alt="" style="max-height: 13vh; padding-top: 12px;">
+            <div style="margin-top: 25px;">
+                <strong style="font-size: 2vw;margin-top: 50px;color: white;">BẢNG XẾP HẠNG
+                </strong>
+            </div>
+            <div style="max-width:80vw; margin-left: auto; margin-right: auto; margin-top: 30px;">
+                <table id="customers">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>TÊN ĐỘI</th>
+                            <th>LƯỢT THI</th>
+                            <th>SỐ CHECKPOINT</th>
+                            <th>THỜI GIAN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 20px;margin-left: auto; margin-right: auto;">
+            <div class="col-md-1"></div>
+            <div class="col-md-2" style="color: white; font-size: 20px;text-align: right;-ms-transform: translateY(-50%);
+			transform: translateY(23%);">
+                Lựa chọn đội thi
+            </div>
+            <div class=" col-md-4">
+                <select class="form-control" id="sel">
+
+                </select>
+            </div>
+            <button class="btn btn-warning my-btn col-md-2" style="max-width:150px; height: 40px; font-size: 25px;"
+                id="ready"> <a href="#" style="text-decoration:none;color:white">SẴN SÀNG</a> </button>
+   
+        </div>
+        <div class="row" style="margin-top: 20px;margin-left: auto; margin-right: auto;">
+            <div class="col-md-1"></div>
+            <div class="col-md-2" style="color: white; font-size: 20px;text-align: right;-ms-transform: translateY(-50%);
+			transform: translateY(23%);">
+                Lựa chọn đội tiếp theo
+            </div>
+            <div class=" col-md-4">
+                <select class="form-control" id="sel-next">
+
+                </select>
+            </div>
+        </div>
+    </div>
+    <!-- <a id="goto-bot" title="Go to bottom" href="#bot" style="text-decoration:none;color:white">Bảng xếp hạng</a> -->
+    <a id="goto-top" title="Go to top" href="#" style="text-decoration:none;color:white">Quay lại</a>
+    <script>
+        window.onscroll = function () { myFunction() };
+
+        var header = document.getElementById('myheader');
+        var team = document.getElementById('team-name-id');
+        var sticky = header.offsetTop;
+        console.log(sticky + " sticky");
+        function myFunction() {
+            console.log(window.pageYOffset);
+            if (window.pageYOffset > sticky) {
+                team.style.display = "none";
+                // nextteam.style.display = "none";
+                header.classList.add("sticky");
+            } else {
+                team.style.display = "block";
+                // nextteam.style.display = "block";
+                header.classList.remove("sticky");
+            }
+            if (window.pageYOffset > 50) {
+                // document.getElementById('goto-bot').style.display = 'none';
+                document.getElementById('goto-top').style.display = 'block';
+            } else {
+                // document.getElementById('goto-bot').style.display = 'block';
+                document.getElementById('goto-top').style.display = 'none';
+            }
+        }
+        // The function actually applying the offset
+        var fullscreenPadding = 180;
+        function offsetAnchor() {
+            if (location.hash.length !== 0) {
+                window.scrollTo(window.scrollX, window.scrollY - fullscreenPadding);
+            }
+        }
+
+        // Captures click events of all a elements with href starting with #
+        $(document).on('click', 'a[href^="#"]', function (event) {
+            // Click events are captured before hashchanges. Timeout
+            // causes offsetAnchor to be called after the page jump.
+            window.setTimeout(function () {
+                offsetAnchor();
+            }, 0);
+        });
+
+        // Set the offset when entering page with hash present in the url
+        window.setTimeout(offsetAnchor, 0);
+    </script>
+</body>
+
+</html>

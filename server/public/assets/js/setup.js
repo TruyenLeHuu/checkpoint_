@@ -1,0 +1,153 @@
+var maxCheckPoints = 10;
+var nowNode = 0;
+var teamgroupData = 0;
+var teamSide = false;
+$.getScript('./configClient/config.js', function () {
+	socket = io('http://' + hostIP + ':' + port);
+});
+$(document).ready(function () {
+const form = document.querySelector('form')
+const delForm = document.querySelector('#delForm')
+const errorMessage = document.querySelector('.error')
+var acc = document.getElementsByClassName("accordion");
+var i;
+	for (let i = 1; i <= 10; i++) {
+		$('#esp' + i).text('disconnected');
+		$('#esp' + i).css({ 'color': 'black' });
+		$('#esp' + i).css({ 'background': 'red' });
+	}
+	socket.on('ESP-check-data', (data) => {
+		// console.log(data);
+		data.forEach(element => {
+			$('#esp' + element).text('connected');
+			$('#esp' + element).css({ 'background': 'green' });
+		});
+	})
+    socket.on('ESP-connect', (data) => {
+		console.log(data);
+		$('#esp' + data).text('connected');
+		$('#esp'+ data).css({ 'background': 'green' });
+	})
+    socket.on('ESP-disconnect', (data) => {
+		console.log(data);
+		$('#esp'+ data).text('disconnected');
+		$('#esp'+ data).css({ 'background': 'red' });
+	})
+	socket.on('ListTeam', (data) => {
+		console.log(data);
+		var teamList = data;
+		teamList.forEach(element =>{
+			$("#team1").append(new Option(element.name));
+			$("#team2").append(new Option(element.name));
+		})
+	});
+	socket.on('esp-send',(id)=>{
+		$('#espbg' + id).css({ 'color': 'black' });
+		$('#espbg' + id).css({ 'background': 'yellow' });
+		$('#lastsent').text(id);
+		setTimeout(()=>{
+			$('#espbg' + id).css({ 'color': 'black' });
+			$('#espbg' + id).css({ 'background': 'white	' });
+		}, 500)	
+	})
+	socket.on('esp-cap-layer',(data)=>{	
+		var cap_layer = JSON.parse(data)
+		console.log(cap_layer.layer)
+		$('#normalnow'+ cap_layer.node).text(' pin - '+(cap_layer.pin)/1000+'V; ' + 'layer' + cap_layer.layer);
+	})
+	for (let i = 1; i <= maxCheckPoints; i++) {
+		$('#button-range' + i).click(() => {
+			// nowNode = i;
+			// socket.emit("SetTopBot", { node: i.toString(), top: parseInt($('#top' + i).val()), bot: parseInt($('#bot' + i).val()), normal: parseInt($('#normal' + i).val()) });
+			socket.emit("esp-send", i.toString());
+		})
+		$('#button' + i).click(() => {
+			nowNode = i;
+			socket.emit("Set-range", { node: i.toString(), range: parseInt($('#range' + i).val()) });
+		})
+	}
+	form.addEventListener('submit', async (e) => {
+		e.preventDefault()     
+		try {
+			socket.emit("AddTeam",{ id: $('#id').val(), name: $('#name').val(), group: $('#group').val(), side: $('#side').val()})
+			errorMessage.textContent = 'Sent request (Add team: '+$('#name').val()+') !';
+			setTimeout(() => {
+				errorMessage.textContent = '';
+			}, 1.5 * 1000);
+		  	} catch (err) {
+			 console.log(err.message)
+		   	}
+	})
+	delForm.addEventListener('submit', async (e) => {
+		e.preventDefault()     
+		try {
+			socket.emit("DeleteTeam",{ id: $('#delId').val()})
+			errorMessage.textContent = 'Sent request (Delete team id: '+$('#delId').val()+') !';
+			setTimeout(() => {
+				errorMessage.textContent = '';
+			}, 2 * 1000);
+		   } catch (err) {	
+			 console.log(err.message)	
+		   }
+	})
+	socket.emit('GetTeam');
+	$('#change').click(() => {
+		socket.emit('Change-team-web', { team1: $('#team1 option:selected').text(), team2: $('#team2 option:selected').text() });
+		document.querySelector('#team1side').textContent = $('#team1 option:selected').text()
+		document.querySelector('#team2side').textContent = $('#team2 option:selected').text()
+	})
+	$('#refresh').click(()=>{
+		for (let i = 1; i <= 10; i++) {
+			$('#esp' + i).text('disconnected');
+			$('#esp' + i).css({ 'color': 'black' });
+			$('#esp' + i).css({ 'background': 'red' });
+		}
+		
+			setTimeout(()=>{
+				console.log("Refresh");
+				socket.emit('Connection-refresh');
+				setTimeout(()=>{
+					console.log("Refresh");
+					socket.emit('Connection-refresh');
+					setTimeout(()=>{
+						console.log("Refresh");
+						socket.emit('Connection-refresh');
+					}, 2000)
+				}, 2000)
+			}, 2000)
+	
+	})
+	$('#toggle').click(() => {
+		teamSide = !teamSide;
+		var nameChange = $('#team1side').text()
+		$('#team1side').text($('#team2side').text());
+		$('#team2side').text(nameChange);
+		socket.emit('Change-team-side', teamSide);
+	});
+	$('#flow').click(()=>{
+		var floww = ['0'];
+		for (let i = 1; i <= 10; i++) {
+			floww.push($('#flow' + i).val());
+		}
+		socket.emit('Change-flow', {flow: floww});
+	})
+    for (i = 0; i < acc.length; i++) {
+    acc[i].nextElementSibling.style.display = "none"
+    }
+    for (i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function() {
+        /* Toggle between adding and removing the "active" class,
+        to highlight the button that controls the panel */
+        this.classList.toggle("active");
+
+        /* Toggle between hiding and showing the active panel */
+        var panel = this.nextElementSibling;
+        if (panel.style.display === "block") {
+          panel.style.display = "none";
+        } else {
+          panel.style.display = "block";
+        }
+
+      });
+    }
+})
