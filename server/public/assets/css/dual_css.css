@@ -1,23 +1,9 @@
-body {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  font-family: "Open Sans", sans-serif;
-  vertical-align: baseline;
-  /* background-color: rgba(0, 0, 0, 0.699);0 */
-  background-image: url("./../../logo/27084.jpg");
-  /* background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-attachment: fixed; */
-  overflow-x: hidden;
-  overflow-y: hidden;
-}
+
 @font-face {
   font-family: "Open Sans";
   /* font-style: normal; */
-  src: local('Open Sans Bold'), local('OpenSans-Bold'), url('/font/OpenSans-Regular.ttf');
+  src: local("Open Sans Bold"), local("OpenSans-Bold"),
+    url("/font/OpenSans-Regular.ttf");
   font-display: swap;
 }
 .versus {
@@ -109,7 +95,24 @@ body {
   padding-left: 7px !important;
   padding-right: 7px !important;
 }
-#team1,
+#team1 {
+  width: 50%;
+  height: 6vw;
+  position: absolute;
+  margin-top: 4vh;
+  top: 0;
+  left: 10vw;
+  z-index: 100;
+  color: RED;
+  font-size: calc(2vw + 8px);
+  background-color: rgba(255, 255, 255, 0.712);
+  display: flex; /* Canh giữa bằng flex */
+  justify-content: center;
+  align-items: center;
+  border: solid;
+  transform: rotate(30deg);
+  display: none;
+}
 #team2 {
   width: 50%;
   height: 6vw;
@@ -134,7 +137,7 @@ body {
   /* border: none;
     outline: none; */
   /* background-color: rgb(136, 126, 126); */
-  color: #FFD700;
+  color: #ffd700;
   /* cursor: pointer; */
   /* padding: 15px; */
   border-radius: 50px 0px 50px 0px;
@@ -164,7 +167,7 @@ body {
   border: none;
   outline: none;
   /* background-color: rgb(136, 126, 126); */
-  color: #FFD700;
+  color: #ffd700;
   /* cursor: pointer; */
   padding: 15px;
   border-radius: 4px;
@@ -198,8 +201,8 @@ body {
 .header-img {
   margin-left: 10px;
   margin-right: 10px;
-  -webkit-filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.4) );
-                        filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.4));
+  -webkit-filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.4));
   /* margin-top: 20px; */
 }
 
@@ -209,13 +212,13 @@ body {
 .timer {
   color: #7fff00;
   text-align: center;
-  font-size: 11vw;
+  font-size: 70px;
   margin-top: 0px;
   text-shadow: 2px 2px 8px #000000;
 }
 #turn {
   font-size: calc(2vw + 3px);
-  color: #FFD700;
+  color: #ffd700;
 }
 .my-btn {
   color: white;
@@ -472,20 +475,20 @@ body {
   animation: goOut 0.5s ease-in-out;
 }
 @keyframes fadeInOpacity {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 @keyframes fadeOutOpacity {
-	0% {
-		opacity: 1;
-	}
-	100% {
-		opacity: 0;
-	}
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 @keyframes goIn {
   0% {
@@ -519,28 +522,30 @@ body {
     transform: translate(-50%, -50%) rotate(-120deg);
   }
 }
-#start:hover{animation: burn 1000ms ease-out forwards;}
+#start:hover {
+  animation: burn 1000ms ease-out forwards;
+}
 #start:hover::before {
-    content: '';
-    position: absolute;
-    left: 370px;  
-    width: 100px;
-    height: 40px;
-    background: rgba(255, 230, 110, 1);
-    border-radius: 100%;
-    animation: flare 1000ms ease-out forwards;
-  }
+  content: "";
+  position: absolute;
+  left: 370px;
+  width: 100px;
+  height: 40px;
+  background: rgba(255, 230, 110, 1);
+  border-radius: 100%;
+  animation: flare 1000ms ease-out forwards;
+}
 
-  #start:hover::after {
-    content: '';
-    position: absolute;
-    right: 370px; 
-    width: 100px;
-    height: 40px;
-    background: rgba(255, 230, 110, 1);
-    border-radius: 100%;
-    animation: flare 1000ms ease-out forwards;
-  }
+#start:hover::after {
+  content: "";
+  position: absolute;
+  right: 370px;
+  width: 100px;
+  height: 40px;
+  background: rgba(255, 230, 110, 1);
+  border-radius: 100%;
+  animation: flare 1000ms ease-out forwards;
+}
 @keyframes flare {
   100% {
     transform: translateY(-20px) scale(1.5);
@@ -553,17 +558,14 @@ body {
   0% {
     color: rgba(255, 130, 110, 1);
     background: rgba(255, 230, 110, 1);
-    box-shadow:
-      0 0 5px 0 rgba(200, 0, 10, 1),
-      0 0 5px 0 rgba(230, 30, 10, 0.8),
+    box-shadow: 0 0 5px 0 rgba(200, 0, 10, 1), 0 0 5px 0 rgba(230, 30, 10, 0.8),
       0 0 5px 0 rgba(230, 230, 10, 0.6);
   }
-  
+
   100% {
     color: rgb(255, 255, 255);
-    background: rgb(40,167,69);
-    box-shadow:
-      0 -35px 40px 30px rgba(255, 130, 10, 0),
+    background: rgb(40, 167, 69);
+    box-shadow: 0 -35px 40px 30px rgba(255, 130, 10, 0),
       0 -30px 30px 10px rgba(230, 30, 10, 0),
       0 -20px 10px 0 rgba(255, 255, 10, 0);
   }
