@@ -75,13 +75,13 @@ void sensor_task(void *pvParameter){
         // ESP_LOGI( TAG, "Range: %d\r\n", range );  
         while (range <= max_range && range > 20 ){
             if (++filter > 3){
-            if(flag) {
-                send_sensor_msg();
-                flag = 0;
-            }
-            led_on();
-            vTaskDelay(50 / portTICK_RATE_MS);
-            range = sensor.readRangeSingleMillimeters();
+                if (flag) {
+                    send_sensor_msg();
+                    flag = 0;
+                }
+                led_on();
+                vTaskDelay(50 / portTICK_RATE_MS);
+                range = sensor.readRangeSingleMillimeters();
             }
             vTaskDelay(50 / portTICK_RATE_MS);
         }
@@ -141,27 +141,22 @@ void app_main( void )
       ret = nvs_flash_init();
     }
     ESP_ERROR_CHECK(ret);
-    // batcap_init();
-    if( xTaskCreate( task_send_bat_capacity, "task_send_bat_capacity", 1024 * 5, NULL, 1, NULL) != pdPASS )
-                            {
-                                #if DEBUG
-                                ESP_LOGI( TAG, "ERROR - task_mesh_rx NOT ALLOCATED :/\r\n" );  
-                                #endif
-                                return;   
-                            }
+    // Batcap init();
+    create_task_send_bat_capacity();
     /**
-     * Inicializa GPIOs;
+     * Initial GPIOs;
      */
 	gpios_setup();
-    
+    /**
+     * Initial reset ssid and password button;
+     */
     start_btn_task();
     /**
-     * Inicializa o stack mesh;
+     * Initial of stack mesh;
      */
     wifi_mesh_start();
     /**
-     * Inicializa o task sensor
+     * Initial of task sensor
      */
     sensor_start();
-
 }

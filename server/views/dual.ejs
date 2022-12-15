@@ -34,7 +34,7 @@
                             class="text-[#ffffff] text-[20px]">Đơn vị
                             <br> tài trợ <span class="text-[#98948e]">Bạc</span></strong></th>
                 </tr>
-                <tr class="flex flex-row bg-[#ffffff] w-full p-2 rounded-full h-[72px]">
+                <tr class="flex flex-row bg-[#ffffff] w-full p-2 rounded-full h-[62px]">
                     <th class="flex flex-row gap-4 w-full items-center justify-center">
                         <img class="w-auto h-full" src="logo/UIT/logoUIT.png">
                         <img class="w-auto h-full" src="logo/UIT/logoCE.png">
@@ -42,7 +42,7 @@
                         <img class="w-auto h-full" src="logo/UIT/logoHSV.png">
                         <img class="w-auto h-full" src="logo/UIT/CEEC.png">
                     </th>
-                    <th class="flex flex-row gap-4 w-full h-full  items-center justify-center">
+                    <th class="flex flex-row gap-4 w-full h-full items-center justify-center">
                         <img class="w-auto h-full" src="logo\taitro\BOSCH-removebg-preview.png">
                         <img class="w-auto h-full" src="logo\taitro\Logo DEK_CMYK_UNCOATED-01.png">
                         <img class="w-auto h-full" src="logo\taitro\FARADAY.png">
@@ -149,51 +149,6 @@
             </div>
         </div>
     </div>
-    <script>
-        window.onscroll = function () { myFunction() };
-        var header = document.getElementById('myheader');
-        var team = document.getElementById('team-name-id');
-        var sticky = header.offsetTop;
-        console.log(sticky + " sticky");
-        function myFunction() {
-            console.log(window.pageYOffset);
-            if (window.pageYOffset > sticky) {
-                team.style.display = "none";
-                // nextteam.style.display = "none";
-                header.classList.add("sticky");
-            } else {
-                team.style.display = "block";
-                // nextteam.style.display = "block";
-                header.classList.remove("sticky");
-            }
-            if (window.pageYOffset > 50) {
-                // document.getElementById('goto-bot').style.display = 'none';
-                document.getElementById('goto-top').style.display = 'block';
-            } else {
-                // document.getElementById('goto-bot').style.display = 'block';
-                document.getElementById('goto-top').style.display = 'none';
-            }
-        }
-        // The function actually applying the offset
-        var fullscreenPadding = 180;
-        function offsetAnchor() {
-            if (location.hash.length !== 0) {
-                window.scrollTo(window.scrollX, window.scrollY - fullscreenPadding);
-            }
-        }
-
-        // Captures click events of all a elements with href starting with #
-        $(document).on('click', 'a[href^="#"]', function (event) {
-            // Click events are captured before hashchanges. Timeout
-            // causes offsetAnchor to be called after the page jump.
-            window.setTimeout(function () {
-                offsetAnchor();
-            }, 0);
-        });
-
-        // Set the offset when entering page with hash present in the url
-        window.setTimeout(offsetAnchor, 0);
-    </script>
 </body>
 
 </html>

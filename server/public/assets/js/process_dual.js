@@ -22,7 +22,8 @@ var resultTeam2 = 0;
 var distanceTime = { minute: 0, second: 0, mil: 0 };
 var maxCheckPoints = 10;
 var changeTeamSide = false;
-
+var startTick = 0;
+var currentTick = 0;
 var functionPoint = null;
 
 var map = null;
@@ -56,6 +57,8 @@ $(document).ready(function () {
 		+ '00';
 	
 	$("#btnStartStop").on('click', '#start', function () {
+		socket.emit("start");})
+		socket.on("start-res", ()=>{
 		Start(() => {
 			setTimeout(() => {
 				$('#myModal').modal('hide');
@@ -79,13 +82,14 @@ $(document).ready(function () {
 					distanceTime.mil = 0;
 					// if (state == true)
 					startTime = new Date().getTime();
+					socket.emit("get-tick");
 					intervalUpdateTime();
 				}
 
 			}, 4500);
 		})
 
-	});
+	})
 	$("#btnStartStop").on('click', '#stop', function () {
 		startSignal = false;
 		clearInterval(functionPoint);
@@ -197,16 +201,18 @@ $(document).ready(function () {
 	});
 	$(document).on('keypress', function (e) {
 		if (e.which == 49) {
+			var timeTeam = distanceTime.mil + distanceTime.second * 100 + distanceTime.minute * 60 * 100 + startTick;
 			if (!changeTeamSide)
-				socket.emit('esp-send-1', currentCheckpoint1 + 1);
+				socket.emit('esp-send-1', {id: currentCheckpoint1 + 1, tick: timeTeam});
 			else
-				socket.emit('esp-send-2', currentCheckpoint1 + 1 );
+				socket.emit('esp-send-2', {id: currentCheckpoint1 + 1, tick: timeTeam});
 		} if (e.which == 50) {
 			// console.log("key 2:" + currentCheckpoint1);
+			var timeTeam = distanceTime.mil + distanceTime.second * 100 + distanceTime.minute * 60 * 100 + startTick;
 			if (changeTeamSide)
-				socket.emit('esp-send-1', currentCheckpoint2 + 1);
+				socket.emit('esp-send-1', {id: currentCheckpoint2 + 1, tick: timeTeam});
 			else
-				socket.emit('esp-send-2', currentCheckpoint2 + 1 );
+				socket.emit('esp-send-2', {id: currentCheckpoint2 + 1, tick: timeTeam});
 		}
 		if (e.which == 52) {
 			if (startSignal) {
@@ -245,25 +251,35 @@ $(document).ready(function () {
 		console.log(e.which);
 
 	});
+	
+	socket.on("send-tick", (tick)=>{
+		startTick = tick;
+		console.log(startTick);
+	})
 	socket.on("esp-send", (data)=>{
-		const id = Number(data);
-		console.log(id)
+		// console.log(data)
+		const id = Number(data.Data);
+		// console.log(id)
+		// var hrTime = process.hrtime()   
+        // console.log(Math.round((hrTime[0]-startTime[0]) * 100 + (hrTime[1]-startTime[1]) / 10000000))
 		if(!changeTeamSide){
 			if(id == Number(map[currentCheckpoint1+1])) {
-				socket.emit("esp-send-1", currentCheckpoint1 + 1);
+				socket.emit("esp-send-1", {id : currentCheckpoint1 + 1, tick : data.Tick});
 			} else 
-			if (id == ((Number(map[currentCheckpoint2 + 1]) <= 5) ? Number(map[currentCheckpoint2 + 1]) + 5 :  Number(map[currentCheckpoint2 + 1]) - 5)) {
-				socket.emit("esp-send-2", currentCheckpoint2 + 1);
+			if (id == ((currentCheckpoint2 + 1 <= 5) ? Number(map[currentCheckpoint2 + 1 + 5])  :  Number(map[currentCheckpoint2 + 1 - 5]) )) {
+				socket.emit("esp-send-2", {id : currentCheckpoint2 + 1, tick : data.Tick});
 		}} else {
-			if(id == ((Number(map[currentCheckpoint1 + 1] <= 5)) ?  Number(map[currentCheckpoint1 + 1]) + 5 :  Number(map[currentCheckpoint1 + 1]) - 5)) {
-				socket.emit("esp-send-1", currentCheckpoint1 + 1);
+			if(id == ((currentCheckpoint1 + 1 <= 5) ?  Number(map[currentCheckpoint1 + 1 + 5])  :  Number(map[currentCheckpoint1 + 1 - 5]) )) {
+				socket.emit("esp-send-1",{id :  currentCheckpoint1 + 1, tick : data.Tick});
 			} else if (id == map[currentCheckpoint2 + 1]) {
-				socket.emit("esp-send-2", currentCheckpoint2 + 1);
+				socket.emit("esp-send-2",{id :  currentCheckpoint2 + 1, tick : data.Tick});
 			}
 		}
 	})
-	socket.on("esp-send-1", function (id) {
-		console.log("node send esp: " + id); //du lieu esp gui
+	socket.on("esp-send-1", function (data) {
+		console.log("node send esp: " + data.id); //du lieu esp gui
+		console.log(data.tick);
+		currentTick = data.tick;
 		/* kiem tra tin hieu bat dau */
 		let a = (outlineTeam1 == false);
 		if (startSignal && a) {
@@ -277,25 +293,31 @@ $(document).ready(function () {
 			currentCheckpoint1 = currentCheckpoint1 + 1;
 			currentCheckpointVal = currentCheckpoint1;
 			updateCheckpoint(currentCheckpointVal, 1);
-			updateTimeDisplay(currentCheckpointVal, 1);
+			updateTimeDisplay(currentCheckpointVal, 1,);
 
 			//neu den duoc checkpoint cuoi cung => ngung tin gio + dung nhan du lieu tu node_mcu
 			if (currentCheckpointVal == maxCheckPoints) {
 				clearInterval(functionPoint);
 				startSignal = false;
 			}
-				timeTeam1 = /*distanceTime.mil + */distanceTime.second * 100 + distanceTime.minute * 60 * 100;
+				// timeTeam1 = distanceTime.mil + distanceTime.second * 100 + distanceTime.minute * 60 * 100;
+				timeTeam1 = currentTick - startTick;
 			//gui ve server luu db
 			socket.emit("web-send-record", {
 				team: currentTeam,
 				turn: currentTurn,
 				time: timeTeam1,
 				cp: currentCheckpointVal
-			});
+				
+			}
+
+			);
+			//console.log("1a")
 		}
 	});
-	socket.on("esp-send-2", function (id) {
-		console.log("node send esp 2: " + id); //du lieu esp gui
+	socket.on("esp-send-2", function (data) {
+		console.log("node send esp 2: " + data.id); //du lieu esp gui
+		currentTick = data.tick;
 		/* kiem tra tin hieu bat dau */
 		let a = (outlineTeam2 == false);
 		if (startSignal && a) {
@@ -317,7 +339,7 @@ $(document).ready(function () {
 				clearInterval(functionPoint);
 				startSignal = false;
 			}
-			timeTeam2 = /*distanceTime.mil + */distanceTime.second * 100 + distanceTime.minute * 60 * 100;
+			timeTeam2 = currentTick - startTick;
 			//gui ve server luu db
 			socket.emit("web-send-record", {
 				team: currentTeam1,
@@ -404,12 +426,25 @@ $(document).ready(function () {
 		$('#timecp' + (number + 1) + (team == 1 ? "" : "-1")).text("00:00:00");
 		$('#timecp' + (number + 1) + (team == 1 ? "" : "-1")).css({ 'color': 'white' });
 	}
+	
 	function updateTimeDisplay(number, team) {
+		var distanceTick = currentTick - startTick;
+		console.log(distanceTick);
+		var tminutes = Math.floor(distanceTick / (100*60));
+		var tseconds = Math.floor((distanceTick / 100) % 60);
+		var tmils = Math.floor(distanceTick % 100);
 		var minutes = (distanceTime.minute >= 10) ? distanceTime.minute : ('0' + distanceTime.minute);
 		var seconds = (distanceTime.second >= 10) ? distanceTime.second : ('0' + distanceTime.second);
 		var mils = (distanceTime.mil >= 10) ? distanceTime.mil : ('0' + distanceTime.mil);
+		console.log(minutes + ":" + seconds + ":" + mils)
+		var minutes = (tminutes >= 10) ? tminutes : ('0' + tminutes);
+		var seconds = (tseconds >= 10) ? tseconds : ('0' + tseconds);
+		var mils = (tmils >= 10) ? tmils : ('0' + tmils);
+		
+
 		// console.log('#timecp' + (team == 1 ? currentCheckpoint1 : currentCheckpoint2) + (team == 1 ? "" : "-1"));
 		// if (!changeTeamSide) {
+		
 		$('#timecp' + number + (team == 1 ? "" : "-1")).text(minutes + ":" + seconds + ":" + mils);
 		$('#timecp' + number + (team == 1 ? "" : "-1")).css({ 'color': '#7FFF00' });
 		// }

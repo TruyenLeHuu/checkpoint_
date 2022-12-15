@@ -55,6 +55,14 @@ module.exports = function (io, activeNode) {
         // console.log('Data Range: ', data);
         client.publish('range', JSON.stringify(data), {qos: 1, retain: false});
     }
+    exports.setIP = function (data) {
+        // console.log('Data Range: ', data);
+        client.publish('ip', JSON.stringify(data), {qos: 1, retain: false});
+    }
+    exports.checkEsp = function (data) {
+        // console.log('Data Range: ', data);
+        client.publish('check', JSON.stringify(data), {qos: 1, retain: false});
+    }
     exports.refreshConnection = function () {
         activeNode.clear();
         client.publish('refresh','r', {qos: 1, retain: false});

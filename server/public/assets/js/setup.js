@@ -55,6 +55,10 @@ var i;
 		console.log(cap_layer.layer)
 		$('#normalnow'+ cap_layer.node).text(' pin - '+(cap_layer.pin)/1000+'V; ' + 'layer' + cap_layer.layer);
 	})
+	$('#ipbt').click(()=>{
+		socket.emit("Set-ip", {ip: $('#ip').val()});
+		console.log($('#ip').val());
+	})
 	for (let i = 1; i <= maxCheckPoints; i++) {
 		$('#button-range' + i).click(() => {
 			// nowNode = i;
@@ -64,6 +68,10 @@ var i;
 		$('#button' + i).click(() => {
 			nowNode = i;
 			socket.emit("Set-range", { node: i.toString(), range: parseInt($('#range' + i).val()) });
+		})
+		$('#button-check' + i).click(() => {
+			nowNode = i;
+			socket.emit("Check-esp", {node: i.toString()});
 		})
 	}
 	form.addEventListener('submit', async (e) => {
@@ -96,27 +104,27 @@ var i;
 		document.querySelector('#team1side').textContent = $('#team1 option:selected').text()
 		document.querySelector('#team2side').textContent = $('#team2 option:selected').text()
 	})
-	$('#refresh').click(()=>{
-		for (let i = 1; i <= 10; i++) {
-			$('#esp' + i).text('disconnected');
-			$('#esp' + i).css({ 'color': 'black' });
-			$('#esp' + i).css({ 'background': 'red' });
-		}
+	// $('#refresh').click(()=>{
+	// 	for (let i = 1; i <= 10; i++) {
+	// 		$('#esp' + i).text('disconnected');
+	// 		$('#esp' + i).css({ 'color': 'black' });
+	// 		$('#esp' + i).css({ 'background': 'red' });
+	// 	}
 		
-			setTimeout(()=>{
-				console.log("Refresh");
-				socket.emit('Connection-refresh');
-				setTimeout(()=>{
-					console.log("Refresh");
-					socket.emit('Connection-refresh');
-					setTimeout(()=>{
-						console.log("Refresh");
-						socket.emit('Connection-refresh');
-					}, 2000)
-				}, 2000)
-			}, 2000)
+	// 		setTimeout(()=>{
+	// 			console.log("Refresh");
+	// 			socket.emit('Connection-refresh');
+	// 			setTimeout(()=>{
+	// 				console.log("Refresh");
+	// 				socket.emit('Connection-refresh');
+	// 				setTimeout(()=>{
+	// 					console.log("Refresh");
+	// 					socket.emit('Connection-refresh');
+	// 				}, 2000)
+	// 			}, 2000)
+	// 		}, 2000)
 	
-	})
+	// })
 	$('#toggle').click(() => {
 		teamSide = !teamSide;
 		var nameChange = $('#team1side').text()

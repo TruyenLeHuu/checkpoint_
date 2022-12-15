@@ -1,5 +1,6 @@
 const team = require('../model/team.js')
 const flow = require('../model/flow.js')
+const teamweb1 = require('../model/teamweb.js')
 var that = module.exports = {
     setupPage:  async(req,  res,  next)  =>  {
         res.render(__basedir  +  '/views/setup.ejs',{ maxCheckPoints: process.env.maxCheckPoints });
@@ -9,13 +10,13 @@ var that = module.exports = {
     },
     addTeam: async(data)=>{
         try{
-            const newTeam = new team({
+            await team.create({
                 name: data.name,
                 id: data.id,
                 group: data.group,
                 side: data.side
             })
-            await newTeam.save()
+            
             console.log({message:"Add user Successfully"})
             }
             catch (err) {
@@ -61,5 +62,20 @@ var that = module.exports = {
         .catch ((err)=> {
             console.log({error:err})
         })
+    },
+    adrecord: async(data)=>{
+        try{
+            await  teamweb1.create({
+               team:    data.team,
+               turn:    data.turn,
+               time:    data.time,
+               cp:    data.cp
+            })
+            
+            console.log({message:"Add teamweb Successfully !"})
+            }
+            catch (err) {
+                console.log({error:err})
+            }
     }
 }

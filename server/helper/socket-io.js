@@ -1,5 +1,5 @@
 const db = require('../controllers/controller')
-module.exports = function (io, mqtt, activeNode) {
+module.exports = function (io, mqtt, activeNode, startTime) {
     var nowNode = 0;
     io.on("connection", function (socket) {
         console.log("Socket connected")
@@ -26,6 +26,15 @@ module.exports = function (io, mqtt, activeNode) {
             mqtt.setRange(value);
             // console.log("io")
         });
+        socket.on("Set-ip", function (ip) {
+            // nowNode = value.node;
+            mqtt.setIP(ip);
+            // console.log("io")
+        });
+        socket.on("Check-esp", function (node) {
+            nowNode = node;
+            mqtt.checkEsp(node);
+        });
         socket.on('AddTeam',  data  =>  {
             
             db.addTeam(data);
@@ -38,19 +47,35 @@ module.exports = function (io, mqtt, activeNode) {
                 io.sockets.emit('ListTeam',teamList)
             });
         })
+        socket.on("web-send-record",  (data)  =>  {
+            db.adrecord(data);
+        })
         socket.on('Change-flow',  (data)  =>  {
             // console.log(data)
             db.addFlow(data);
         })
         socket.on('esp-send',(data)=>{
             io.sockets.emit('esp-send', data)
-            console.log(data)
+            // console.log(data.id)
+            // while (1){
+            // var hrTime = process.hrtime()
+            
+            // console.log(Math.round((hrTime[0]-startTime[0]) * 100 + (hrTime[1]-startTime[1]) / 10000000))}
+        })
+        socket.on('start', ()=>{
+            io.sockets.emit('start-res')
+        })
+        socket.on('get-tick',()=>{
+            var hrTime = process.hrtime()
+            io.sockets.emit('send-tick', Math.round((hrTime[0]-startTime[0]) * 100 + (hrTime[1]-startTime[1]) / 10000000));
         })
         socket.on('esp-send-1',(data)=>{
             io.sockets.emit('esp-send-1', data)
+            // console.log(data);
         })
         socket.on('esp-send-2',(data)=>{
             io.sockets.emit('esp-send-2', data)
+            // console.log(data);
         })
         socket.on('Change-team-web',(data)=>{
             io.sockets.emit('Change-team-web', data)
