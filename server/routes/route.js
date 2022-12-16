@@ -1,7 +1,8 @@
 const router = require('express').Router();
-const  {setupPage,  dualPage, addFlow, sendData}  =  require('../controllers/controller')
+const  {setupPage,  dualPage, addFlow, sendData, mainPage}  =  require('../controllers/controller')
 
 module.exports = function (io, startTime) {
+  router.get('/',  mainPage)
   router.get('/setup',  setupPage)
   router.get('/dual',  dualPage)
   router.post('/add_flow', addFlow)

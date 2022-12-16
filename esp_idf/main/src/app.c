@@ -68,6 +68,7 @@ extern char ip[50];
 nodeEsp activeNode[30];
 int lengthOfActiveNode = 0;
 long long Tick = 0;
+long long previousTick = 0;
 char post_url [200] = "http://192.168.137.1:3001/send-data";
 char get_url [200] = "http://192.168.137.1:3001/getTick";
 /**
@@ -132,16 +133,10 @@ void post_rest_function(void * post_data)
     esp_http_client_cleanup(client);
     vTaskDelete(NULL);
 }
-void countTick(void *arg){
-    while(1){
-        Tick++;
-        // ESP_LOGE(TAG, "Tick: %lld", Tick);
-        vTaskDelay(1);
-        }
+long long takeTick(){
+    return Tick + (millis() - previousTick)/10;
 }
-void task_countTick(){
-    xTaskCreatePinnedToCore(countTick, "countStick", 1024*4, NULL, 1, NULL, 1);
-}
+
 void getStick(){
     char output_buffer[2048] = {0};   
     int content_length = 0;
@@ -168,8 +163,8 @@ void getStick(){
                 ESP_LOGI(TAG, "%s", (char*) output_buffer);
                 cJSON *root = cJSON_Parse((char*)output_buffer);
                 Tick = cJSON_GetObjectItem(root,"tick")->valueint;
+                previousTick = millis();
                 Tick += 27;
-                task_countTick();
                 // ESP_LOGI(TAG, "%lld", Tick);
             } else {
                 ESP_LOGE(TAG, "Failed to read response");
@@ -226,7 +221,7 @@ void send_sensor_msg()
     root=cJSON_CreateObject();
     cJSON_AddStringToObject(root, "Topic", "Send-Data");
     cJSON_AddStringToObject(root, "Data", NODE_ID);
-    cJSON_AddNumberToObject(root, "Tick", Tick);
+    cJSON_AddNumberToObject(root, "Tick", takeTick());
     char *rendered=cJSON_Print(root);
     if(esp_mesh_is_root()){
         // mqtt_app_publish("ESP-send", NODE_ID); 

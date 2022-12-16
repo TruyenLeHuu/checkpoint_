@@ -62,7 +62,7 @@ extern "C" {
 void app_main(void);
 }
 VL53L0X sensor;
-int max_range = 100;
+int max_range = 400;
 uint16_t range;
 /**
  * Program begins here:)
@@ -72,6 +72,9 @@ void sensor_task(void *pvParameter){
     int filter =0;
     while (1) {
         range = sensor.readRangeSingleMillimeters();
+        if (sensor.timeoutOccurred()) {
+                ESP_LOGI( TAG, "TIMEOUT\r\n" );  
+        }
         // ESP_LOGI( TAG, "Range: %d\r\n", range );  
         while (range <= max_range && range > 20 ){
             if (++filter > 3){
@@ -82,18 +85,19 @@ void sensor_task(void *pvParameter){
                 led_on();
                 vTaskDelay(50 / portTICK_RATE_MS);
                 range = sensor.readRangeSingleMillimeters();
+                if (sensor.timeoutOccurred()) {
+                ESP_LOGI( TAG, "TIMEOUT\r\n" );  
+                }
             }
             vTaskDelay(50 / portTICK_RATE_MS);
         }
         filter = 0;
         if (!flag){
             led_off();
-            vTaskDelay(1000 / portTICK_RATE_MS);
+            vTaskDelay(500 / portTICK_RATE_MS);
         }
         flag = 1;
-        if (sensor.timeoutOccurred()) {
-            ESP_LOGI( TAG, "TIMEOUT\r\n" );  
-        }
+        
         vTaskDelay(50 / portTICK_RATE_MS);
     }
 }
@@ -125,7 +129,7 @@ void sensor_start(){
         sensor.setMeasurementTimingBudget(200000);
     #endif
     vTaskDelay(2000 / portTICK_RATE_MS);
-    if( xTaskCreatePinnedToCore( sensor_task, "sensor_task", 1024 * 8, NULL, 2, NULL, 1 ) != pdPASS )
+    if( xTaskCreate( sensor_task, "sensor_task", 1024 * 8, NULL, 2, NULL) != pdPASS )
     {
         #if DEBUG
         ESP_LOGI( TAG, "ERROR - sensor_task NOT ALLOCATED :/\r\n" );  

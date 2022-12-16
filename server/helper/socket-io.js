@@ -65,6 +65,15 @@ module.exports = function (io, mqtt, activeNode, startTime) {
         socket.on('start', ()=>{
             io.sockets.emit('start-res')
         })
+        socket.on('stop', ()=>{
+            io.sockets.emit('stop-res')
+        })
+        socket.on('refresh', ()=>{
+            io.sockets.emit('refresh-res')
+        })
+        socket.on('restart', ()=>{
+            io.sockets.emit('restart-res')
+        })
         socket.on('get-tick',()=>{
             var hrTime = process.hrtime()
             io.sockets.emit('send-tick', Math.round((hrTime[0]-startTime[0]) * 100 + (hrTime[1]-startTime[1]) / 10000000));

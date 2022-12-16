@@ -41,13 +41,13 @@ var i;
 			$("#team2").append(new Option(element.name));
 		})
 	});
-	socket.on('esp-send',(id)=>{
-		$('#espbg' + id).css({ 'color': 'black' });
-		$('#espbg' + id).css({ 'background': 'yellow' });
-		$('#lastsent').text(id);
+	socket.on('esp-send',(data)=>{
+		$('#espbg' + data.Data).css({ 'color': 'black' });
+		$('#espbg' + data.Data).css({ 'background': 'yellow' });
+		$('#lastsent').text(data.Data);
 		setTimeout(()=>{
-			$('#espbg' + id).css({ 'color': 'black' });
-			$('#espbg' + id).css({ 'background': 'white	' });
+			$('#espbg' + data.Data).css({ 'color': 'black' });
+			$('#espbg' + data.Data).css({ 'background': 'white	' });
 		}, 500)	
 	})
 	socket.on('esp-cap-layer',(data)=>{	
@@ -63,7 +63,7 @@ var i;
 		$('#button-range' + i).click(() => {
 			// nowNode = i;
 			// socket.emit("SetTopBot", { node: i.toString(), top: parseInt($('#top' + i).val()), bot: parseInt($('#bot' + i).val()), normal: parseInt($('#normal' + i).val()) });
-			socket.emit("esp-send", i.toString());
+			socket.emit("esp-send", {Data: i.toString(), Tick: 0});
 		})
 		$('#button' + i).click(() => {
 			nowNode = i;

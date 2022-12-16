@@ -8,6 +8,9 @@ var that = module.exports = {
     dualPage:  async(req,  res,  next)  =>  {
         res.render(__basedir  +  '/views/dual.ejs');
     },
+    mainPage:  async(req,  res,  next)  =>  {
+        res.render(__basedir  +  '/views/dual_view.ejs');
+    },
     addTeam: async(data)=>{
         try{
             await team.create({

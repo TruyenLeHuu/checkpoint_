@@ -341,7 +341,7 @@ void set_ip(char * ip_set){
         ESP_LOGW(TAG,"Add ip ... ");
         #endif
 
-        err = nvs_set_str(my_handle, "ip", ip);
+        err = nvs_set_str(my_handle, "ip", ip_set);
         printf(TAG,(err != ESP_OK) ? "Add ip to nvs failed!\n" : "Add ip to nvs done\n");
         #if DEBUG
         ESP_LOGW(TAG,"Committing updates in NVS ... ");
@@ -382,7 +382,7 @@ void wifi_mesh_start(void)
             esp_err_t errr = nvs_commit(my_handle);
             #if DEBUG
             ESP_LOGW(TAG,"Password = %s", password);
-            ESP_LOGW(TAG,"Ip = %s", ip);
+            ESP_LOGW(TAG,"ip = %s", ip);
             printf((errr != ESP_OK) ? "Commit failed!\n" : "Commit done\n");
             #endif
             // Close nvs flash

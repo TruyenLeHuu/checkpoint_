@@ -10,7 +10,7 @@
  * NODE_ID
  */
 
-#define NODE_ID "1"
+#define NODE_ID "10"
 
 /**
  * GPIOs defs
