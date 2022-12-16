@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="module/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/dual_css.css">
     <link rel="stylesheet" href="module/fontawesome/css/all.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script type="text/javascript" src="jquery.js"></script>
@@ -21,39 +24,40 @@
 <body>
     <div class="versus overflow-x-auto h-screen">
         <div class="flex flex-col gap-4 pt-0 pl-4 pr-4   w-full">
-            <table class="w-full gap-4"> <tr class="w-full flex flex-row justify-between">
-                <th class="flex flex-col justify-center items-center w-full text-center"><strong
-                        class="text-[20px] text-[#ffffff]">Đơn
-                        vị tổ chức</strong></th>
-                <th class="flex flex-col justify-center items-center w-full text-center"><strong
-                        class="text-[#ffffff] text-[20px] ">Đơn vị
-                        <br>
-                        tài trợ <span class="text-[#FFD700]">Vàng</span></strong></th>
-                <th class="flex flex-col justify-center items-center w-full text-center"><strong
-                        style="text-shadow: 5px 5px 5px rgb(0, 0, 0)" class="text-[#ffffff] text-[20px]">Đơn vị
-                        <br> tài trợ <span class="text-[#98948e]">Bạc</span></strong></th>
-                <th class="flex flex-col justify-center items-center w-full text-center"><strong
-                        class="text-[#ffffff] text-[20px]">Đơn vị
-                        <br> tài trợ <span class="text-[#cd7f32]">Đồng</span></strong></th>
-            </tr>
-            <tr class="flex flex-row bg-[#ffffff] w-full p-[5px] rounded-full h-[62px]">
-                <th class="flex flex-row gap-4 w-full items-center justify-center">
-                    <img class="w-auto h-full" src="logo/UIT/logoUIT.png">
-                    <img class="w-auto h-full" src="logo/UIT/logoCE.png">
-                    <img class="w-auto h-full" src="logo/UIT/logoDTN.png">
-                    <img class="w-auto h-full" src="logo/UIT/logoHSV.png">
-                    <img class="w-auto h-full" src="logo/UIT/CEEC.png">
-                </th>
-                <th class="flex flex-row gap-4 w-full h-full items-center justify-center">
-                    <img class="w-auto h-full" src="logo\taitro\BOSCH-removebg-preview.png">
-                </th>
-                <th class="flex flex-row w-full items-center justify-center">
-                    <img class="w-auto h-full" src="logo\taitro\Logo GanNha-01.png">
-                </th>
-                <th class="flex flex-row w-full items-center justify-center">
-                    <img class="w-auto h-[80%]" src="logo\taitro\Renesas Logo_Blue_nonBG.png">
-                </th>
-            </tr>
+            <table class="w-full gap-4">
+                <tr class="w-full flex flex-row justify-between">
+                    <th class="flex flex-col justify-center items-center w-full text-center"><strong
+                            class="text-[20px] text-[#ffffff]">Đơn
+                            vị tổ chức</strong></th>
+                    <th class="flex flex-col justify-center items-center w-full text-center"><strong
+                            class="text-[#ffffff] text-[20px] ">Đơn vị
+                            <br>
+                            tài trợ <span class="text-[#FFD700]">Vàng</span></strong></th>
+                    <th class="flex flex-col justify-center items-center w-full text-center"><strong
+                            style="text-shadow: 5px 5px 5px rgb(0, 0, 0)" class="text-[#ffffff] text-[20px]">Đơn vị
+                            <br> tài trợ <span class="text-[#98948e]">Bạc</span></strong></th>
+                    <th class="flex flex-col justify-center items-center w-full text-center"><strong
+                            class="text-[#ffffff] text-[20px]">Đơn vị
+                            <br> tài trợ <span class="text-[#cd7f32]">Đồng</span></strong></th>
+                </tr>
+                <tr class="flex flex-row bg-[#ffffff] w-full p-[5px] rounded-full h-[62px]">
+                    <th class="flex flex-row gap-4 w-full items-center justify-center">
+                        <img class="w-auto h-full" src="logo/UIT/logoUIT.png">
+                        <img class="w-auto h-full" src="logo/UIT/logoCE.png">
+                        <img class="w-auto h-full" src="logo/UIT/logoDTN.png">
+                        <img class="w-auto h-full" src="logo/UIT/logoHSV.png">
+                        <img class="w-auto h-full" src="logo/UIT/CEEC.png">
+                    </th>
+                    <th class="flex flex-row gap-4 w-full h-full items-center justify-center">
+                        <img class="w-auto h-full" src="logo\taitro\BOSCH-removebg-preview.png">
+                    </th>
+                    <th class="flex flex-row w-full items-center justify-center">
+                        <img class="w-auto h-full" src="logo\taitro\Logo GanNha-01.png">
+                    </th>
+                    <th class="flex flex-row w-full items-center justify-center">
+                        <img class="w-auto h-[80%]" src="logo\taitro\Renesas Logo_Blue_nonBG.png">
+                    </th>
+                </tr>
             </table>
         </div>
         <div style="height: 82vh;">
@@ -63,7 +67,7 @@
                         <br><strong id='nameofteam'></strong>
                         <div id="team1"></div>
                     </div>
-                    <div style="display: flex;">
+                    <div class="flex flex-col">
                         <div style="margin: auto; text-align: center;">
                             <div><span id="timecp1"></span> <span id="checkpoint1">1</span> </div>
                             <div><span id="timecp2"></span> <span id="checkpoint2">2</span></div>
@@ -75,6 +79,10 @@
                             <div><span id="timecp8"></span> <span id="checkpoint8">8</span> </div>
                             <div><span id="timecp9"></span> <span id="checkpoint9">9</span> </div>
                             <div><span id="timecp10"></span> <span id="checkpoint10">10</span> </div>
+                        </div>
+                        <div class="flex flex-col w-full relative" id="win1">
+                            <p class="text-[50px] text-[#ffed00] right-[-20px] top-2 rotate-45 font-[Monoton] absolute">
+                                WINNER</p>
                         </div>
                     </div>
 
@@ -109,7 +117,7 @@
                         <br><strong id='nameofteam-1'></strong>
                         <div id="team2"></div>
                     </div>
-                    <div style="display: flex;">
+                    <div class="flex flex-col">
                         <div style="margin: auto; text-align: center;">
                             <div><span id="checkpoint1-1">1</span> <span id="timecp1-1"></span> </div>
                             <div><span id="checkpoint2-1">2</span> <span id="timecp2-1"></span> </div>
@@ -121,6 +129,10 @@
                             <div><span id="checkpoint8-1">8</span> <span id="timecp8-1"></span> </div>
                             <div><span id="checkpoint9-1">9</span> <span id="timecp9-1"></span> </div>
                             <div><span id="checkpoint10-1">10</span> <span id="timecp10-1"></span> </div>
+                        </div>
+                        <div class="flex flex-col w-full relative" id="win1">
+                            <p class="text-[50px] text-[#ffed00] right-[40px] top-2 rotate-45 font-[Monoton] absolute">
+                                WINNER</p>
                         </div>
                     </div>
 
@@ -150,9 +162,9 @@
             </div>
         </div>
     </div>
-    <audio controls class="h-0" id ="start_sound">
+    <audio controls class="h-0" id="start_sound">
         <source src="/sound/start.mp3" type="audio/mpeg">
-    </audio> 
+    </audio>
 </body>
 
 </html>
