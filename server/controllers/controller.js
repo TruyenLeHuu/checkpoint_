@@ -1,12 +1,13 @@
 const team = require('../model/team.js')
 const flow = require('../model/flow.js')
 const teamweb1 = require('../model/teamweb.js')
+
 var that = module.exports = {
     setupPage:  async(req,  res,  next)  =>  {
         res.render(__basedir  +  '/views/setup.ejs',{ maxCheckPoints: process.env.maxCheckPoints });
     },
     dualPage:  async(req,  res,  next)  =>  {
-        res.render(__basedir  +  '/views/dual.ejs');
+        res.render(__basedir  +  '/views/new_dual.ejs');
     },
     mainPage:  async(req,  res,  next)  =>  {
         res.render(__basedir  +  '/views/dual_view.ejs');

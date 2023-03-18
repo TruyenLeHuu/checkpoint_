@@ -132,21 +132,15 @@
   display: none;
 }
 .team-name {
+  overflow: hidden;
+  padding: 20px 30px;
+  min-width: 400px;
+  width: 400px;
   border: solid;
-  font-size: calc(2vw + 8px);
-  /* border: none;
-    outline: none; */
-  /* background-color: rgb(136, 126, 126); */
+  font-size: 32px;
   color: #ffd700;
-  /* cursor: pointer; */
-  /* padding: 15px; */
   border-radius: 50px 0px 50px 0px;
-  /* height: 100vh; */
-  /* width: 20vw; */
-  margin: 0 auto;
-  margin-top: 5vh;
   text-align: center;
-  min-height: 6vw;
   display: flex; /* Canh giữa bằng flex */
   justify-content: center;
   align-items: center;
@@ -210,16 +204,9 @@
   text-align: center;
 }
 .timer {
-  color: #7fff00;
-  text-align: center;
-  font-size: 70px;
-  margin-top: 0px;
   text-shadow: 2px 2px 8px #000000;
 }
-#turn {
-  font-size: calc(2vw + 3px);
-  color: #ffd700;
-}
+
 .my-btn {
   color: white;
   height: 11vh;
@@ -525,27 +512,9 @@
 #start:hover {
   animation: burn 1000ms ease-out forwards;
 }
-#start:hover::before {
-  content: "";
-  position: absolute;
-  left: 370px;
-  width: 100px;
-  height: 40px;
-  background: rgba(255, 230, 110, 1);
-  border-radius: 100%;
-  animation: flare 1000ms ease-out forwards;
-}
 
-#start:hover::after {
-  content: "";
-  position: absolute;
-  right: 370px;
-  width: 100px;
-  height: 40px;
-  background: rgba(255, 230, 110, 1);
-  border-radius: 100%;
-  animation: flare 1000ms ease-out forwards;
-}
+
+
 @keyframes flare {
   100% {
     transform: translateY(-20px) scale(1.5);
