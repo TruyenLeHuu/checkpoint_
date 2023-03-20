@@ -40,9 +40,12 @@ $(document).ready(function () {
 	const nums = document.querySelectorAll('.nums span');
 	const counter = document.querySelector('.counter');
 	const finalMessage = document.querySelector('.final');
-	var sound_start = document.getElementById("start_sound");
+	const sound_start = document.getElementById("start_sound");
+	const sound_eli = document.getElementById("eli_sound");
 	/* tam thoi hide trang index */
 	$('#main').hide();
+	$('#win1').css({ 'display': 'none' });
+	$('#win2').css({ 'display': 'none' });
 	/* mac dinh chua co gi */
 	$("#turn").html("Lượt " + currentTurn);
 	updateTimeDisplay(currentCheckpoint1, 1);
@@ -87,7 +90,6 @@ $(document).ready(function () {
 					socket.emit("get-tick");
 					intervalUpdateTime();
 				}
-
 			}, 4500);
 		})
 
@@ -120,6 +122,8 @@ $(document).ready(function () {
 			$("#result").html(resultTeam1);
 			$("#result-1").html(resultTeam2);
 		}
+		if (resultTeam1 == 2) $('#win1').css({ 'display': 'block' });
+			else if (resultTeam2 == 2 ) $('#win2').css({ 'display': 'block' });
 		// } else {
 		// 	if (currentCheckpoint1 < currentCheckpoint2 || (currentCheckpoint1 == currentCheckpoint2 && timeTeam1 < timeTeam2)) {
 		// 		resultTeam1 = resultTeam1 + 1;
@@ -157,15 +161,19 @@ $(document).ready(function () {
 			$('#refresh').removeClass("btn-warning").addClass("btn-secondary");
 			$('#refresh').html("HẾT");
 			$('#refresh').addClass('disabled');
+			
 		} else {
 			$('#refresh').removeClass("btn-warning").addClass("btn-success");
 			$('#refresh').html("BẮT ĐẦU");
 			$('#refresh').attr("id", "start");
 			currentTurn = currentTurn + 1;
+			if(currentTurn == 2 || currentTurn == 3) changeTeamSide= !changeTeamSide;
 			$("#turn").html("Lượt " + currentTurn);
 		}
 		$('#team1').css({ 'display': 'none' });
 		$('#team2').css({ 'display': 'none' });
+		$('#win1').css({ 'display': 'none' });
+		$('#win2').css({ 'display': 'none' });
 		outlineTeam1 = false;
 		outlineTeam2 = false;
 		// $('#restart').addClass('disabled');
@@ -201,6 +209,9 @@ $(document).ready(function () {
 		$('#refresh').attr("id", "start");
 		$('#team1').css({ 'display': 'none' });
 		$('#team2').css({ 'display': 'none' });
+		$('#win1').css({ 'display': 'none' });
+		$('#win2').css({ 'display': 'none' });
+		changeTeamSide = false;
 		outlineTeam1 = false;
 		outlineTeam2 = false;
 		currentTurn = 1;
@@ -223,43 +234,52 @@ $(document).ready(function () {
 				socket.emit('esp-send-2', {id: currentCheckpoint2 + 1, tick: timeTeam});
 		}
 		if (e.which == 52) {
-			if (startSignal) {
-				outlineTeam1 = !outlineTeam1;
-				if (outlineTeam1)
-					$('#team1').css({ 'display': 'block' });
-				else
-					$('#team1').css({ 'display': 'none' });
-			}
-		}
+			socket.emit('out1');}
 		if (e.which == 53) {
-			if (startSignal) {
-				outlineTeam2 = !outlineTeam2;
-				if (outlineTeam2)
-					$('#team2').css({ 'display': 'block' });
-				else
-					$('#team2').css({ 'display': 'none' });
-			}
-		}
-		if (e.which == 55) {
-			currentCheckpoint1 = currentCheckpoint1 - 1;
-			clearTimeDisplay(currentCheckpoint1, 1);
-			updateCheckpoint(currentCheckpoint1, 1);
-			let a = $('#timecp' + currentCheckpoint1).text().split(':');
-			timeTeam1 = /*parseInt(a[2]) + */parseInt(a[1]) * 100 + parseInt(a[0]) * 60 * 100;
-			console.log(a);
-			console.log(timeTeam1);
-		}
-		if (e.which == 56) {
-			currentCheckpoint2 = currentCheckpoint2 - 1;
-			clearTimeDisplay(currentCheckpoint2, 2);
-			updateCheckpoint(currentCheckpoint2, 2);
-			let a = $('#timecp' + currentCheckpoint2 + '-1').text().split(':');
-			timeTeam2 = /*parseInt(a[2]) + */parseInt(a[1]) * 100 + parseInt(a[0]) * 60 * 100;
-		}
+			socket.emit('out2');}
+		if (e.which == 55) {socket.emit('del1');}
+		
+		if (e.which == 56) {socket.emit('del2');}
+		
 		console.log(e.which);
 
 	});
-	
+	socket.on('del2_res', ()=>{
+		currentCheckpoint2 = currentCheckpoint2 - 1;
+		clearTimeDisplay(currentCheckpoint2, 2);
+		updateCheckpoint(currentCheckpoint2, 2);
+		let a = $('#timecp' + currentCheckpoint2 + '-1').text().split(':');
+		timeTeam2 = /*parseInt(a[2]) + */parseInt(a[1]) * 100 + parseInt(a[0]) * 60 * 100;
+	})
+	socket.on('del1_res', ()=>{
+		currentCheckpoint1 = currentCheckpoint1 - 1;
+		clearTimeDisplay(currentCheckpoint1, 1);
+		updateCheckpoint(currentCheckpoint1, 1);
+		let a = $('#timecp' + currentCheckpoint1).text().split(':');
+		timeTeam1 = /*parseInt(a[2]) + */parseInt(a[1]) * 100 + parseInt(a[0]) * 60 * 100;
+		console.log(a);
+		console.log(timeTeam1);
+	})
+	socket.on('out1_res',()=>{
+		if (startSignal) {
+			sound_eli.play();
+			outlineTeam1 = !outlineTeam1;
+			if (outlineTeam1)
+				$('#team1').css({ 'display': 'block' });
+			else
+				$('#team1').css({ 'display': 'none' });
+		}
+	})
+	socket.on('out2_res', ()=>{
+		if (startSignal) {
+			sound_eli.play();
+			outlineTeam2 = !outlineTeam2;
+			if (outlineTeam2)
+				$('#team2').css({ 'display': 'block' });
+			else
+				$('#team2').css({ 'display': 'none' });
+		}
+	})
 	socket.on("send-tick", (tick)=>{
 		startTick = tick;
 		console.log(startTick);
@@ -307,6 +327,7 @@ $(document).ready(function () {
 			if (currentCheckpointVal == maxCheckPoints) {
 				clearInterval(functionPoint);
 				startSignal = false;
+				socket.emit("stop");
 			}
 				// timeTeam1 = distanceTime.mil + distanceTime.second * 100 + distanceTime.minute * 60 * 100;
 				timeTeam1 = currentTick - startTick;
@@ -346,6 +367,7 @@ $(document).ready(function () {
 			if (currentCheckpointVal == maxCheckPoints) {
 				clearInterval(functionPoint);
 				startSignal = false;
+				socket.emit("stop");
 			}
 			timeTeam2 = currentTick - startTick;
 			//gui ve server luu db

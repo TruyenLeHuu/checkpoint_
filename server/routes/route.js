@@ -4,7 +4,7 @@ const  {setupPage,  dualPage, addFlow, sendData, mainPage}  =  require('../contr
 module.exports = function (io, startTime) {
   router.get('/',  mainPage)
   router.get('/setup',  setupPage)
-  router.get('/dual',  dualPage)
+  router.get('/dual-dual',  dualPage)
   router.post('/add_flow', addFlow)
   router.post('/send-data', (req,  res,  next) =>{
       try{

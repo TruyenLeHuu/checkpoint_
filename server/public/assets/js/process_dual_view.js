@@ -6,8 +6,8 @@ $.getScript('./configClient/config.js', function () {
 	Socket_port = port;
 });
 var startSignal = false;
-var currentTeam = 'team1';
-var currentTeam1 = 'team2';
+var currentTeam = ' ';
+var currentTeam1 = ' ';
 var nextTeam = '';
 var currentTurn = 1;
 var maxTurn = 3;
@@ -40,10 +40,14 @@ $(document).ready(function () {
 	const nums = document.querySelectorAll('.nums span');
 	const counter = document.querySelector('.counter');
 	const finalMessage = document.querySelector('.final');
-	var sound_start = document.getElementById("start_sound");
+	const sound_start = document.getElementById("start_sound");
+	const sound_eli = document.getElementById("eli_sound");
+	const sound_congra = document.getElementById("congra_sound");
 
 	/* tam thoi hide trang index */
 	$('#main').hide();
+	$('#win1').css({ 'display': 'none' });
+	$('#win2').css({ 'display': 'none' });
 	/* mac dinh chua co gi */
 	$("#turn").html("Lượt " + currentTurn);
 	updateTimeDisplay(currentCheckpoint1, 1);
@@ -56,7 +60,6 @@ $(document).ready(function () {
 	document.getElementById("timerCount").innerHTML = '00' + ":"
 		+ '00' + ":"
 		+ '00';
-	
 		socket.on("start-res", ()=>{
 		sound_start.play();
 		Start(() => {
@@ -116,6 +119,9 @@ $(document).ready(function () {
 			$("#result").html(resultTeam1);
 			$("#result-1").html(resultTeam2);
 		}
+		if (resultTeam1 == 2) {$('#win1').css({ 'display': 'block' }); sound_congra.play();}
+			else if (resultTeam2 == 2 ) {$('#win2').css({ 'display': 'block' }); sound_congra.play();}
+		
 		// } else {
 		// 	if (currentCheckpoint1 < currentCheckpoint2 || (currentCheckpoint1 == currentCheckpoint2 && timeTeam1 < timeTeam2)) {
 		// 		resultTeam1 = resultTeam1 + 1;
@@ -156,10 +162,13 @@ $(document).ready(function () {
 			$('#refresh').html("BẮT ĐẦU");
 			$('#refresh').attr("id", "start");
 			currentTurn = currentTurn + 1;
+			if(currentTurn == 2 || currentTurn == 3) changeTeamSide= !changeTeamSide;
 			$("#turn").html("Lượt " + currentTurn);
 		}
 		$('#team1').css({ 'display': 'none' });
 		$('#team2').css({ 'display': 'none' });
+		$('#win1').css({ 'display': 'none' });
+		$('#win2').css({ 'display': 'none' });
 		outlineTeam1 = false;
 		outlineTeam2 = false;
 		// $('#restart').addClass('disabled');
@@ -193,13 +202,50 @@ $(document).ready(function () {
 		$('#refresh').attr("id", "start");
 		$('#team1').css({ 'display': 'none' });
 		$('#team2').css({ 'display': 'none' });
+		$('#win1').css({ 'display': 'none' });
+		$('#win2').css({ 'display': 'none' });
 		outlineTeam1 = false;
 		outlineTeam2 = false;
 		currentTurn = 1;
 		$("#turn").html("Lượt " + currentTurn);
 		// $('#restart').addClass('disabled');
 	});
-	
+	socket.on('del2_res', ()=>{
+		currentCheckpoint2 = currentCheckpoint2 - 1;
+		clearTimeDisplay(currentCheckpoint2, 2);
+		updateCheckpoint(currentCheckpoint2, 2);
+		let a = $('#timecp' + currentCheckpoint2 + '-1').text().split(':');
+		timeTeam2 = /*parseInt(a[2]) + */parseInt(a[1]) * 100 + parseInt(a[0]) * 60 * 100;
+	})
+	socket.on('del1_res', ()=>{
+		currentCheckpoint1 = currentCheckpoint1 - 1;
+		clearTimeDisplay(currentCheckpoint1, 1);
+		updateCheckpoint(currentCheckpoint1, 1);
+		let a = $('#timecp' + currentCheckpoint1).text().split(':');
+		timeTeam1 = /*parseInt(a[2]) + */parseInt(a[1]) * 100 + parseInt(a[0]) * 60 * 100;
+		console.log(a);
+		console.log(timeTeam1);
+	})
+	socket.on('out1_res',()=>{
+		if (startSignal) {
+			sound_eli.play();
+			outlineTeam1 = !outlineTeam1;
+			if (outlineTeam1)
+				$('#team1').css({ 'display': 'block' });
+			else
+				$('#team1').css({ 'display': 'none' });
+		}
+	})
+	socket.on('out2_res', ()=>{
+		if (startSignal) {
+			sound_eli.play();
+			outlineTeam2 = !outlineTeam2;
+			if (outlineTeam2)
+				$('#team2').css({ 'display': 'block' });
+			else
+				$('#team2').css({ 'display': 'none' });
+		}
+	})
 	socket.on("send-tick", (tick)=>{
 		startTick = tick;
 		console.log(startTick);
