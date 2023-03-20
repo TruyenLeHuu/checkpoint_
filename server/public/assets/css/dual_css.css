@@ -141,18 +141,11 @@
   color: #ffd700;
   border-radius: 50px 0px 50px 0px;
   text-align: center;
-  display: flex; /* Canh giữa bằng flex */
+  display: flex; 
   justify-content: center;
   align-items: center;
 }
-/* .team-name-info{
-    margin: 0;
-    position: absolute;
-    top: 48vh;
-    left: 30%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-  } */
+
 .team-name-next {
   position: fixed;
   right: 10px;
@@ -160,9 +153,7 @@
   font-size: 40px;
   border: none;
   outline: none;
-  /* background-color: rgb(136, 126, 126); */
   color: #ffd700;
-  /* cursor: pointer; */
   padding: 15px;
   border-radius: 4px;
   text-align: center;

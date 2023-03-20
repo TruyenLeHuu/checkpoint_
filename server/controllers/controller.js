@@ -7,7 +7,7 @@ var that = module.exports = {
         res.render(__basedir  +  '/views/setup.ejs',{ maxCheckPoints: process.env.maxCheckPoints });
     },
     dualPage:  async(req,  res,  next)  =>  {
-        res.render(__basedir  +  '/views/new_dual.ejs');
+        res.render(__basedir  +  '/views/dual_view_v2.ejs');
     },
     mainPage:  async(req,  res,  next)  =>  {
         res.render(__basedir  +  '/views/dual_view.ejs');
