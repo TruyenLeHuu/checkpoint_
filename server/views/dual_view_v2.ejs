@@ -53,9 +53,11 @@
           <img class="w-auto logo-height object-cover" src="./logo/logo_gara_stem.png" />
         </div>
       </div>
-      <div class="flex flex-row w-full  relative">
-        <div class="flex flex-col pt-[3vh]">
-          <div class="team-name" id="team-name-id">
+      <div class="flex flex-row w-full relative overflow-hidden gap-[10px]">
+        <div class="flex flex-col pt-[3vh] w-[25%] min-w-[25%] ">
+          <div
+            class="w-full text-[24px] p-3 border-[#ffd700] border-solid border-[3px] text-[#ffd700] rounded-[50px] text-center flex items-center justify-center overflow-hidden"
+            id="team-name-id">
             <br><strong id='nameofteam'></strong>
             <div id="team1"></div>
           </div>
@@ -74,13 +76,16 @@
             </div>
           </div>
         </div>
-        <div class="flex flex-row w-full logo-competition items-center justify-center gap-10">
-            <img class="icon-next " src="./logo/next.svg" />
-            <img class="logo-competition" src="./logo/logoITCAR.png" />
-            <img class="icon-next " src="./logo/next.svg" />
+        <div class="flex flex-row w-full h-[17%] overflow-hidden logo-competition items-center justify-center gap-10">
+          <img class="w-[25%] h-auto" src="./logo/next.svg" />
+          <img class="w-auto h-full" src="./logo/logoITCAR.png" />
+          <img class="w-[25%] h-auto" src="./logo/next.svg" />
         </div>
-        <div class="flex flex-col pt-[3vh]">
-          <div class="team-name" id="team-name-id-1">
+
+        <div class="flex flex-col pt-[3vh] w-[25%] min-w-[25%] ">
+          <div
+            class="w-full text-[24px] p-3 border-[#ffd700] border-solid border-[3px] text-[#ffd700] rounded-[50px] text-center flex items-center justify-center overflow-hidden"
+            id="team-name-id-1">
             <br><strong id='nameofteam-1'></strong>
             <div id="team2"></div>
           </div>
@@ -109,12 +114,17 @@
       </div>
       <div class="flex flex-col w-full items-center absolute bottom-0 pb-4">
         <div id="timerCount" class="text-[150px] text-[#7fff00] timer"></div>
-        <div class="flex flex-row items-center gap-5" id="btnStartStop">
-          <strong id="turn" class="text-[5px 5px 5px rgb(0, 0, 0)] text-[#ffd700] text-[60px]">
-            Lượt 1
-          </strong>
-          <button id="start" class="btn btn-success my-btn" data-toggle="modal">BẮT ĐẦU</button>
-          <button class="text-[4vw] background-[#000] text-[#6e6d68] fas fa-redo-alt" id='restart'></button>
+        <div class="flex flex-row items-center justify-center gap-5 w-full" id="btnStartStop">
+          <div class="flex flex-row items-center justify-end w-full">
+            <strong id="turn" class="text-[5px 5px 5px rgb(0, 0, 0)] text-[#ffd700] text-[60px] absolute">
+              Lượt 1
+            </strong>
+          </div>
+
+          <button id="start" class="btn btn-success my-btn items-center min-w-[15%]" data-toggle="modal">BẮT ĐẦU</button>
+          <div class="flex flex-row items-center w-full">
+            <button class="text-[4vw] background-[#000] text-[#6e6d68] fas fa-redo-alt absolute" id='restart'></button>
+          </div>
         </div>
       </div>
     </div>
