@@ -1,0 +1,9 @@
+.rank {
+  background: rgb(28, 184, 119);
+  background: linear-gradient(
+    36deg,
+    rgba(28, 184, 119, 1) 31%,
+    rgba(49, 208, 141, 1) 50%,
+    rgba(0, 255, 145, 1) 76%
+  );
+}
