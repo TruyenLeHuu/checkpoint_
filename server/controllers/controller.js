@@ -8,6 +8,11 @@ var that = (module.exports = {
       maxCheckPoints: process.env.maxCheckPoints,
     });
   },
+  leaderBoard: async (req, res, next) => {
+    res.render(__basedir + "/views/leaderboard.ejs", {
+      maxCheckPoints: process.env.maxCheckPoints,
+    });
+  },
   dualPage: async (req, res, next) => {
     res.render(__basedir + "/views/dual_view_v2.ejs");
   },
