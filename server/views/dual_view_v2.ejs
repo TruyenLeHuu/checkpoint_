@@ -53,19 +53,14 @@
           <img class="w-auto logo-height object-cover" src="./logo/logo_gara_stem.png" />
         </div>
       </div>
-      <div class="flex flex-row w-full relative">
-        <div class="flex flex-row w-full justify-center items-center gap-10">
-          <img class="icon-next " src="./logo/next.svg" />
-          <img class="logo-competition" src="./logo/logoITCAR.png" />
-          <img class="icon-next " src="./logo/next.svg" />
-        </div>
-        <div class="flex flex-col left-0 absolute">
+      <div class="flex flex-row w-full  relative">
+        <div class="flex flex-col pt-[3vh]">
           <div class="team-name" id="team-name-id">
             <br><strong id='nameofteam'></strong>
             <div id="team1"></div>
           </div>
-          <div style="display: flex;">
-            <div style="margin: auto; text-align: center;">
+          <div class="flex ">
+            <div class="m-auto text-center">
               <div><span id="timecp1"></span> <span id="checkpoint1">1</span> </div>
               <div><span id="timecp2"></span> <span id="checkpoint2">2</span></div>
               <div><span id="timecp3"></span> <span id="checkpoint3">3</span> </div>
@@ -79,8 +74,12 @@
             </div>
           </div>
         </div>
-
-        <div class="flex flex-col right-0 absolute">
+        <div class="flex flex-row w-full logo-competition items-center justify-center gap-10">
+            <img class="icon-next " src="./logo/next.svg" />
+            <img class="logo-competition" src="./logo/logoITCAR.png" />
+            <img class="icon-next " src="./logo/next.svg" />
+        </div>
+        <div class="flex flex-col pt-[3vh]">
           <div class="team-name" id="team-name-id-1">
             <br><strong id='nameofteam-1'></strong>
             <div id="team2"></div>
@@ -104,11 +103,11 @@
     </div>
 
     <div class="flex flex-col w-full h-full absolute z-20">
-      <div class="flex flex-row w-full h-full gap-[600px] absolute  items-center justify-center">
+      <div class="flex flex-row w-full h-full gap-[60vh] absolute  items-center justify-center">
         <p id="result" class="text-[100px] text-[#fff]">0</p>
         <p id="result-1" class="text-[100px] text-[#fff]">0</p>
       </div>
-      <div class="flex flex-col w-full items-center absolute bottom-0 pb-20 ">
+      <div class="flex flex-col w-full items-center absolute bottom-0 pb-4">
         <div id="timerCount" class="text-[150px] text-[#7fff00] timer"></div>
         <div class="flex flex-row items-center gap-5" id="btnStartStop">
           <strong id="turn" class="text-[5px 5px 5px rgb(0, 0, 0)] text-[#ffd700] text-[60px]">
