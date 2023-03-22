@@ -15,6 +15,7 @@
 #include "freertos/queue.h"
 #include "freertos/event_groups.h"
 
+
 /**
  * ESP hall;
  */
@@ -83,7 +84,7 @@ char mac_address_root_str[50];
 mesh_addr_t route_table[CONFIG_MESH_ROUTE_TABLE_SIZE];
 
 static const char *TAG = "mesh";
-static const uint8_t MESH_ID[6] = { 0x77, 0x77, 0x77, 0x77, 0x77, 0x77 };
+static const uint8_t MESH_ID[6] = { 0x77, 0x77, 0x77, 0x77, 0x77, 0x76 };
 
 static bool is_mesh_connected = false;
 static mesh_addr_t mesh_parent_addr;
@@ -93,18 +94,23 @@ static bool smart_config = 0;
 
 uint8_t ssid[33] = { 0 };
 uint8_t password[65] = { 0 };
-
+char ip[50] = "192.168.137.1";
+extern long long Tick;
 nvs_handle my_handle;
+int s_retry_num = 0;
 
+//reset button
 unsigned long lastDebounceTime = 0; // the last time the output pin was toggled
 unsigned long debounceDelay = 50;   // the debounce time; increase if the output flickers
 unsigned long buttonPressTime = 0; //Amount of time the button has been held down
 unsigned long actualBtnState = 0;
 int lastButtonState = 1;
 int buttonState; 
+//smart config
 EventGroupHandle_t s_wifi_event_group;
 static const int CONNECTED_BIT = BIT0;
 static const int ESPTOUCH_DONE_BIT = BIT1;
+
 /**
  * Function prototypes
  */
@@ -113,73 +119,156 @@ void mesh_event_handler( void *arg, esp_event_base_t event_base, int32_t event_i
 void mesh_app_start( void );
 void smartconfig_task(void *);
 
-unsigned long IRAM_ATTR millis()
-{
-    return (unsigned long) (esp_timer_get_time() / 1000ULL);
-}
+//taking millis function
+unsigned long IRAM_ATTR millis(){return (unsigned long) (esp_timer_get_time() / 1000ULL);}
+
 void clearBtn(void *pvParameters)
-{
+{   
+    //Turn on led for debug
     gpio_reset_pin(LED_BUILDING);
     gpio_set_direction(LED_BUILDING, GPIO_MODE_OUTPUT);
     gpio_set_level(LED_BUILDING, 1);
-  while (true)
-  { // read the state of the switch into a local variable:
-    int reading = gpio_get_level(BUTTON_PIN);
-    if (!reading)
-    actualBtnState = reading;
-    if (reading != lastButtonState) // If the switch changed, due to noise or pressing:
-    {
-      lastDebounceTime = millis(); // reset the debouncing timer
-    }
-    unsigned long timeSinceDebounce = millis() - lastDebounceTime;
-    if (timeSinceDebounce > debounceDelay)
-    {
-      // whatever the reading is at, it's been there for longer than the debounce
-      // delay, so take it as the actual current state:
-      buttonState = reading;
-      if (buttonState == 0)
-      {
-        buttonPressTime += timeSinceDebounce;
-      }
-      else if (buttonPressTime > 3000)
-      { 
-        buttonPressTime = 0;
-        esp_err_t err = nvs_open("storage", NVS_READWRITE, &my_handle);
-        if (err != ESP_OK) {
-            #if DEBUG
-            ESP_LOGW(TAG, "Error (%s) opening NVS handle!\n", esp_err_to_name(err));
-            #endif
-        } else {
-        ESP_ERROR_CHECK(nvs_erase_key(my_handle, "ssid"));
-        ESP_ERROR_CHECK(nvs_erase_key(my_handle, "password"));
-        #if DEBUG
-        ESP_LOGW(TAG, "Committing updates in NVS ... ");
-        #endif
-        err = nvs_commit(my_handle);
-        #if DEBUG
-        printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
-        #endif
-        // Close
-        nvs_close(my_handle);
-        gpio_set_level(LED_BUILDING, 0);
-        esp_restart();
-        }
-      }
-      else
-      {
-        buttonPressTime = 0;
-      }
-    }
-    // save the reading. Next time through the loop, it'll be the lastButtonState:
-    lastButtonState = reading;
-    vTaskDelay(50);
-    }
-}
-void start_btn_task()
-{
-    xTaskCreate(clearBtn, "clearBtn", 2048, NULL, 10, NULL);
-}
 
+    while (true)
+    { 
+        // read the state of the switch into a local variable:
+        int reading = gpio_get_level(BUTTON_PIN);
+        if (!reading)
+        actualBtnState = reading;
+        if (reading != lastButtonState) // If the switch changed, due to noise or pressing:
+        {
+        lastDebounceTime = millis(); // reset the debouncing timer
+        }
+        unsigned long timeSinceDebounce = millis() - lastDebounceTime;
+        if (timeSinceDebounce > debounceDelay)
+        {
+        // whatever the reading is at, it's been there for longer than the debounce
+        // delay, so take it as the actual current state:
+        buttonState = reading;
+        if (buttonState == 0)
+        {
+            buttonPressTime += timeSinceDebounce;
+        }
+        else if (buttonPressTime > 3000)
+        { 
+            buttonPressTime = 0;
+            //Delete ssid and password
+            esp_err_t err = nvs_open("storage", NVS_READWRITE, &my_handle);
+            if (err != ESP_OK) {
+                #if DEBUG
+                ESP_LOGW(TAG, "Error (%s) opening NVS handle!\n", esp_err_to_name(err));
+                #endif
+            } else {
+            ESP_ERROR_CHECK(nvs_erase_key(my_handle, "ssid"));
+            ESP_ERROR_CHECK(nvs_erase_key(my_handle, "password"));
+            #if DEBUG
+            ESP_LOGW(TAG, "Committing updates in NVS ... ");
+            #endif
+            err = nvs_commit(my_handle);
+            #if DEBUG
+            printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
+            #endif
+            // Close
+            nvs_close(my_handle);
+            gpio_set_level(LED_BUILDING, 0);
+            esp_restart();
+            }
+        }
+        else
+        {
+            buttonPressTime = 0;
+        }
+        }
+        // save the reading. Next time through the loop, it'll be the lastButtonState:
+        lastButtonState = reading;
+        vTaskDelay(50);
+    }
+}
+//Creating delete ssid and password task 
+void start_btn_task(){xTaskCreate(clearBtn, "clearBtn", 1024*2, NULL, 10, NULL);}
+
+static void wf_event_handler(void* arg, esp_event_base_t event_base,
+                                int32_t event_id, void* event_data)
+{
+    if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
+        esp_wifi_connect();
+    } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
+        if (s_retry_num < 10) {
+            esp_wifi_connect();
+            s_retry_num++;
+            ESP_LOGI(TAG, "retry to connect to the AP");
+        } else {
+            xEventGroupSetBits(s_wifi_event_group, WIFI_FAIL_BIT);
+        }
+        ESP_LOGI(TAG,"connect to the AP fail");
+    } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
+        ip_event_got_ip_t* event = (ip_event_got_ip_t*) event_data;
+        ESP_LOGI(TAG, "got ip:" IPSTR, IP2STR(&event->ip_info.ip));
+        s_retry_num = 0;
+        xEventGroupSetBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
+    }
+}
+static void initialise_wifi(void)
+{   
+    s_wifi_event_group = xEventGroupCreate();
+    ESP_ERROR_CHECK(esp_netif_init());
+    ESP_ERROR_CHECK(esp_event_loop_create_default());
+    esp_netif_t *sta_netif = esp_netif_create_default_wifi_sta();
+    assert(sta_netif);
+
+
+    wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
+    ESP_ERROR_CHECK( esp_wifi_init(&cfg) );
+
+    esp_event_handler_instance_t instance_any_id;
+    esp_event_handler_instance_t instance_got_ip;
+    ESP_ERROR_CHECK(esp_event_handler_instance_register(WIFI_EVENT,
+                                                        ESP_EVENT_ANY_ID,
+                                                        &wf_event_handler,
+                                                        NULL,
+                                                        &instance_any_id));
+    ESP_ERROR_CHECK(esp_event_handler_instance_register(IP_EVENT,
+                                                        IP_EVENT_STA_GOT_IP,
+                                                        &wf_event_handler,
+                                                        NULL,
+                                                        &instance_got_ip));
+
+    wifi_config_t wifi_config = {
+        .sta = {
+	     .threshold.authmode = WIFI_AUTH_WPA2_PSK,
+            .pmf_cfg = {
+                .capable = true,
+                .required = false
+            },
+        },
+    };
+    memcpy((uint8_t *) &wifi_config.sta.ssid, ssid, strlen((char*)ssid));
+    memcpy((uint8_t *) &wifi_config.sta.password, password, strlen((char*)password));
+    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA) );
+    ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config) );
+    ESP_ERROR_CHECK(esp_wifi_start() );
+
+    EventBits_t bits = xEventGroupWaitBits(s_wifi_event_group,
+            WIFI_CONNECTED_BIT | WIFI_FAIL_BIT,
+            pdFALSE,
+            pdFALSE,
+            portMAX_DELAY);
+
+    if (bits & WIFI_CONNECTED_BIT) {
+        ESP_LOGI(TAG, "connected to ap SSID:%s password:%s",
+                 "1111", "01245678");
+    } else if (bits & WIFI_FAIL_BIT) {
+        ESP_LOGI(TAG, "Failed to connect to SSID:%s, password:%s",
+                 "1111", "01245678");
+    } else {
+        ESP_LOGE(TAG, "UNEXPECTED EVENT");
+    }
+
+    /* The event will not be processed after unregister */
+    ESP_ERROR_CHECK(esp_event_handler_instance_unregister(IP_EVENT, IP_EVENT_STA_GOT_IP, instance_got_ip));
+    ESP_ERROR_CHECK(esp_event_handler_instance_unregister(WIFI_EVENT, ESP_EVENT_ANY_ID, instance_any_id));
+    vEventGroupDelete(s_wifi_event_group);
+}
 static void event_handler(void* arg, esp_event_base_t event_base,
                                 int32_t event_id, void* event_data)
 {
@@ -241,9 +330,36 @@ static void event_handler(void* arg, esp_event_base_t event_base,
         xEventGroupSetBits(s_wifi_event_group, ESPTOUCH_DONE_BIT);
     }
 }
+void set_ip(char * ip_set){
+    esp_err_t err = nvs_open("storage", NVS_READWRITE, &my_handle);
+    if (err != ESP_OK) {
+        #if DEBUG
+        ESP_LOGW(TAG,"Error (%s) opening NVS handle!", esp_err_to_name(err));
+        #endif
+    } else {
+        #if DEBUG
+        ESP_LOGW(TAG,"Add ip ... ");
+        #endif
 
+        err = nvs_set_str(my_handle, "ip", ip_set);
+        printf(TAG,(err != ESP_OK) ? "Add ip to nvs failed!\n" : "Add ip to nvs done\n");
+        #if DEBUG
+        ESP_LOGW(TAG,"Committing updates in NVS ... ");
+        #endif
+        err = nvs_commit(my_handle);
+        #if DEBUG
+        printf((err != ESP_OK) ? "Commit failed!\n" : "Commit done\n");
+        #endif
+        // Close
+        nvs_close(my_handle);
+        gpio_set_level(LED_BUILDING, 0);
+        vTaskDelay(1000);
+        esp_restart();
+    }
+}
 void wifi_mesh_start(void)
 {   
+    //Firstly, opening nvs storage to take ssid and password
     esp_err_t err = nvs_open("storage", NVS_READWRITE, &my_handle);
     if (err != ESP_OK) {
         #if DEBUG
@@ -261,14 +377,22 @@ void wifi_mesh_start(void)
             ESP_LOGW(TAG,"Ssid = %s", ssid);
             size_t required_size_pw = 100;
             nvs_get_str(my_handle, "password", (char *)&password, &required_size_pw);
+            size_t required_size_ip = 100;
+            nvs_get_str(my_handle, "ip", (char *)ip, &required_size_ip);
             esp_err_t errr = nvs_commit(my_handle);
             #if DEBUG
             ESP_LOGW(TAG,"Password = %s", password);
+            ESP_LOGW(TAG,"ip = %s", ip);
             printf((errr != ESP_OK) ? "Commit failed!\n" : "Commit done\n");
             #endif
             // Close nvs flash
             nvs_close(my_handle);
+            initialise_wifi();
+            // task_getStick();
+            getStick();
+            ESP_ERROR_CHECK( esp_wifi_disconnect() );
             mesh_app_start();
+            // vTaskDelete(NULL);
             break;
         case ESP_ERR_NVS_NOT_FOUND:
             #if DEBUG
@@ -297,6 +421,8 @@ void wifi_mesh_start(void)
     } 
     
 }
+
+
 void smartconfig_task(void * parm)
 {
     EventBits_t uxBits;
@@ -413,25 +539,17 @@ void mesh_event_handler(void *arg, esp_event_base_t event_base,
                 tcpip_adapter_dhcpc_start(TCPIP_ADAPTER_IF_STA);
             #endif
         }
-
         /**
          * Initialize the message reception thread 
          */
         esp_mesh_rx_start();
+        if (!esp_mesh_is_root())
         if (!is_esp_mesh_sent_connect){
             while (!send_connect_msg()){
                     vTaskDelay( 200/portTICK_PERIOD_MS);
             }
             is_esp_mesh_sent_connect = true;
         }
-        // if(!esp_mesh_is_root())
-        //     if( xTaskCreate( task_send_bat_capacity, "task_send_bat_capacity", 1024 * 5, NULL, 1, NULL) != pdPASS )
-        //     {
-        //         #if DEBUG
-        //         ESP_LOGI( TAG, "ERROR - task_mesh_rx NOT ALLOCATED :/\r\n" );  
-        //         #endif
-        //         return;   
-        //     }
         esp_mesh_set_self_organized(0, 0);
     }
     break;
@@ -455,7 +573,7 @@ void mesh_event_handler(void *arg, esp_event_base_t event_base,
     case MESH_EVENT_LAYER_CHANGE: {
         mesh_event_layer_change_t *layer_change = (mesh_event_layer_change_t *)event_data;
         mesh_layer = layer_change->new_layer;
-        ESP_LOGI(TAG, "<MESH_EVENT_LAYER_CHANGE>layer:%d-->%d%s",
+        ESP_LOGI(TAG, "<MESH_EVENT_LAYER_CHANGE>layer:%d-->%d%s", 
                  last_layer, mesh_layer,
                  esp_mesh_is_root() ? "<ROOT>" :
                  (mesh_layer == 2) ? "<layer2>" : "");
@@ -617,13 +735,8 @@ void ip_event_handler(void *arg, esp_event_base_t event_base,
 #endif
     if (esp_mesh_is_root()) {
                             mqtt_start();
-                            // if( xTaskCreate( task_send_bat_capacity, "task_send_bat_capacity", 1024 * 5, NULL, 1, NULL) != pdPASS )
-                            // {
-                            //     #if DEBUG
-                            //     ESP_LOGI( TAG, "ERROR - task_mesh_rx NOT ALLOCATED :/\r\n" );  
-                            //     #endif
-                            //     return;   
-                            // }
+                            vTaskDelay( 1000/portTICK_PERIOD_MS);
+                            send_connect_msg();
                         } 
 }
 
@@ -658,8 +771,8 @@ void mesh_app_start( void )
     /**
      * WiFi Init
      */
-    if (!smart_config)
-    ESP_ERROR_CHECK(esp_event_loop_create_default());
+    // if (!smart_config)
+    // ESP_ERROR_CHECK(esp_event_loop_create_default());
     wifi_init_config_t config = WIFI_INIT_CONFIG_DEFAULT();
     ESP_ERROR_CHECK( esp_wifi_init( &config ) );
     ESP_ERROR_CHECK(esp_event_handler_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &ip_event_handler, NULL));
@@ -672,7 +785,13 @@ void mesh_app_start( void )
     ESP_ERROR_CHECK( esp_mesh_init() );
     ESP_ERROR_CHECK( esp_mesh_set_max_layer( CONFIG_MESH_MAX_LAYER ));
     ESP_ERROR_CHECK( esp_mesh_set_vote_percentage(1) );
-    ESP_ERROR_CHECK( esp_mesh_set_ap_assoc_expire(36000) );
+    // ESP_ERROR_CHECK( esp_mesh_set_ap_assoc_expire(30) );
+    /* Enable mesh PS function */
+    ESP_ERROR_CHECK(esp_mesh_enable_ps());
+    /* better to increase the associate expired time, if a small duty cycle is set. */
+    ESP_ERROR_CHECK(esp_mesh_set_ap_assoc_expire(60));
+    /* better to increase the announce interval to avoid too much management traffic, if a small duty cycle is set. */
+    ESP_ERROR_CHECK(esp_mesh_set_announce_interval(600, 3300));
 
     mesh_cfg_t cfg = MESH_INIT_CONFIG_DEFAULT();
     

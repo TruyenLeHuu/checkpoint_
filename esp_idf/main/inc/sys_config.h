@@ -5,13 +5,12 @@
  * Debugger?
  */
 #define DEBUG 1
-
-#define SEND_DISCONNECT 0
+#define SEND_DISCONNECT 1
 /**
  * NODE_ID
  */
 
-#define NODE_ID "3"
+#define NODE_ID "7"
 
 /**
  * GPIOs defs
@@ -43,5 +42,6 @@
 #define TRUE  1
 #define FALSE 0
 
-
+#define WIFI_CONNECTED_BIT BIT0
+#define WIFI_FAIL_BIT      BIT1
 #endif 

@@ -17,13 +17,15 @@
 static const char *TAG = "mesh_mqtt";
 static esp_mqtt_client_handle_t s_client = NULL;
 bool mqtt_app_publish(char* , char *);
+extern char ip[50];
 
 static esp_err_t mqtt_event_handler_cb(esp_mqtt_event_handle_t event)
 {
     switch (event->event_id) {
         case MQTT_EVENT_CONNECTED:
             ESP_LOGI(TAG, "MQTT_EVENT_CONNECTED");
-            if (esp_mqtt_client_subscribe(s_client, "range", 0) < 0 || esp_mqtt_client_subscribe(s_client, "refresh", 0) < 0) {
+            if (esp_mqtt_client_subscribe(s_client, "range", 0) < 0 || esp_mqtt_client_subscribe(s_client, "refresh", 0) < 0 
+            || esp_mqtt_client_subscribe(s_client, "check", 0) < 0 || esp_mqtt_client_subscribe(s_client, "ip", 0) < 0) {
                 // Disconnect to retry the subscribe after auto-reconnect timeout
                 esp_mqtt_client_disconnect(s_client);
             }
@@ -75,9 +77,9 @@ bool mqtt_app_publish(char* topic, char *publish_string)
 }
 
 void mqtt_app_start(void)
-{
+{ 
     esp_mqtt_client_config_t mqtt_cfg = {
-            .host = "192.168.137.1",
+            .host = ip,
             .port = 1883,
             //Public after disconnect 30s
             .lwt_topic = "ESP-disconnect",

@@ -39,7 +39,7 @@
  */
 #include "esp_mesh.h"
 #include "esp_mesh_internal.h"
-
+#include "esp_http_client.h"
 /**
  * Lwip
  */
@@ -52,6 +52,8 @@
 */
 #include "cJSON.h"
 
+#include "mesh.h"
+
 // interaction with public mqtt broker
 void mqtt_app_start(void);
 void mqtt_app_publish(char* topic, char *publish_string);
@@ -59,14 +61,16 @@ void mqtt_app_publish(char* topic, char *publish_string);
  * Gloabal Variables; 
  */
 static esp_adc_cal_characteristics_t adc1_chars;
-extern EventGroupHandle_t wifi_event_group;
-extern const int CONNECTED_BIT;
 extern mesh_addr_t route_table[];
 extern char mac_address_root_str[];
 extern int max_range;
-extern uint16_t range;
+extern char ip[50];
 nodeEsp activeNode[30];
 int lengthOfActiveNode = 0;
+long long Tick = 0;
+long long previousTick = 0;
+char post_url [200] = "http://192.168.137.1:3001/send-data";
+char get_url [200] = "http://192.168.137.1:3001/getTick";
 /**
  * Constants;
  */
@@ -75,11 +79,11 @@ static const char *TAG = "app: ";
 #define RX_SIZE          (200)
 static uint8_t rx_buf[RX_SIZE] = { 0, };
 
-#define TX_SIZE          (200)
+#define TX_SIZE          (200)  
 static uint8_t tx_buf[TX_SIZE] = { 0, };
 
 /**
- * Configure the ESP32 gpios (lLED & button );
+ * Configure the ESP32 gpios (LED & button );
  */
 void led_on(){
     gpio_set_level( LED_BUILDING, 1 ); 
@@ -89,8 +93,6 @@ void led_off(){
 }
 void gpios_setup( void )
 {
-  
-        
     gpio_pad_select_gpio(BUTTON_PIN);
     gpio_set_direction(BUTTON_PIN, GPIO_MODE_INPUT);
     /**
@@ -102,8 +104,80 @@ void gpios_setup( void )
     gpio_set_level( LED_BUILDING, 0 ); 
 }
     /* Function to send child*/
-void send_mesh(char* data_t){
-       
+esp_err_t client_event_post_handler(esp_http_client_event_handle_t evt)
+{
+    switch (evt->event_id)
+    {case HTTP_EVENT_ON_DATA: printf("HTTP_EVENT_ON_DATA: %.*s\n", evt->data_len, (char *)evt->data);   break;
+    default:    break;
+    }
+    return ESP_OK;
+}
+
+void post_rest_function(void * post_data)
+{  sprintf(post_url,"http://%s:3001/send-data",ip);
+    esp_http_client_config_t config_post = {
+        .url = post_url,
+        .method = HTTP_METHOD_POST,
+        .cert_pem = NULL,
+        .event_handler = client_event_post_handler};
+        
+    esp_http_client_handle_t client = esp_http_client_init(&config_post);
+
+    esp_http_client_set_post_field(client, post_data, strlen(post_data));
+    esp_http_client_set_header(client, "Content-Type", "application/json");
+
+    esp_err_t err = esp_http_client_perform(client);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to open HTTP connection: %s", esp_err_to_name(err));
+    } 
+    esp_http_client_cleanup(client);
+    vTaskDelete(NULL);
+}
+long long takeTick(){
+    return Tick + (millis() - previousTick)/10;
+}
+
+void getStick(){
+    char output_buffer[2048] = {0};   
+    int content_length = 0;
+    sprintf(get_url, "http://%s:3001/getTick", ip);
+    esp_http_client_config_t config = {
+        .url = get_url,
+    };
+    esp_http_client_handle_t client = esp_http_client_init(&config);
+
+    esp_http_client_set_method(client, HTTP_METHOD_GET);
+    esp_err_t err = esp_http_client_open(client, 0);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to open HTTP connection: %s", esp_err_to_name(err));
+    } else {
+        content_length = esp_http_client_fetch_headers(client);
+        if (content_length < 0) {
+            ESP_LOGE(TAG, "HTTP client fetch headers failed");
+        } else {
+            int data_read = esp_http_client_read_response(client, output_buffer, 2048);
+            if (data_read >= 0) {
+                ESP_LOGI(TAG, "HTTP GET Status = %d, content_length = %d",
+                esp_http_client_get_status_code(client),
+                esp_http_client_get_content_length(client));
+                ESP_LOGI(TAG, "%s", (char*) output_buffer);
+                cJSON *root = cJSON_Parse((char*)output_buffer);
+                Tick = cJSON_GetObjectItem(root,"tick")->valueint;
+                previousTick = millis();
+                Tick += 27;
+                // ESP_LOGI(TAG, "%lld", Tick);
+            } else {
+                ESP_LOGE(TAG, "Failed to read response");
+            }
+        }
+    }
+    esp_http_client_close(client);
+};
+void task_send_data(char *post_data){
+    xTaskCreate(post_rest_function, "post_rest_function", 1024*4, post_data, 2, NULL);
+}
+void send_mesh(char* data_t)
+{
     mesh_data_t data;
     int route_table_size;
     data.data = tx_buf;
@@ -124,7 +198,7 @@ void send_mesh(char* data_t){
             if (err) 
             {
                 #if DEBUG 
-                    ESP_LOGI( TAG, "ERROR : Sending Message!\r\n" ); 
+                    ESP_LOGI( TAG, "ERROR : Sending Mesh Message!\r\n" ); 
                 #endif
             } else {
                 #if DEBUG 
@@ -135,27 +209,30 @@ void send_mesh(char* data_t){
         }
     }
 }
-void send_sensor_msg(){
+void send_sensor_msg()
+{
     char mac_str[30]; 
     esp_err_t err;
     mesh_data_t data;
     data.data = tx_buf;
     data.size = TX_SIZE;
     data.proto = MESH_PROTO_JSON;
+    cJSON *root;
+    root=cJSON_CreateObject();
+    cJSON_AddStringToObject(root, "Topic", "Send-Data");
+    cJSON_AddStringToObject(root, "Data", NODE_ID);
+    cJSON_AddNumberToObject(root, "Tick", takeTick());
+    char *rendered=cJSON_Print(root);
     if(esp_mesh_is_root()){
-        mqtt_app_publish("ESP-send", NODE_ID); 
+        // mqtt_app_publish("ESP-send", NODE_ID); 
+        task_send_data(rendered); 
     } else {
-        cJSON *root;
-        root=cJSON_CreateObject();
-        cJSON_AddStringToObject(root, "Topic", "Send-Data");
-        cJSON_AddStringToObject(root, "Data", NODE_ID);
-        char *rendered=cJSON_Print(root);       
         snprintf( (char*)tx_buf, TX_SIZE,  rendered ); 
         data.size = strlen((char*)tx_buf) + 1;
         err = esp_mesh_send(NULL, &data, MESH_DATA_P2P, NULL, 0);   
         if (err) 
         {
-            ESP_LOGI( TAG, "ERROR : Sending Message!\r\n" );   
+            ESP_LOGI( TAG, "ERROR : Sending Sensor Message!\r\n" );   
         } else {
                 uint8_t chipid[20];
                 esp_efuse_mac_get_default(chipid);
@@ -170,27 +247,38 @@ void send_sensor_msg(){
 void send_setup_msg(char * topic, char * data){
     cJSON *root;
     if(strcmp(topic,"range")==0){
-    root = cJSON_Parse(data);
-    char* ID = cJSON_GetObjectItem(root,"node")->valuestring;
-    if (strcmp(ID, NODE_ID)==0){
-        max_range = cJSON_GetObjectItem(root,"range")->valueint;
-        #if DEBUG 
-        ESP_LOGI( TAG, "%d", max_range );   
-        #endif
-        #if DEBUG 
-        ESP_LOGI(TAG,"It root");
-        #endif
-    } else {
+        root = cJSON_Parse(data);
+        char* ID = cJSON_GetObjectItem(root,"node")->valuestring;
+        if (strcmp(ID, NODE_ID)==0){
+            max_range = cJSON_GetObjectItem(root,"range")->valueint;
+            #if DEBUG 
+            ESP_LOGI( TAG, "%d", max_range );   
+            #endif
+            #if DEBUG 
+            ESP_LOGI(TAG,"It root");
+            #endif
+        } else {
+            cJSON_AddStringToObject(root, "Topic", topic);
+            char *rendered = cJSON_Print(root);   
+            send_mesh(rendered);
+        }
+    } else if (strcmp(topic,"check")==0){
+        root = cJSON_Parse(data);
+        char* ID = cJSON_GetObjectItem(root,"node")->valuestring;
+        if (strcmp(ID, NODE_ID)==0){
+            mqtt_app_publish("ESP-connect", NODE_ID);
+        } else {
+            cJSON_AddStringToObject(root, "Topic", topic);
+            char *rendered = cJSON_Print(root);   
+            send_mesh(rendered);
+        }
+    }  else if (strcmp(topic,"ip")==0){
+        root = cJSON_Parse(data);
+        char* ip_setup = cJSON_GetObjectItem(root,"ip")->valuestring;
         cJSON_AddStringToObject(root, "Topic", topic);
         char *rendered = cJSON_Print(root);   
         send_mesh(rendered);
-    }
-    } else if(strcmp(topic,"refresh")==0){
-        mqtt_app_publish("ESP-connect", NODE_ID);
-        root = cJSON_CreateObject();  
-        cJSON_AddStringToObject(root, "Topic", topic);
-        char *rendered = cJSON_Print(root);   
-        send_mesh(rendered);
+        set_ip(ip_setup);
     }
 }
 void send_disconnect_msg(char* macID){    
@@ -220,7 +308,7 @@ void send_disconnect_msg(char* macID){
         if (err) 
         {   
             #if DEBUG 
-                ESP_LOGI( TAG, "ERROR : Sending Message!\r\n" ); 
+                ESP_LOGI( TAG, "ERROR : Sending Disconnected Message!\r\n" ); 
             #endif
         } else {
             #if DEBUG 
@@ -257,7 +345,7 @@ bool send_connect_msg()
     if (err) 
     {   return false;
         #if DEBUG 
-            ESP_LOGI( TAG, "ERROR : Sending Message!\r\n" ); 
+            ESP_LOGI( TAG, "ERROR : Sending Connect Message!\r\n" ); 
         #endif
     } else {
         return true;
@@ -314,10 +402,11 @@ void task_mesh_rx ( void *pvParameter )
             //**ROOT handle message
             if (strcmp(topic,"Send-Data")==0){
                 char* nodeData = cJSON_GetObjectItem(root,"Data")->valuestring;
-                mqtt_app_publish("ESP-send", nodeData); 
+                // mqtt_app_publish("ESP-send", nodeData); 
+                task_send_data(myJson);
                 #if DEBUG
                 ESP_LOGI(TAG, "NON-ROOT(MAC:%s)- Node %s: %s, ", mac_address_str, topic, nodeData);  
-                ESP_LOGI(TAG, "Tried to publish %s", nodeData);  
+
                 #endif
             } else
             if (strcmp(topic,"Connect-Mesh")==0){
@@ -335,11 +424,11 @@ void task_mesh_rx ( void *pvParameter )
                             activeNode[i].id = id;
                             break;}
                             // ESP_LOGI(TAG, "Active node HERE");   
+                    // ESP_LOGI(TAG, "Active node%s",activeNode[i].mac);
                 }
                 #endif
                 snprintf( mac_address_str, sizeof(mac_address_str), ""MACSTR"", MAC2STR(from.addr) );
                 #if DEBUG
-                ESP_LOGI(TAG, "Active node%s",activeNode[0].mac);
                 ESP_LOGI(TAG, "NON-ROOT(MAC:%s)- Node %s: %s, ", mac_address_str, topic, id);  
                 ESP_LOGI(TAG, "Tried to publish %s", id);  
                 #endif               
@@ -377,10 +466,15 @@ void task_mesh_rx ( void *pvParameter )
                 #if DEBUG 
                 ESP_LOGI(TAG, "MQTT send %s", myJson);  
                 #endif
-            } else if (strcmp(topic,"refresh")==0){
-                while (!send_connect_msg()){
-                    vTaskDelay(200/portTICK_PERIOD_MS);
+            } else if (strcmp(topic,"check")==0){
+                char *node =  cJSON_GetObjectItem(root,"node")->valuestring;
+                if (strcmp(node, NODE_ID)==0){
+                    while (!send_connect_msg())
+                        vTaskDelay(200/portTICK_PERIOD_MS);
                 }
+            } else if (strcmp(topic,"ip")==0){
+                char *ip_setup =  cJSON_GetObjectItem(root,"ip")->valuestring;
+                set_ip(ip_setup);
             }
             #if DEBUG 
                 ESP_LOGI( TAG, "NON-ROOT(MAC:%s)- Msg: %s, ", mac_address_str, (char*)data.data );  
@@ -388,7 +482,7 @@ void task_mesh_rx ( void *pvParameter )
                 ESP_LOGI( TAG, "send by ROOT: %s\r\n", mac_address_str );
             #endif  
         }
-        vTaskDelay( 50/portTICK_PERIOD_MS );   
+        vTaskDelay( 5/portTICK_PERIOD_MS );   
     }
     vTaskDelete(NULL);
 }
@@ -416,8 +510,10 @@ bool send_pincap_layer(int voltage, int layer, char* ID){
         err = esp_mesh_send(NULL, &data, MESH_DATA_P2P, NULL, 0);   
         if (err) 
         {   
-            return 0;
-            ESP_LOGI( TAG, "ERROR : Sending Message!\r\n" );       
+            #if DEBUG 
+            ESP_LOGI( TAG, "ERROR : Sending Pin Cap Message!\r\n" );
+            #endif       
+            return 0;  
         } else {
                 uint8_t chipid[20];
                 esp_efuse_mac_get_default(chipid);
@@ -430,6 +526,15 @@ bool send_pincap_layer(int voltage, int layer, char* ID){
         return 0;
     }
 }
+void create_task_send_bat_capacity(){
+     if( xTaskCreate( task_send_bat_capacity, "task_send_bat_capacity", 1024 * 5, NULL, 1, NULL) != pdPASS )
+                            {
+                                #if DEBUG
+                                ESP_LOGI( TAG, "ERROR - task_mesh_rx NOT ALLOCATED :/\r\n" );  
+                                #endif
+                                return;   
+                            }
+}
 void task_send_bat_capacity ( void *pvParameter )
 {   
     esp_adc_cal_characterize(ADC_UNIT_2, ADC_ATTEN_DB_11, ADC_WIDTH_12Bit, 0, &adc1_chars);
@@ -438,7 +543,7 @@ void task_send_bat_capacity ( void *pvParameter )
     while (1) 
     {   
         int adc_value, adc = 0;
-        for (int i = 0; i <64; i++) {
+        for (int i = 0; i < 64; i++) {
         adc2_get_raw(ADC2_CHANNEL_0, ADC_WIDTH_BIT_DEFAULT, &adc_value);
         adc += adc_value;
         }
@@ -446,9 +551,9 @@ void task_send_bat_capacity ( void *pvParameter )
         voltage = esp_adc_cal_raw_to_voltage(adc, &adc1_chars);
         // printf("Raw: %d, voltage: %d mV\n", adc*2, voltage*2);
         while (!send_pincap_layer(voltage*2, esp_mesh_get_layer(), NODE_ID)){
-            vTaskDelay(1000/ portTICK_PERIOD_MS); 
+            vTaskDelay(5000/ portTICK_PERIOD_MS); 
         }
-        vTaskDelay(600000/ portTICK_PERIOD_MS);
+        vTaskDelay(600000/ portTICK_PERIOD_MS);    
     }
 }
 void mqtt_start(){
@@ -478,15 +583,4 @@ void task_app_create( void )
         #endif
         return;   
     }
-    // if( xTaskCreate( task_send_bat_capacity, "task_send_bat_capacity", 1024 * 5, NULL, 1, NULL) != pdPASS )
-    // {
-    //     #if DEBUG
-    //     ESP_LOGI( TAG, "ERROR - task_mesh_rx NOT ALLOCATED :/\r\n" );  
-    //     #endif
-    //     return;   
-    // }
-
-    /**
-     *  Creates a Task to transfer message;
-     */    
 }

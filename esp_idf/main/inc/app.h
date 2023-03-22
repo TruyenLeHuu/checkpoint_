@@ -5,7 +5,9 @@ typedef struct
     char* id;
     char* mac;
 } nodeEsp;
-
+void task_getStick();
+void getStick();
+void create_task_send_bat_capacity();
 void send_setup_msg(char*, char*);
 void mqtt_start();
 void send_disconnect_msg(char* );

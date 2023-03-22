@@ -6,8 +6,8 @@ $.getScript('./configClient/config.js', function () {
 	Socket_port = port;
 });
 var startSignal = false;
-var currentTeam = 'team1';
-var currentTeam1 = 'team2';
+var currentTeam = ' ';
+var currentTeam1 = ' ';
 var nextTeam = '';
 var currentTurn = 1;
 var maxTurn = 3;
@@ -42,6 +42,8 @@ $(document).ready(function () {
 	const finalMessage = document.querySelector('.final');
 	const sound_start = document.getElementById("start_sound");
 	const sound_eli = document.getElementById("eli_sound");
+	const sound_congra = document.getElementById("congra_sound");
+
 	/* tam thoi hide trang index */
 	$('#main').hide();
 	$('#win1').css({ 'display': 'none' });
@@ -58,9 +60,6 @@ $(document).ready(function () {
 	document.getElementById("timerCount").innerHTML = '00' + ":"
 		+ '00' + ":"
 		+ '00';
-	
-	$("#btnStartStop").on('click', '#start', function () {
-		socket.emit("start");})
 		socket.on("start-res", ()=>{
 		sound_start.play();
 		Start(() => {
@@ -85,17 +84,15 @@ $(document).ready(function () {
 					distanceTime.second = 0;
 					distanceTime.mil = 0;
 					// if (state == true)
-					
 					startTime = new Date().getTime();
-					socket.emit("get-tick");
+					// socket.emit("get-tick");
 					intervalUpdateTime();
 				}
+
 			}, 4500);
 		})
 
 	})
-	$("#btnStartStop").on('click', '#stop', function () {
-		socket.emit("stop");})
 		socket.on("stop-res", ()=>{
 		startSignal = false;
 		clearInterval(functionPoint);
@@ -122,8 +119,9 @@ $(document).ready(function () {
 			$("#result").html(resultTeam1);
 			$("#result-1").html(resultTeam2);
 		}
-		if (resultTeam1 == 2) $('#win1').css({ 'display': 'block' });
-			else if (resultTeam2 == 2 ) $('#win2').css({ 'display': 'block' });
+		if (resultTeam1 == 2) {$('#win1').css({ 'display': 'block' }); sound_congra.play();}
+			else if (resultTeam2 == 2 ) {$('#win2').css({ 'display': 'block' }); sound_congra.play();}
+		
 		// } else {
 		// 	if (currentCheckpoint1 < currentCheckpoint2 || (currentCheckpoint1 == currentCheckpoint2 && timeTeam1 < timeTeam2)) {
 		// 		resultTeam1 = resultTeam1 + 1;
@@ -138,8 +136,6 @@ $(document).ready(function () {
 		// state = false;
 		console.log("stop");
 	});
-	$("#btnStartStop").on('click', '#refresh', function () {
-		socket.emit("refresh");})
 		socket.on("refresh-res", ()=>{
 		// clearInterval(delay);
 		// startDelay = 0;
@@ -161,7 +157,6 @@ $(document).ready(function () {
 			$('#refresh').removeClass("btn-warning").addClass("btn-secondary");
 			$('#refresh').html("HẾT");
 			$('#refresh').addClass('disabled');
-			
 		} else {
 			$('#refresh').removeClass("btn-warning").addClass("btn-success");
 			$('#refresh').html("BẮT ĐẦU");
@@ -180,8 +175,6 @@ $(document).ready(function () {
 		console.log('refresh');
 	});
 	// Nhấn thi lại
-	$('#restart').click(function () {
-		socket.emit("restart");})
 		socket.on("restart-res", ()=>{
 		// clearInterval(delay);
 		// startDelay = 0;
@@ -211,38 +204,11 @@ $(document).ready(function () {
 		$('#team2').css({ 'display': 'none' });
 		$('#win1').css({ 'display': 'none' });
 		$('#win2').css({ 'display': 'none' });
-		changeTeamSide = false;
 		outlineTeam1 = false;
 		outlineTeam2 = false;
 		currentTurn = 1;
 		$("#turn").html("Lượt " + currentTurn);
 		// $('#restart').addClass('disabled');
-	});
-	$(document).on('keypress', function (e) {
-		if (e.which == 49) {
-			var timeTeam = distanceTime.mil + distanceTime.second * 100 + distanceTime.minute * 60 * 100 + startTick;
-			if (!changeTeamSide)
-				socket.emit('esp-send-1', {id: currentCheckpoint1 + 1, tick: timeTeam});
-			else
-				socket.emit('esp-send-2', {id: currentCheckpoint1 + 1, tick: timeTeam});
-		} if (e.which == 50) {
-			// console.log("key 2:" + currentCheckpoint1);
-			var timeTeam = distanceTime.mil + distanceTime.second * 100 + distanceTime.minute * 60 * 100 + startTick;
-			if (changeTeamSide)
-				socket.emit('esp-send-1', {id: currentCheckpoint2 + 1, tick: timeTeam});
-			else
-				socket.emit('esp-send-2', {id: currentCheckpoint2 + 1, tick: timeTeam});
-		}
-		if (e.which == 52) {
-			socket.emit('out1');}
-		if (e.which == 53) {
-			socket.emit('out2');}
-		if (e.which == 55) {socket.emit('del1');}
-		
-		if (e.which == 56) {socket.emit('del2');}
-		
-		console.log(e.which);
-
 	});
 	socket.on('del2_res', ()=>{
 		currentCheckpoint2 = currentCheckpoint2 - 1;
@@ -284,26 +250,26 @@ $(document).ready(function () {
 		startTick = tick;
 		console.log(startTick);
 	})
-	socket.on("esp-send", (data)=>{
-		// console.log(data)
-		const id = Number(data.Data);
-		// console.log(id)
-		// var hrTime = process.hrtime()   
-        // console.log(Math.round((hrTime[0]-startTime[0]) * 100 + (hrTime[1]-startTime[1]) / 10000000))
-		if(!changeTeamSide){
-			if(id == Number(map[currentCheckpoint1+1])) {
-				socket.emit("esp-send-1", {id : currentCheckpoint1 + 1, tick : data.Tick});
-			} else 
-			if (id == ((currentCheckpoint2 + 1 <= 5) ? Number(map[currentCheckpoint2 + 1 + 5])  :  Number(map[currentCheckpoint2 + 1 - 5]) )) {
-				socket.emit("esp-send-2", {id : currentCheckpoint2 + 1, tick : data.Tick});
-		}} else {
-			if(id == ((currentCheckpoint1 + 1 <= 5) ?  Number(map[currentCheckpoint1 + 1 + 5])  :  Number(map[currentCheckpoint1 + 1 - 5]) )) {
-				socket.emit("esp-send-1",{id :  currentCheckpoint1 + 1, tick : data.Tick});
-			} else if (id == map[currentCheckpoint2 + 1]) {
-				socket.emit("esp-send-2",{id :  currentCheckpoint2 + 1, tick : data.Tick});
-			}
-		}
-	})
+	// socket.on("esp-send", (data)=>{
+	// 	// console.log(data)
+	// 	const id = Number(data.Data);
+	// 	// console.log(id)
+	// 	// var hrTime = process.hrtime()   
+    //     // console.log(Math.round((hrTime[0]-startTime[0]) * 100 + (hrTime[1]-startTime[1]) / 10000000))
+	// 	if(!changeTeamSide){
+	// 		if(id == Number(map[currentCheckpoint1+1])) {
+	// 			socket.emit("esp-send-1", {id : currentCheckpoint1 + 1, tick : data.Tick});
+	// 		} else 
+	// 		if (id == ((currentCheckpoint2 + 1 <= 5) ? Number(map[currentCheckpoint2 + 1 + 5])  :  Number(map[currentCheckpoint2 + 1 - 5]) )) {
+	// 			socket.emit("esp-send-2", {id : currentCheckpoint2 + 1, tick : data.Tick});
+	// 	}} else {
+	// 		if(id == ((currentCheckpoint1 + 1 <= 5) ?  Number(map[currentCheckpoint1 + 1 + 5])  :  Number(map[currentCheckpoint1 + 1 - 5]) )) {
+	// 			socket.emit("esp-send-1",{id :  currentCheckpoint1 + 1, tick : data.Tick});
+	// 		} else if (id == map[currentCheckpoint2 + 1]) {
+	// 			socket.emit("esp-send-2",{id :  currentCheckpoint2 + 1, tick : data.Tick});
+	// 		}
+	// 	}
+	// })
 	socket.on("esp-send-1", function (data) {
 		console.log("node send esp: " + data.id); //du lieu esp gui
 		console.log(data.tick);
@@ -327,20 +293,10 @@ $(document).ready(function () {
 			if (currentCheckpointVal == maxCheckPoints) {
 				clearInterval(functionPoint);
 				startSignal = false;
-				socket.emit("stop");
 			}
 				// timeTeam1 = distanceTime.mil + distanceTime.second * 100 + distanceTime.minute * 60 * 100;
 				timeTeam1 = currentTick - startTick;
 			//gui ve server luu db
-			socket.emit("web-send-record", {
-				team: currentTeam,
-				turn: currentTurn,
-				time: timeTeam1,
-				cp: currentCheckpointVal
-				
-			}
-
-			);
 			//console.log("1a")
 		}
 	});
@@ -367,16 +323,9 @@ $(document).ready(function () {
 			if (currentCheckpointVal == maxCheckPoints) {
 				clearInterval(functionPoint);
 				startSignal = false;
-				socket.emit("stop");
 			}
 			timeTeam2 = currentTick - startTick;
 			//gui ve server luu db
-			socket.emit("web-send-record", {
-				team: currentTeam1,
-				turn: currentTurn,
-				time: timeTeam2,
-				cp: currentCheckpointVal
-			});
 		}
 	});
 	function Start(callback) {
@@ -460,15 +409,12 @@ $(document).ready(function () {
 	function updateTimeDisplay(number, team) {
 		var distanceTick = currentTick - startTick;
 		console.log(distanceTick);
-		if (distanceTick > 0){
 		var tminutes = Math.floor(distanceTick / (100*60));
 		var tseconds = Math.floor((distanceTick / 100) % 60);
-		var tmils = Math.floor(distanceTick % 100);}
-		else {
-		var tminutes = (distanceTime.minute >= 10) ? distanceTime.minute : ('0' + distanceTime.minute);
-		var tseconds = (distanceTime.second >= 10) ? distanceTime.second : ('0' + distanceTime.second);
-		var tmils = (distanceTime.mil >= 10) ? distanceTime.mil : ('0' + distanceTime.mil);
-		}
+		var tmils = Math.floor(distanceTick % 100);
+		var minutes = (distanceTime.minute >= 10) ? distanceTime.minute : ('0' + distanceTime.minute);
+		var seconds = (distanceTime.second >= 10) ? distanceTime.second : ('0' + distanceTime.second);
+		var mils = (distanceTime.mil >= 10) ? distanceTime.mil : ('0' + distanceTime.mil);
 		console.log(minutes + ":" + seconds + ":" + mils)
 		var minutes = (tminutes >= 10) ? tminutes : ('0' + tminutes);
 		var seconds = (tseconds >= 10) ? tseconds : ('0' + tseconds);
@@ -503,7 +449,7 @@ $(document).ready(function () {
 	socket.on("Change-team-side", function (data) {
 		changeTeamSide = data;
 	});
-	socket.emit("Get-line");
+	// socket.emit("Get-line");
 	socket.on('List-line', (data)=>{
 		map = data[0].flow;
 		console.info(map);
