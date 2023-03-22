@@ -41,8 +41,8 @@ $(document).ready(function () {
 	const sound_congra = document.getElementById("congra_sound");
   /* tam thoi hide trang index */
   $("#main").hide();
-  $('#win1').css({ 'display': 'none' });
-	$('#win2').css({ 'display': 'none' });
+  // $('#win1').css({ 'display': 'none' });
+	// $('#win2').css({ 'display': 'none' });
   /* mac dinh chua co gi */
   $("#turn").html("Lượt " + currentTurn);
   updateTimeDisplay(currentCheckpoint1, 1);

@@ -44,12 +44,14 @@ $(document).ready(function () {
   console.log(sound_start);
   /* tam thoi hide trang index */
   $("#main").hide();
-  $('#win1').css({ 'display': 'none' });
-	$('#win2').css({ 'display': 'none' });
+  // $('#win1').css({ 'display': 'none' });
+	// $('#win2').css({ 'display': 'none' });
   /* mac dinh chua co gi */
   $("#turn").html("Lượt " + currentTurn);
   updateTimeDisplay(currentCheckpoint1, 1);
   updateTimeDisplay(currentCheckpoint2, 2);
+  $("#team1").css({ 'display': 'block' });
+  $("#team2").css({ 'display': 'block' })
   $("#team1").html("OUT TURN");
   $("#team2").html("OUT TURN");
   /* cap nhat ten doi moi */
