@@ -16,7 +16,7 @@
     "express": "^4.17.1",
     "mongoose": "^6.5.1",
     "mqtt": "^4.2.8",
-    "nodemon": "^2.0.20",
+    "nodemon": "^2.0.21",
     "socket.io": "^4.1.3"
   }
 }

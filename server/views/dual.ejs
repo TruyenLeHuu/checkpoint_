@@ -9,21 +9,20 @@
     <link rel="stylesheet" href="module/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/dual_css.css">
     <link rel="stylesheet" href="module/fontawesome/css/all.css">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script type="text/javascript" src="jquery.js"></script>
     <script src="module/bootstrap/dist/js/bootstrap.min.js"></script>
-    
+
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="/assets/js/process_dual.js"></script>
 </head>
 
 <body>
     <div class="versus overflow-x-auto h-screen">
-
         <div class="flex flex-col gap-4 pt-0 pl-4 pr-4   w-full">
             <table class="w-full gap-4">
                 <tr class="w-full flex flex-row justify-between">
@@ -53,37 +52,15 @@
                         <img class="w-auto h-full" src="logo\taitro\BOSCH-removebg-preview.png">
                     </th>
                     <th class="flex flex-row w-full items-center justify-center">
-                        <img class="w-auto h-full pb-[5px]" src="logo\taitro\Logo GanNha-01.png">
+                        <img class="w-auto h-full" src="logo\taitro\Logo GanNha-01.png">
                     </th>
                     <th class="flex flex-row w-full items-center justify-center">
-                        <img class="w-auto h-[75%] pt-[5px]" src="logo\taitro\Renesas Logo_Blue_nonBG.png">
+                        <img class="w-auto h-[80%]" src="logo\taitro\Renesas Logo_Blue_nonBG.png">
                     </th>
                 </tr>
             </table>
         </div>
-        <div class="flex flex-row justify-between">
-            <div class="col-md-3">
-                <div class="team-name" id="team-name-id">
-                    <br><strong id='nameofteam'></strong>
-                    <div id="team1"></div>
-                </div>
-                <div style="display: flex;">
-                    <div style="margin: auto; text-align: center;">
-                        <div><span id="timecp1"></span> <span id="checkpoint1">1</span> </div>
-                        <div><span id="timecp2"></span> <span id="checkpoint2">2</span></div>
-                        <div><span id="timecp3"></span> <span id="checkpoint3">3</span> </div>
-                        <div><span id="timecp4"></span> <span id="checkpoint4">4</span> </div>
-                        <div><span id="timecp5"></span> <span id="checkpoint5">5</span> </div>
-                        <div><span id="timecp6"></span> <span id="checkpoint6">6</span> </div>
-                        <div><span id="timecp7"></span> <span id="checkpoint7">7</span> </div>
-                        <div><span id="timecp8"></span> <span id="checkpoint8">8</span> </div>
-                        <div><span id="timecp9"></span> <span id="checkpoint9">9</span> </div>
-                        <div><span id="timecp10"></span> <span id="checkpoint10">10</span> </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- <div class="h-full">
+        <div style="height: 82vh;">
             <div class="row" style="height: 100%;">
                 <div class="col-md-3">
                     <div class="team-name" id="team-name-id">
@@ -91,7 +68,7 @@
                         <div id="team1"></div>
                     </div>
                     <div class="flex flex-col">
-                        <div  style="margin: auto; text-align: center;">
+                        <div style="margin: auto; text-align: center;">
                             <div><span id="timecp1"></span> <span id="checkpoint1">1</span> </div>
                             <div><span id="timecp2"></span> <span id="checkpoint2">2</span></div>
                             <div><span id="timecp3"></span> <span id="checkpoint3">3</span> </div>
@@ -123,7 +100,6 @@
                         class="flex flex-row justify-between text-[#ffffff] text-[120px] items-center text-center gap-16 w-[50%] w-full">
                         <strong id="result">0</strong>
                         <!-- <strong class="text-[#FF0000]">vs</strong> -->
-
                         <strong id="result-1">0</strong>
                     </div>
                     <div id="timerCount" class="timer text-[150px]"></div>
@@ -154,7 +130,7 @@
                             <div><span id="checkpoint9-1">9</span> <span id="timecp9-1"></span> </div>
                             <div><span id="checkpoint10-1">10</span> <span id="timecp10-1"></span> </div>
                         </div>
-                        <div class="flex flex-col w-full relative" id="win2">
+                        <div class="flex flex-col w-full relative" id="win1">
                             <p class="text-[50px] text-[#ffed00] right-[40px] top-2 rotate-45 font-[Monoton] absolute">
                                 WINNER</p>
                         </div>
@@ -162,39 +138,32 @@
 
                 </div>
             </div>
+
+
         </div>
-
-    </div>
-    </div>
-
-
-    </div> -->
-    <div class="modal fade" id="myModal">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="border-radius: 50%;">
-                <div class="modal-body" style="min-height: 40vh;">
-                    <div class="counter">
-                        <div class="nums">
-                            <span class="in">3</span>
-                            <span>2</span>
-                            <span>1</span>
-                            <span>0</span>
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="border-radius: 50%;">
+                    <div class="modal-body" style="min-height: 40vh;">
+                        <div class="counter">
+                            <div class="nums">
+                                <span class="in">3</span>
+                                <span>2</span>
+                                <span>1</span>
+                                <span>0</span>
+                            </div>
+                            <h4>Get Ready</h4>
                         </div>
-                        <h4>Get Ready</h4>
-                    </div>
-                    <div class="final">
-                        <h1 style="font-size: 11vw; color:  #3498db;">GO</h1>
+                        <div class="final">
+                            <h1 style="font-size: 11vw; color:  #3498db;">GO</h1>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <audio controls class="h-0" id="start_sound">
         <source src="/sound/start.mp3" type="audio/mpeg">
-    </audio>
-    <audio controls class="h-0" id="eli_sound">
-        <source src="/sound/eliminated.mp3" type="audio/mpeg">
     </audio>
 </body>
 
