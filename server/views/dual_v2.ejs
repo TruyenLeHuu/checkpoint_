@@ -18,8 +18,7 @@
   <script type="text/javascript" src="jquery.js"></script>
   <script src="module/bootstrap/dist/js/bootstrap.min.js"></script>
 
-  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-  <script type="text/javascript" src="/assets/js/process_dual.js"></script>
+
 </head>
 
 <body>
@@ -115,7 +114,7 @@
       </div>
       <div class="flex flex-col w-full items-center pb-4">
         <div id="timerCount" class="text-[150px] text-[#7fff00] timer pb-0 mb-0"></div>
-        <div class="flex flex-row items-center justify-center gap-5 w-full" id="btnStartStop">
+        <div class="flex flex-row items-center justify-center gap-5 w-full z-20" id="btnStartStop">
           <div class="flex flex-row items-center justify-end w-full">
             <strong id="turn" class="text-[5px 5px 5px rgb(0, 0, 0)] text-[#ffd700] text-[60px] absolute">
               Lượt 1
@@ -130,9 +129,37 @@
         </div>
       </div>
     </div>
-
+    <div class="modal fade" id="myModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 50%;">
+          <div class="modal-body" style="min-height: 40vh;">
+            <div class="counter">
+              <div class="nums">
+                <span class="in">3</span>
+                <span>2</span>
+                <span>1</span>
+                <span>0</span>
+              </div>
+              <h4>Get Ready</h4>
+            </div>
+            <div class="final">
+              <h1 style="font-size: 11vw; color:  #3498db;">GO</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <img class="w-full h-screen absolute z-10" src="./logo/background.jpg" />
+    <audio controls class="h-0" id="start_sound">
+      <source src="./sound/start.mp3" type="audio/mpeg">
+    </audio>
   </div>
 </body>
+<script src="https://cdn.tailwindcss.com"></script>
+<script type="text/javascript" src="jquery.js"></script>
+<script src="module/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="/assets/js/process_dual.js"></script>
 
 </html>
