@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="module/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/dual_css.css">
     <link rel="stylesheet" href="module/fontawesome/css/all.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script type="text/javascript" src="jquery.js"></script>
     <script src="module/bootstrap/dist/js/bootstrap.min.js"></script>
-
+    
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="/assets/js/process_dual.js"></script>
 </head>
@@ -52,10 +52,10 @@
                         <img class="w-auto h-full" src="logo\taitro\BOSCH-removebg-preview.png">
                     </th>
                     <th class="flex flex-row w-full items-center justify-center">
-                        <img class="w-auto h-full" src="logo\taitro\Logo GanNha-01.png">
+                        <img class="w-auto h-full pb-[5px]" src="logo\taitro\Logo GanNha-01.png">
                     </th>
                     <th class="flex flex-row w-full items-center justify-center">
-                        <img class="w-auto h-[80%]" src="logo\taitro\Renesas Logo_Blue_nonBG.png">
+                        <img class="w-auto h-[75%] pt-[5px]" src="logo\taitro\Renesas Logo_Blue_nonBG.png">
                     </th>
                 </tr>
             </table>
@@ -68,7 +68,7 @@
                         <div id="team1"></div>
                     </div>
                     <div class="flex flex-col">
-                        <div style="margin: auto; text-align: center;">
+                        <div  style="margin: auto; text-align: center;">
                             <div><span id="timecp1"></span> <span id="checkpoint1">1</span> </div>
                             <div><span id="timecp2"></span> <span id="checkpoint2">2</span></div>
                             <div><span id="timecp3"></span> <span id="checkpoint3">3</span> </div>
@@ -130,7 +130,7 @@
                             <div><span id="checkpoint9-1">9</span> <span id="timecp9-1"></span> </div>
                             <div><span id="checkpoint10-1">10</span> <span id="timecp10-1"></span> </div>
                         </div>
-                        <div class="flex flex-col w-full relative" id="win1">
+                        <div class="flex flex-col w-full relative" id="win2">
                             <p class="text-[50px] text-[#ffed00] right-[40px] top-2 rotate-45 font-[Monoton] absolute">
                                 WINNER</p>
                         </div>
@@ -164,6 +164,9 @@
     </div>
     <audio controls class="h-0" id="start_sound">
         <source src="/sound/start.mp3" type="audio/mpeg">
+    </audio>
+    <audio controls class="h-0" id="eli_sound">
+        <source src="/sound/eliminated.mp3" type="audio/mpeg">
     </audio>
 </body>
 

@@ -62,7 +62,7 @@ extern "C" {
 void app_main(void);
 }
 VL53L0X sensor;
-int max_range = 400;
+int max_range = 500;
 uint16_t range;
 /**
  * Program begins here:)

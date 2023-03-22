@@ -62,6 +62,12 @@ module.exports = function (io, mqtt, activeNode, startTime) {
             
             // console.log(Math.round((hrTime[0]-startTime[0]) * 100 + (hrTime[1]-startTime[1]) / 10000000))}
         })
+        socket.on('del1', ()=>{
+            io.sockets.emit('del1_res')
+        })
+        socket.on('del2', ()=>{
+            io.sockets.emit('del2_res')
+        })
         socket.on('start', ()=>{
             io.sockets.emit('start-res')
         })
@@ -73,6 +79,12 @@ module.exports = function (io, mqtt, activeNode, startTime) {
         })
         socket.on('restart', ()=>{
             io.sockets.emit('restart-res')
+        })
+        socket.on('out1', ()=>{
+            io.sockets.emit('out1_res')
+        })
+        socket.on('out2', ()=>{
+            io.sockets.emit('out2_res')
         })
         socket.on('get-tick',()=>{
             var hrTime = process.hrtime()

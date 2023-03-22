@@ -36,25 +36,60 @@ var timeDelay = 0;
 var startDelay = 0;
 
 $(document).ready(function () {
-  var socket = io("http://" + Socket_hostIP + ":" + Socket_port);
-  const nums = document.querySelectorAll(".nums span");
-  const counter = document.querySelector(".counter");
-  const finalMessage = document.querySelector(".final");
-  var sound_start = document.getElementById("start_sound");
+	var socket = io('http://' + Socket_hostIP + ':' + Socket_port);
+	const nums = document.querySelectorAll('.nums span');
+	const counter = document.querySelector('.counter');
+	const finalMessage = document.querySelector('.final');
+	const sound_start = document.getElementById("start_sound");
+	const sound_eli = document.getElementById("eli_sound");
+	const sound_congra = document.getElementById("congra_sound");
 
-  /* tam thoi hide trang index */
-  $("#main").hide();
-  /* mac dinh chua co gi */
-  $("#turn").html("Lượt " + currentTurn);
-  updateTimeDisplay(currentCheckpoint1, 1);
-  updateTimeDisplay(currentCheckpoint2, 2);
-  $("#team1").html("OUT TURN");
-  $("#team2").html("OUT TURN");
-  /* cap nhat ten doi moi */
-  $("#nameofteam").html(currentTeam);
-  $("#nameofteam-1").html(currentTeam1);
-  document.getElementById("timerCount").innerHTML =
-    "00" + ":" + "00" + ":" + "00";
+	/* tam thoi hide trang index */
+	$('#main').hide();
+	$('#win1').css({ 'display': 'none' });
+	$('#win2').css({ 'display': 'none' });
+	/* mac dinh chua co gi */
+	$("#turn").html("Lượt " + currentTurn);
+	updateTimeDisplay(currentCheckpoint1, 1);
+	updateTimeDisplay(currentCheckpoint2, 2);
+	$('#team1').html('OUT TURN');
+	$('#team2').html('OUT TURN');
+	/* cap nhat ten doi moi */
+	$('#nameofteam').html(currentTeam);
+	$('#nameofteam-1').html(currentTeam1);
+	document.getElementById("timerCount").innerHTML = '00' + ":"
+		+ '00' + ":"
+		+ '00';
+		socket.on("start-res", ()=>{
+		sound_start.play();
+		Start(() => {
+			setTimeout(() => {
+				$('#myModal').modal('hide');
+				if (startSignal != true) {
+					startSignal = true;
+					clearInterval(delay);
+					//open gate
+					//socket.emit("control-sign", {node: map[0].node, sign: '1'}); //open gate
+					socket.emit("control-sign", { node: '10', sign: '1' }); //open gate
+					socket.emit("control-sign", { node: '5', sign: '1' }); //open gate
+					socket.emit("Buzzer");
+					/* reset for new turn */
+					currentCheckpoint1 = 0;
+					$('#start').removeClass("btn-success").addClass("btn-danger");
+					$('#start').html("DỪNG");
+					$('#start').attr("id", "stop");
+					$('#restart').addClass('disabled');
+					console.log("start");
+					distanceTime.minute = 0;
+					distanceTime.second = 0;
+					distanceTime.mil = 0;
+					// if (state == true)
+					startTime = new Date().getTime();
+					// socket.emit("get-tick");
+					intervalUpdateTime();
+				}
+      })
+    })
 
   socket.on("start-res", () => {
     sound_start.play();
@@ -201,48 +236,202 @@ $(document).ready(function () {
     // $('#restart').addClass('disabled');
   });
 
-  socket.on("send-tick", (tick) => {
-    startTick = tick;
-    console.log(startTick);
-  });
-  // socket.on("esp-send", (data)=>{
-  // 	// console.log(data)
-  // 	const id = Number(data.Data);
-  // 	// console.log(id)
-  // 	// var hrTime = process.hrtime()
-  //     // console.log(Math.round((hrTime[0]-startTime[0]) * 100 + (hrTime[1]-startTime[1]) / 10000000))
-  // 	if(!changeTeamSide){
-  // 		if(id == Number(map[currentCheckpoint1+1])) {
-  // 			socket.emit("esp-send-1", {id : currentCheckpoint1 + 1, tick : data.Tick});
-  // 		} else
-  // 		if (id == ((currentCheckpoint2 + 1 <= 5) ? Number(map[currentCheckpoint2 + 1 + 5])  :  Number(map[currentCheckpoint2 + 1 - 5]) )) {
-  // 			socket.emit("esp-send-2", {id : currentCheckpoint2 + 1, tick : data.Tick});
-  // 	}} else {
-  // 		if(id == ((currentCheckpoint1 + 1 <= 5) ?  Number(map[currentCheckpoint1 + 1 + 5])  :  Number(map[currentCheckpoint1 + 1 - 5]) )) {
-  // 			socket.emit("esp-send-1",{id :  currentCheckpoint1 + 1, tick : data.Tick});
-  // 		} else if (id == map[currentCheckpoint2 + 1]) {
-  // 			socket.emit("esp-send-2",{id :  currentCheckpoint2 + 1, tick : data.Tick});
-  // 		}
-  // 	}
-  // })
-  socket.on("esp-send-1", function (data) {
-    console.log("node send esp: " + data.id); //du lieu esp gui
-    console.log(data.tick);
-    currentTick = data.tick;
-    /* kiem tra tin hieu bat dau */
-    let a = outlineTeam1 == false;
-    if (startSignal && a) {
-      //kiem tra xem gan den checkpoint cuoi hay chua?
-      let currentCheckpointVal = currentCheckpoint1;
-      // if (currentCheckpointVal + 2 == maxCheckPoints) {
-      // 	socket.emit("end-point-signal");
-      // }
-      //xac nhan qua check point thanh cong
-      //cap nhat checkpoint moi
-      currentCheckpoint1 = currentCheckpoint1 + 1;
-      currentCheckpointVal = currentCheckpoint1;
-      updateCheckpoint(currentCheckpointVal, 1);
-      updateTimeDisplay(currentCheckpointVal, 1);
+	})
+		socket.on("stop-res", ()=>{
+		startSignal = false;
+		clearInterval(functionPoint);
+		//close gate
+		//socket.emit("control-sign", {node: map[0].node, sign: '2'});
+		socket.emit("control-sign", { node: '10', sign: '2' });
+		socket.emit("control-sign", { node: '5', sign: '2' });
+		$('#stop').removeClass("btn-danger").addClass("btn-warning");
+		$('#stop').html("LƯỢT KẾ");
+		$('#stop').attr("id", "refresh");
+		$('#restart').removeClass('disabled');
+		console.log('timeteam1: ', timeTeam1);
+		console.log('timeteam2: ', timeTeam2);
+		console.log('currencheckpoint: ', currentCheckpoint1);
+		console.log('currencheckpoint1: ', currentCheckpoint2);
+		// if (!changeTeamSide) {
+		if (currentCheckpoint1 > currentCheckpoint2 || (currentCheckpoint1 == currentCheckpoint2 && timeTeam1 < timeTeam2)) {
+			resultTeam1 = resultTeam1 + 1;
+			$("#result").html(resultTeam1);
+		} else if (currentCheckpoint1 < currentCheckpoint2 || (currentCheckpoint1 == currentCheckpoint2 && timeTeam1 > timeTeam2)) {
+			resultTeam2 = resultTeam2 + 1;
+			$("#result-1").html(resultTeam2);
+		} else {
+			$("#result").html(resultTeam1);
+			$("#result-1").html(resultTeam2);
+		}
+		if (resultTeam1 == 2) {$('#win1').css({ 'display': 'block' }); sound_congra.play();}
+			else if (resultTeam2 == 2 ) {$('#win2').css({ 'display': 'block' }); sound_congra.play();}
+		
+		// } else {
+		// 	if (currentCheckpoint1 < currentCheckpoint2 || (currentCheckpoint1 == currentCheckpoint2 && timeTeam1 < timeTeam2)) {
+		// 		resultTeam1 = resultTeam1 + 1;
+		// 		$("#result").html(resultTeam1);
+		// 	} else {
+		// 		resultTeam2 = resultTeam2 + 1;
+		// 		$("#result-1").html(resultTeam2);
+		// 	}
+		// }
+		// startDelay = new Date().getTime() - timeDelay;
+		// countDelay();
+		// state = false;
+		console.log("stop");
+	});
+		socket.on("refresh-res", ()=>{
+		// clearInterval(delay);
+		// startDelay = 0;
+		// timeDelay = 0;
+		// startTime = new Date().getTime();
+		currentCheckpoint1 = 0;
+		currentCheckpoint2 = 0;
+		timeTeam1 = 0;
+		timeTeam2 = 0;
+		distanceTime = { minute: 0, second: 0, mil: 0 };
+		updateCheckpoint(currentCheckpoint1, 1);
+		updateCheckpoint(currentCheckpoint2, 2);
+		updateTimeDisplay(currentCheckpoint1, 1);
+		updateTimeDisplay(currentCheckpoint2, 2);
+		document.getElementById("timerCount").innerHTML = '00' + ":"
+			+ '00' + ":"
+			+ '00';
+		if (currentTurn == maxTurn || resultTeam1 == 2 || resultTeam2 == 2) {
+			$('#refresh').removeClass("btn-warning").addClass("btn-secondary");
+			$('#refresh').html("HẾT");
+			$('#refresh').addClass('disabled');
+		} else {
+			$('#refresh').removeClass("btn-warning").addClass("btn-success");
+			$('#refresh').html("BẮT ĐẦU");
+			$('#refresh').attr("id", "start");
+			currentTurn = currentTurn + 1;
+			if(currentTurn == 2 || currentTurn == 3) changeTeamSide= !changeTeamSide;
+			$("#turn").html("Lượt " + currentTurn);
+		}
+		$('#team1').css({ 'display': 'none' });
+		$('#team2').css({ 'display': 'none' });
+		$('#win1').css({ 'display': 'none' });
+		$('#win2').css({ 'display': 'none' });
+		outlineTeam1 = false;
+		outlineTeam2 = false;
+		// $('#restart').addClass('disabled');
+		console.log('refresh');
+	});
+	// Nhấn thi lại
+		socket.on("restart-res", ()=>{
+		// clearInterval(delay);
+		// startDelay = 0;
+		// timeDelay = 0;
+		currentCheckpoint1 = 0;
+		currentCheckpoint2 = 0;
+		timeTeam1 = 0;
+		timeTeam2 = 0;
+		resultTeam1 = 0;
+		resultTeam2 = 0;
+		$("#result").html(resultTeam1);
+		$("#result-1").html(resultTeam2);
+		distanceTime = { minute: 0, second: 0, mil: 0 };
+		updateCheckpoint(currentCheckpoint1, 1);
+		updateCheckpoint(currentCheckpoint2, 2);
+		updateTimeDisplay(currentCheckpoint1, 1);
+		updateTimeDisplay(currentCheckpoint2, 2);
+		document.getElementById("timerCount").innerHTML = '00' + ":"
+			+ '00' + ":"
+			+ '00';
+		$('#refresh').removeClass('disabled');
+		$('#refresh').removeClass("btn-warning").addClass("btn-success");
+		$('#refresh').removeClass("btn-secondary").addClass("btn-success");
+		$('#refresh').html("BẮT ĐẦU");
+		$('#refresh').attr("id", "start");
+		$('#team1').css({ 'display': 'none' });
+		$('#team2').css({ 'display': 'none' });
+		$('#win1').css({ 'display': 'none' });
+		$('#win2').css({ 'display': 'none' });
+		outlineTeam1 = false;
+		outlineTeam2 = false;
+		currentTurn = 1;
+		$("#turn").html("Lượt " + currentTurn);
+		// $('#restart').addClass('disabled');
+	});
+	socket.on('del2_res', ()=>{
+		currentCheckpoint2 = currentCheckpoint2 - 1;
+		clearTimeDisplay(currentCheckpoint2, 2);
+		updateCheckpoint(currentCheckpoint2, 2);
+		let a = $('#timecp' + currentCheckpoint2 + '-1').text().split(':');
+		timeTeam2 = /*parseInt(a[2]) + */parseInt(a[1]) * 100 + parseInt(a[0]) * 60 * 100;
+	})
+	socket.on('del1_res', ()=>{
+		currentCheckpoint1 = currentCheckpoint1 - 1;
+		clearTimeDisplay(currentCheckpoint1, 1);
+		updateCheckpoint(currentCheckpoint1, 1);
+		let a = $('#timecp' + currentCheckpoint1).text().split(':');
+		timeTeam1 = /*parseInt(a[2]) + */parseInt(a[1]) * 100 + parseInt(a[0]) * 60 * 100;
+		console.log(a);
+		console.log(timeTeam1);
+	})
+	socket.on('out1_res',()=>{
+		if (startSignal) {
+			sound_eli.play();
+			outlineTeam1 = !outlineTeam1;
+			if (outlineTeam1)
+				$('#team1').css({ 'display': 'block' });
+			else
+				$('#team1').css({ 'display': 'none' });
+		}
+	})
+	socket.on('out2_res', ()=>{
+		if (startSignal) {
+			sound_eli.play();
+			outlineTeam2 = !outlineTeam2;
+			if (outlineTeam2)
+				$('#team2').css({ 'display': 'block' });
+			else
+				$('#team2').css({ 'display': 'none' });
+		}
+	})
+	socket.on("send-tick", (tick)=>{
+		startTick = tick;
+		console.log(startTick);
+	})
+	// socket.on("esp-send", (data)=>{
+	// 	// console.log(data)
+	// 	const id = Number(data.Data);
+	// 	// console.log(id)
+	// 	// var hrTime = process.hrtime()   
+    //     // console.log(Math.round((hrTime[0]-startTime[0]) * 100 + (hrTime[1]-startTime[1]) / 10000000))
+	// 	if(!changeTeamSide){
+	// 		if(id == Number(map[currentCheckpoint1+1])) {
+	// 			socket.emit("esp-send-1", {id : currentCheckpoint1 + 1, tick : data.Tick});
+	// 		} else 
+	// 		if (id == ((currentCheckpoint2 + 1 <= 5) ? Number(map[currentCheckpoint2 + 1 + 5])  :  Number(map[currentCheckpoint2 + 1 - 5]) )) {
+	// 			socket.emit("esp-send-2", {id : currentCheckpoint2 + 1, tick : data.Tick});
+	// 	}} else {
+	// 		if(id == ((currentCheckpoint1 + 1 <= 5) ?  Number(map[currentCheckpoint1 + 1 + 5])  :  Number(map[currentCheckpoint1 + 1 - 5]) )) {
+	// 			socket.emit("esp-send-1",{id :  currentCheckpoint1 + 1, tick : data.Tick});
+	// 		} else if (id == map[currentCheckpoint2 + 1]) {
+	// 			socket.emit("esp-send-2",{id :  currentCheckpoint2 + 1, tick : data.Tick});
+	// 		}
+	// 	}
+	// })
+	socket.on("esp-send-1", function (data) {
+		console.log("node send esp: " + data.id); //du lieu esp gui
+		console.log(data.tick);
+		currentTick = data.tick;
+		/* kiem tra tin hieu bat dau */
+		let a = (outlineTeam1 == false);
+		if (startSignal && a) {
+			//kiem tra xem gan den checkpoint cuoi hay chua?
+			let currentCheckpointVal = currentCheckpoint1;
+			// if (currentCheckpointVal + 2 == maxCheckPoints) {
+			// 	socket.emit("end-point-signal");
+			// }
+			//xac nhan qua check point thanh cong
+			//cap nhat checkpoint moi
+			currentCheckpoint1 = currentCheckpoint1 + 1;
+			currentCheckpointVal = currentCheckpoint1;
+			updateCheckpoint(currentCheckpointVal, 1);
+			updateTimeDisplay(currentCheckpointVal, 1,);
 
       //neu den duoc checkpoint cuoi cung => ngung tin gio + dung nhan du lieu tu node_mcu
       if (currentCheckpointVal == maxCheckPoints) {
