@@ -36,12 +36,11 @@ var timeDelay = 0;
 var startDelay = 0;
 
 $(document).ready(function () {
-  var socket = io("http://" + Socket_hostIP + ":" + Socket_port);
+  var socket = io("http://" + Socket_hostIP + ":" + Socket_port, { transports : ['websocket'] });
   const nums = document.querySelectorAll(".nums span");
   const counter = document.querySelector(".counter");
   const finalMessage = document.querySelector(".final");
   var sound_start = document.getElementById("start_sound");
-  console.log(sound_start);
   /* tam thoi hide trang index */
   $("#main").hide();
   /* mac dinh chua co gi */

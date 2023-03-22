@@ -36,7 +36,7 @@ var timeDelay = 0;
 var startDelay = 0;
 
 $(document).ready(function () {
-	var socket = io('http://' + Socket_hostIP + ':' + Socket_port);
+	var socket = io('http://' + Socket_hostIP + ':' + Socket_port, { transports : ['websocket'] });
 	const nums = document.querySelectorAll('.nums span');
 	const counter = document.querySelector('.counter');
 	const finalMessage = document.querySelector('.final');
@@ -60,37 +60,6 @@ $(document).ready(function () {
 	document.getElementById("timerCount").innerHTML = '00' + ":"
 		+ '00' + ":"
 		+ '00';
-		socket.on("start-res", ()=>{
-		sound_start.play();
-		Start(() => {
-			setTimeout(() => {
-				$('#myModal').modal('hide');
-				if (startSignal != true) {
-					startSignal = true;
-					clearInterval(delay);
-					//open gate
-					//socket.emit("control-sign", {node: map[0].node, sign: '1'}); //open gate
-					socket.emit("control-sign", { node: '10', sign: '1' }); //open gate
-					socket.emit("control-sign", { node: '5', sign: '1' }); //open gate
-					socket.emit("Buzzer");
-					/* reset for new turn */
-					currentCheckpoint1 = 0;
-					$('#start').removeClass("btn-success").addClass("btn-danger");
-					$('#start').html("DỪNG");
-					$('#start').attr("id", "stop");
-					$('#restart').addClass('disabled');
-					console.log("start");
-					distanceTime.minute = 0;
-					distanceTime.second = 0;
-					distanceTime.mil = 0;
-					// if (state == true)
-					startTime = new Date().getTime();
-					// socket.emit("get-tick");
-					intervalUpdateTime();
-				}
-      })
-    })
-
   socket.on("start-res", () => {
     sound_start.play();
     Start(() => {
@@ -235,8 +204,6 @@ $(document).ready(function () {
     $("#turn").html("Lượt " + currentTurn);
     // $('#restart').addClass('disabled');
   });
-
-	})
 		socket.on("stop-res", ()=>{
 		startSignal = false;
 		clearInterval(functionPoint);
