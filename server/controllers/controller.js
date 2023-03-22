@@ -14,10 +14,10 @@ var that = (module.exports = {
     });
   },
   dualPage: async (req, res, next) => {
-    res.render(__basedir + "/views/dual_view_v2.ejs");
+    res.render(__basedir + "/views/dual_v2.ejs");
   },
   mainPage: async (req, res, next) => {
-    res.render(__basedir + "/views/dual_v2.ejs");
+    res.render(__basedir + "/views/dual_view_v2.ejs");
   },
   addTeam: async (data) => {
     try {

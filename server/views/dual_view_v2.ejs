@@ -10,6 +10,9 @@
   <link rel="stylesheet" type="text/css" href="/assets/css/img.css">
   <link rel="stylesheet" type="text/css" href="/assets/css/dual_css.css">
   <link rel="stylesheet" href="module/fontawesome/css/all.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script type="text/javascript" src="jquery.js"></script>
@@ -19,6 +22,15 @@
 </head>
 
 <body>
+  <audio controls class="h-0" id="start_sound">
+      <source allow="autoplay" muted="muted" src="/sound/start.mp3" type="audio/mpeg">
+  </audio>
+  <audio controls class="h-0" id="eli_sound">
+      <source allow="autoplay" muted="muted" src="/sound/eliminated.mp3" type="audio/mpeg">
+  </audio>
+  <audio controls class="h-0" id="congra_sound">
+      <source allow="autoplay" muted="muted" src="/sound/congra.mp3" type="audio/mpeg">
+  </audio>
   <div class="flex flex-col relative h-screen">
     <div class="flex flex-col h-full z-20 px-20 pt-6 gap-8">
       <div class="flex flex-row justify-center w-full relative">
@@ -71,6 +83,10 @@
               <div><span id="timecp9"></span> <span id="checkpoint9">9</span> </div>
               <div><span id="timecp10"></span> <span id="checkpoint10">10</span> </div>
             </div>
+            <div class="flex flex-col w-full relative" id="win1">
+              <p class="text-[50px] text-[#ffed00] right-[-20px] top-2 rotate-45 font-[Monoton] absolute">
+                  WINNER</p>
+          </div>
           </div>
         </div>
         <div class="flex flex-row w-full h-[17%] overflow-hidden logo-competition items-center justify-center gap-6">
@@ -98,6 +114,10 @@
               <div><span id="checkpoint8-1">8</span> <span id="timecp8-1"></span> </div>
               <div><span id="checkpoint9-1">9</span> <span id="timecp9-1"></span> </div>
               <div><span id="checkpoint10-1">10</span> <span id="timecp10-1"></span> </div>
+            </div>
+            <div class="flex flex-col w-full relative" id="win2">
+              <p class="text-[50px] text-[#ffed00] right-[40px] top-2 rotate-45 font-[Monoton] absolute">
+                  WINNER</p>
             </div>
           </div>
         </div>
@@ -129,6 +149,28 @@
 
     <img class="w-full h-screen absolute z-10" src="./logo/background.jpg" />
   </div>
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 50%;">
+            <div class="modal-body" style="min-height: 40vh;">
+                <div class="counter">
+                    <div class="nums">
+                        <span class="in">3</span>
+                        <span>2</span>
+                        <span>1</span>
+                        <span>0</span>
+                    </div>
+                    <h4>Get Ready</h4>
+                </div>
+                <div class="final">
+                    <h1 style="font-size: 11vw; color:  #3498db;">GO</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
 </body>
 <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="/assets/js/process_dual_view.js"></script>
