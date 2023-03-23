@@ -11,7 +11,7 @@ function createTable(name, array) {
     '              class="flex flex-col right-1 top-1 border-[2px] border-[rgba(0,255,145,1)] text-center items-center justify-center w-[30px] h-[30px] absolute bg-[#FFAB00] rounded-full z-20">' +
     '              <p class="text-[#fff] text-[18px]">1</p>' +
     "            </div>" +
-    `            <img src="${array[0].logo}" class="w-full h-full object-cover " />` +
+    `            <img src="${array[0].logo}" class="w-full h-full object-cover rounded-full" />` +
     "          </div>" +
     `          <p class="text-[#fff] text-center text-[18px] ">${array[0].name}</p>` +
     `          <p class="text-[#ffffffb3] text-center text-[14px] font-[700]">${array[0].score}</p>` +
