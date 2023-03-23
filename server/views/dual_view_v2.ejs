@@ -23,13 +23,13 @@
 
 <body>
   <audio controls class="h-0" id="start_sound">
-      <source allow="autoplay" muted="muted" src="/sound/start.mp3" type="audio/mpeg">
+    <source allow="autoplay" muted="muted" src="/sound/start.mp3" type="audio/mpeg">
   </audio>
   <audio controls class="h-0" id="eli_sound">
-      <source allow="autoplay" muted="muted" src="/sound/eliminated.mp3" type="audio/mpeg">
+    <source allow="autoplay" muted="muted" src="/sound/eliminated.mp3" type="audio/mpeg">
   </audio>
   <audio controls class="h-0" id="congra_sound">
-      <source allow="autoplay" muted="muted" src="/sound/congra.mp3" type="audio/mpeg">
+    <source allow="autoplay" muted="muted" src="/sound/congra.mp3" type="audio/mpeg">
   </audio>
   <div class="flex flex-col relative h-screen">
     <div class="flex flex-col h-full z-20 px-20 pt-6 gap-8">
@@ -62,31 +62,42 @@
           <img class="w-auto logo-height object-cover" src="./logo/logo_gara_stem.png" />
         </div>
       </div>
-      <div class="flex flex-row w-full relative overflow-hidden gap-[10px]">
-        <div class="flex flex-col pt-[3vh] w-[25%] min-w-[25%] ">
+      <div class="flex flex-row w-full relative gap-[10px]">
+        <div class="flex flex-col relative pt-[3vh] w-[25%] min-w-[25%] gap-3">
           <div
             class="w-full text-[24px] p-3 border-[#ffd700] border-solid border-[3px] text-[#ffd700] rounded-[50px] text-center flex items-center justify-center overflow-hidden"
             id="team-name-id">
             <br><strong id='nameofteam'></strong>
-            <div id="team1"></div>
+            <div class="py-4 px-[100px] rotate-45 bg-[#ffffffb6] border-solid border-[1px] text-[#ff0000] z-20 absolute"
+              id="team1"></div>
           </div>
-          <div class="flex ">
-            <div class="m-auto text-center">
-              <div><span id="timecp1"></span> <span id="checkpoint1">1</span> </div>
-              <div><span id="timecp2"></span> <span id="checkpoint2">2</span></div>
-              <div><span id="timecp3"></span> <span id="checkpoint3">3</span> </div>
-              <div><span id="timecp4"></span> <span id="checkpoint4">4</span> </div>
-              <div><span id="timecp5"></span> <span id="checkpoint5">5</span> </div>
-              <div><span id="timecp6"></span> <span id="checkpoint6">6</span> </div>
-              <div><span id="timecp7"></span> <span id="checkpoint7">7</span> </div>
-              <div><span id="timecp8"></span> <span id="checkpoint8">8</span> </div>
-              <div><span id="timecp9"></span> <span id="checkpoint9">9</span> </div>
-              <div><span id="timecp10"></span> <span id="checkpoint10">10</span> </div>
+          <div class="flex flex-col relative">
+            <div class="flex flex-col items-center justify-center m-auto text-center gap-3">
+              <div class="flex flex-row gap-3 items-center">
+                <div class="flex flex-col bg-[#bbb] px-8 py-2 rounded-[8px]"><span id="checkpoint1">1</span></div>
+                <span id="timecp1"></span>
+              </div>
+              <div class="flex flex-row gap-3 items-center">
+                <div class="flex flex-col bg-[#bbb] px-8 py-2 rounded-[8px]"><span id="checkpoint2">2</span></div>
+                <span id="timecp2"></span>
+              </div>
+              <div class="flex flex-row gap-3 items-center">
+                <div class="flex flex-col bg-[#bbb] px-8 py-2 rounded-[8px]"><span id="checkpoint3">3</span></div>
+                <span id="timecp3"></span>
+              </div>
+              <div class="flex flex-row gap-3 items-center">
+                <div class="flex flex-col bg-[#bbb] px-8 py-2 rounded-[8px]"><span id="checkpoint4">4</span></div>
+                <span id="timecp4"></span>
+              </div>
+              <div class="flex flex-row gap-3 items-center">
+                <div class="flex flex-col bg-[#bbb] px-8 py-2 rounded-[8px]"><span id="checkpoint5">5</span></div>
+                <span id="timecp5"></span>
+              </div>
             </div>
-            <div class="flex flex-col w-full relative" id="win1">
-              <p class="text-[50px] text-[#ffed00] right-[-20px] top-2 rotate-45 font-[Monoton] absolute">
-                  WINNER</p>
-          </div>
+            <div class="flex flex-col absolute" id="win2">
+              <p class="text-[50px] text-[#ffed00] rotate-45 font-[Monoton]">
+                WINNER</p>
+            </div>
           </div>
         </div>
         <div class="flex flex-row w-full h-[17%] overflow-hidden logo-competition items-center justify-center gap-6">
@@ -95,29 +106,41 @@
           <img class="w-[25%] min-w-[25%] h-auto" src="./logo/next.svg" />
         </div>
 
-        <div class="flex flex-col pt-[3vh] w-[25%] min-w-[25%] ">
+        <div class="flex flex-col pt-[3vh] w-[25%] min-w-[25%] gap-3">
           <div
             class="w-full text-[24px] p-3 border-[#ffd700] border-solid border-[3px] text-[#ffd700] rounded-[50px] text-center flex items-center justify-center overflow-hidden"
             id="team-name-id-1">
             <br><strong id='nameofteam-1'></strong>
-            <div id="team2"></div>
+            <div class="py-4 px-[100px] rotate-45 bg-[#ffffffb6] border-solid border-[1px] text-[#ff0000] z-20 absolute"
+              id="team2"></div>
+
           </div>
-          <div style="display: flex;">
-            <div style="margin: auto; text-align: center;">
-              <div><span id="checkpoint1-1">1</span> <span id="timecp1-1"></span> </div>
-              <div><span id="checkpoint2-1">2</span> <span id="timecp2-1"></span> </div>
-              <div><span id="checkpoint3-1">3</span> <span id="timecp3-1"></span> </div>
-              <div><span id="checkpoint4-1">4</span> <span id="timecp4-1"></span> </div>
-              <div><span id="checkpoint5-1">5</span> <span id="timecp5-1"></span> </div>
-              <div><span id="checkpoint6-1">6</span> <span id="timecp6-1"></span> </div>
-              <div><span id="checkpoint7-1">7</span> <span id="timecp7-1"></span> </div>
-              <div><span id="checkpoint8-1">8</span> <span id="timecp8-1"></span> </div>
-              <div><span id="checkpoint9-1">9</span> <span id="timecp9-1"></span> </div>
-              <div><span id="checkpoint10-1">10</span> <span id="timecp10-1"></span> </div>
+          <div class="flex flex-col relative">
+            <div class="flex flex-col items-center justify-center m-auto text-center gap-3">
+              <div class="flex flex-row gap-3 items-center">
+                <div class="flex flex-col bg-[#bbb] px-8 py-2 rounded-[8px]"><span id="checkpoint1-1">1</span></div>
+                <span id="timecp1-1"></span>
+              </div>
+              <div class="flex flex-row gap-3 items-center">
+                <div class="flex flex-col bg-[#bbb] px-8 py-2 rounded-[8px]"><span id="checkpoint2-1">2</span></div>
+                <span id="timecp2-1"></span>
+              </div>
+              <div class="flex flex-row gap-3 items-center">
+                <div class="flex flex-col bg-[#bbb] px-8 py-2 rounded-[8px]"><span id="checkpoint3-1">3</span></div>
+                <span id="timecp3-1"></span>
+              </div>
+              <div class="flex flex-row gap-3 items-center">
+                <div class="flex flex-col bg-[#bbb] px-8 py-2 rounded-[8px]"><span id="checkpoint4-1">4</span></div>
+                <span id="timecp4-1"></span>
+              </div>
+              <div class="flex flex-row gap-3 items-center">
+                <div class="flex flex-col bg-[#bbb] px-8 py-2 rounded-[8px]"><span id="checkpoint5-1">5</span></div>
+                <span id="timecp5-1"></span>
+              </div>
             </div>
-            <div class="flex flex-col w-full relative" id="win2">
-              <p class="text-[50px] text-[#ffed00] right-[40px] top-2 rotate-45 font-[Monoton] absolute">
-                  WINNER</p>
+            <div class="flex flex-col absolute" id="win2">
+              <p class="text-[50px] text-[#ffed00] rotate-45 font-[Monoton]">
+                WINNER</p>
             </div>
           </div>
         </div>
@@ -151,25 +174,25 @@
   </div>
   <div class="modal fade" id="myModal">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="border-radius: 50%;">
-            <div class="modal-body" style="min-height: 40vh;">
-                <div class="counter">
-                    <div class="nums">
-                        <span class="in">3</span>
-                        <span>2</span>
-                        <span>1</span>
-                        <span>0</span>
-                    </div>
-                    <h4>Get Ready</h4>
-                </div>
-                <div class="final">
-                    <h1 style="font-size: 11vw; color:  #3498db;">GO</h1>
-                </div>
+      <div class="modal-content" style="border-radius: 50%;">
+        <div class="modal-body" style="min-height: 40vh;">
+          <div class="counter">
+            <div class="nums">
+              <span class="in">3</span>
+              <span>2</span>
+              <span>1</span>
+              <span>0</span>
             </div>
+            <h4>Get Ready</h4>
+          </div>
+          <div class="final">
+            <h1 style="font-size: 11vw; color:  #3498db;">GO</h1>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-</div>
+  </div>
+  </div>
 
 </body>
 <script type="text/javascript" src="/socket.io/socket.io.js"></script>

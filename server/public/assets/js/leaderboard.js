@@ -42,17 +42,17 @@ function createTable(name, array) {
 const tableA = [
   {
     name: "Trường THPT 1",
-    logo: "/logo/avatar.svg",
+    logo: "/logo/kajima.png",
     score: 12,
   },
   {
     name: "Trường THPT 2",
-    logo: "/logo/avatar.svg",
+    logo: "/logo/kajima.png",
     score: 9,
   },
   {
     name: "Trường THPT 3",
-    logo: "/logo/avatar.svg",
+    logo: "/logo/kajima.png",
     score: 8,
   },
 ];

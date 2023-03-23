@@ -94,42 +94,7 @@
   padding-left: 7px !important;
   padding-right: 7px !important;
 }
-#team1 {
-  width: 50%;
-  height: 6vw;
-  position: absolute;
-  margin-top: 4vh;
-  top: 0;
-  left: 10vw;
-  z-index: 100;
-  color: RED;
-  font-size: calc(2vw + 8px);
-  background-color: rgba(255, 255, 255, 0.712);
-  display: flex; /* Canh giữa bằng flex */
-  justify-content: center;
-  align-items: center;
-  border: solid;
-  transform: rotate(30deg);
-  display: none;
-}
-#team2 {
-  width: 50%;
-  height: 6vw;
-  position: absolute;
-  margin-top: 4vh;
-  top: 0;
-  left: 10vw;
-  z-index: 100;
-  color: RED;
-  font-size: calc(2vw + 8px);
-  background-color: rgba(255, 255, 255, 0.712);
-  display: flex; /* Canh giữa bằng flex */
-  justify-content: center;
-  align-items: center;
-  border: solid;
-  transform: rotate(30deg);
-  display: none;
-}
+
 .team-name {
   overflow: hidden;
   width: 100%;
@@ -224,16 +189,14 @@
 #checkpoint8-1,
 #checkpoint9-1,
 #checkpoint10-1 {
-  height: 4vh;
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  height: 8vh;
   width: 5vw;
-  background-color: #bbb;
-  /* border-radius: 50%; */
-  display: inline-block;
-  margin: auto;
-  margin-top: 10px;
-  height: 4vh;
-  line-height: 4vh;
-  white-space: nowrap;
+  text-align: center;
+  background-color: #bbb; */
 }
 #timecp1,
 #timecp2,

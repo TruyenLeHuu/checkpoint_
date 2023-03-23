@@ -2,7 +2,7 @@ var test = false;
 var Socket_hostIP;
 var Socket_port;
 var startSignal = false;
-var currentTeam = "Trường THPT Long Trường - Đội 1";
+var currentTeam = "team1";
 var currentTeam1 = "team2";
 var nextTeam = "";
 var currentTurn = 1;
