@@ -1,3 +1,12 @@
+const logo_BC = "/logo/logo_BC.png";
+const logo_DST = "/logo/logo_DST.png";
+const logo_DVT = "/logo/logo_DVT.png";
+const logo_LT = "/logo/logo_LT.png";
+const logo_NH = "/logo/logo_NH.png";
+const logo_NHH = "/logo/logo_NHH.png";
+const logo_NTN = "/logo/logo_NTN.png";
+const logo_TP = "/logo/logo_TP.png";
+
 function createTable(name, array) {
   array.sort(function (a, b) {
     return a.score < b.score;
