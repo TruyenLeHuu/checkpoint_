@@ -49,7 +49,7 @@ function createTable(name, array) {
     "      </div>" +
     "";
   document.getElementById("root").innerHTML += variable;
-  console.log(document.getElementById("root"));
+  // console.log(document.getElementById("root"));
 }
 var socket = io('http://192.168.0.101:3001');
 socket.emit('call-list');

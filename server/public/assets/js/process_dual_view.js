@@ -32,7 +32,7 @@ var timeDelay = 0;
 var startDelay = 0;
 
 $(document).ready(function () {
-  var socket = io("http://localhost:3001");
+  var socket = io("http://192.168.0.101:3001");
   const nums = document.querySelectorAll(".nums span");
   const counter = document.querySelector(".counter");
   const finalMessage = document.querySelector(".final");
