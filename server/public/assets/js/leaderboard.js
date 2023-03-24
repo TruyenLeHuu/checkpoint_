@@ -9,11 +9,23 @@ const logo_TP = "/logo/logo_TP.png";
 const hostIP = "192.168.0.101"
 const port = "3001"
 
+function compare( a, b ) {
+  if ( a.score > b.score ){
+    return -1;
+  }
+  if ( a.score < b.score ){
+    return 1;
+  }
+  return 0;
+}
+
 
 function createTable(name, array) {
-  array.sort(function (a, b) {
-    return a.score < b.score;
-  });
+  // array.sort(function (a, b) {
+  //   return a.score < b.score;
+  // });
+  // console.log(array)
+  array.sort( compare );
   let variable =
     '  <div class="flex flex-col rounded-[24px] rank w-full gap-3">' +
     `        <p class="text-[#1C1A1F] text-center text-[32px]">Bảng ${name}</p>` +
@@ -51,9 +63,13 @@ function createTable(name, array) {
   document.getElementById("root").innerHTML += variable;
   // console.log(document.getElementById("root"));
 }
+function clearRoot(){
+  document.getElementById("root").innerHTML = '';
+}
 var socket = io('http://192.168.0.101:3001');
 socket.emit('call-list');
 socket.on('update-leader-board', async(teamList)=>{
+  clearRoot();
   let groupA = [];
   await teamList.forEach(async (element) => {
     if (element.group == 'A') await groupA.push(element);
@@ -79,23 +95,23 @@ socket.on('update-leader-board', async(teamList)=>{
   createTable("C", groupC);
   createTable("D", groupD);
 })
-const tableA = [
-  {
-    name: "Trường THPT 1",
-    image_link: logo_NHH,
-    score: 12,
-  },
-  {
-    name: "Trường THPT 2",
-    image_link: logo_NTN,
-    score: 9,
-  },
-  {
-    name: "Trường THPT 3",
-    image_link: logo_NTN,
-    score: 8,
-  },
-];
-createTable("A", tableA);
-createTable("B", tableA);
-createTable("C", tableA);
+// const tableA = [
+//   {
+//     name: "Trường THPT 1",
+//     image_link: logo_NHH,
+//     score: 12,
+//   },
+//   {
+//     name: "Trường THPT 2",
+//     image_link: logo_NTN,
+//     score: 9,
+//   },
+//   {
+//     name: "Trường THPT 3",
+//     image_link: logo_NTN,
+//     score: 8,
+//   },
+// ];
+// createTable("A", tableA);
+// createTable("B", tableA);
+// createTable("C", tableA);
