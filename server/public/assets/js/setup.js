@@ -37,8 +37,8 @@ var i;
 		console.log(data);
 		var teamList = data;
 		teamList.forEach(element =>{
-			$("#team1").append(new Option(element.name));
-			$("#team2").append(new Option(element.name));
+			$("#team1").append(new Option(element.group+": "+element.name));
+			$("#team2").append(new Option(element.group+": "+element.name));
 		})
 	});
 	socket.on('esp-send',(data)=>{
@@ -77,7 +77,7 @@ var i;
 	form.addEventListener('submit', async (e) => {
 		e.preventDefault()     
 		try {
-			socket.emit("AddTeam",{ id: $('#id').val(), name: $('#name').val(), group: $('#group').val(), side: $('#side').val()})
+			socket.emit("AddTeam",{ name: $('#name').val(), group: $('#group').val()})
 			errorMessage.textContent = 'Sent request (Add team: '+$('#name').val()+') !';
 			setTimeout(() => {
 				errorMessage.textContent = '';
@@ -89,8 +89,8 @@ var i;
 	delForm.addEventListener('submit', async (e) => {
 		e.preventDefault()     
 		try {
-			socket.emit("DeleteTeam",{ id: $('#delId').val()})
-			errorMessage.textContent = 'Sent request (Delete team id: '+$('#delId').val()+') !';
+			socket.emit("DeleteTeam",{ name: $('#delId').val()})
+			errorMessage.textContent = 'Sent request (Delete team name: '+$('#delId').val()+') !';
 			setTimeout(() => {
 				errorMessage.textContent = '';
 			}, 2 * 1000);

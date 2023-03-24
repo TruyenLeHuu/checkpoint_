@@ -1,11 +1,8 @@
 const mongoose = require('mongoose')
 const Schema  = mongoose.Schema
 const recordSchema = new Schema ({
-    id:{
+    name:{
         type:String
-    },
-    rank:{
-        type:Number,
     },
     maxcp:{
         type:Number,

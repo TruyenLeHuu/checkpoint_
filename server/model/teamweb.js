@@ -4,6 +4,9 @@ const teamweb = new Schema ({
     team:{
         type:String
     },
+    dualwith:{
+        type:String
+    },
     turn:{
         type:Number
     },

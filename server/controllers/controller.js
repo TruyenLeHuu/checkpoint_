@@ -23,9 +23,7 @@ var that = (module.exports = {
     try {
       await team.create({
         name: data.name,
-        id: data.id,
         group: data.group,
-        side: data.side,
       });
 
       console.log({ message: "Add user Successfully" });
@@ -33,9 +31,9 @@ var that = (module.exports = {
       console.log({ error: err });
     }
   },
-  deleteTeam: async (id) => {
+  deleteTeam: async (name) => {
     team
-      .findOneAndRemove({ id: id })
+      .findOneAndRemove({ name: name })
       .then(() => {
         console.log({ message: "Delete user Successfully" });
       })
@@ -46,7 +44,7 @@ var that = (module.exports = {
   getTeam: (callback) => {
     team
       .find()
-      .select("name -_id")
+      .select("name group -_id")
       .then((respond) => {
         return callback(respond);
       })

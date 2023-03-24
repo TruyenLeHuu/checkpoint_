@@ -377,6 +377,7 @@ $(document).ready(function () {
       //gui ve server luu db
       socket.emit("web-send-record", {
         team: currentTeam,
+        dualwith: currentTeam1,
         turn: currentTurn,
         time: timeTeam1,
         cp: currentCheckpointVal,
@@ -412,6 +413,7 @@ $(document).ready(function () {
       //gui ve server luu db
       socket.emit("web-send-record", {
         team: currentTeam1,
+        dualwith: currentTeam,
         turn: currentTurn,
         time: timeTeam2,
         cp: currentCheckpointVal,
