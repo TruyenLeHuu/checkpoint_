@@ -7,6 +7,9 @@ const teamSchema = new Schema ({
     group:{
         type:String,
     },
+    image_link:{
+        type:String,
+    },
     score: {
         type: Number
     },

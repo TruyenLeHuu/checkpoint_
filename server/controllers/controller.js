@@ -1,6 +1,7 @@
 const team = require("../model/team.js");
 const flow = require("../model/flow.js");
-const teamweb1 = require("../model/teamweb.js");
+const teamweb = require("../model/teamweb.js");
+const { response } = require("express");
 
 var that = (module.exports = {
   setupPage: async (req, res, next) => {
@@ -24,6 +25,9 @@ var that = (module.exports = {
       await team.create({
         name: data.name,
         group: data.group,
+        image_link: data.image_link,
+        score: 0,
+        numcheckpoint: 0 
       });
 
       console.log({ message: "Add user Successfully" });
@@ -74,10 +78,11 @@ var that = (module.exports = {
         console.log({ error: err });
       });
   },
-  adrecord: async (data) => {
+  addrecord: async (data) => {
     try {
-      await teamweb1.create({
+      await teamweb.create({
         team: data.team,
+        dualwith: data.dualwith,
         turn: data.turn,
         time: data.time,
         cp: data.cp,
@@ -87,5 +92,35 @@ var that = (module.exports = {
     } catch (err) {
       console.log({ error: err });
     }
+  },
+  addrecordteam: async (data) => {
+    try {
+      console.log(data)
+      team
+      .findOne({name: data[0].name})
+      .select("name score numcheckpoint -_id")
+      .then((respond) => {
+        let updateData = ({
+          score : ((data[0].result == 'w') ? 3 : ((data[0].result == 'l') ? 0 : 1))  + respond.score,
+          numcheckpoint: data[0].numcp + respond.numcheckpoint,
+        })
+        team.findOneAndUpdate({name: data[0].name}, {$set:updateData})
+        // console.log(respond)
+      })
+      team
+      .findOne({name: data[1].name})
+      .select("name score numcheckpoint -_id")
+      .then((respond) => {
+        let updateData1 = ({
+          score : ((data[1].result == 'w') ? 3 : ((data[1].result == 'l') ? 0 : 1))  + respond.score,
+          numcheckpoint: data[1].numcp + respond.numcheckpoint,
+        })
+        team.findOneAndUpdate({name: data[1].name}, {$set:updateData1})
+        // console.log(respond)
+      })
+      console.log({ message: "Add teamweb Successfully !" });
+      } catch (err) {
+        console.log({ error: err });
+      }
   },
 });

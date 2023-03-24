@@ -36,7 +36,6 @@ module.exports = function (io, mqtt, activeNode, startTime) {
             mqtt.checkEsp(node);
         });
         socket.on('AddTeam',  data  =>  {
-            
             db.addTeam(data);
         })
         socket.on('DeleteTeam',  data  =>  {
@@ -48,7 +47,10 @@ module.exports = function (io, mqtt, activeNode, startTime) {
             });
         })
         socket.on("web-send-record",  (data)  =>  {
-            db.adrecord(data);
+            db.addrecord(data);
+        })
+        socket.on("record-team",  (data)  =>  {
+            db.addrecordteam(data);
         })
         socket.on('Change-flow',  (data)  =>  {
             // console.log(data)

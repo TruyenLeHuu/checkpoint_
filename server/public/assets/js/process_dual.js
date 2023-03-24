@@ -10,6 +10,8 @@ var currentTurn = 1;
 var maxTurn = 3;
 var currentCheckpoint1 = 0;
 var currentCheckpoint2 = 0;
+var numCheckpointt1 = 0;
+var numCheckpointt2 = 0;
 var outlineTeam1 = false;
 var outlineTeam2 = false;
 var timeTeam1 = 0;
@@ -157,6 +159,9 @@ $(document).ready(function () {
     // startDelay = 0;
     // timeDelay = 0;
     // startTime = new Date().getTime();
+    numCheckpointt1 += currentCheckpoint1;
+    numCheckpointt2 += currentCheckpoint2;
+    changeTeamSide = !changeTeamSide;
     currentCheckpoint1 = 0;
     currentCheckpoint2 = 0;
     timeTeam1 = 0;
@@ -172,6 +177,19 @@ $(document).ready(function () {
       $("#refresh").removeClass("btn-warning").addClass("btn-secondary");
       $("#refresh").html("HẾT");
       $("#refresh").addClass("disabled");
+      let Team = [{
+        name: currentTeam,
+        result: (resultTeam1 != resultTeam2) ? ((resultTeam1  > resultTeam2) ? 'w' : 'l'): 'wl',
+        numcp:  numCheckpointt1
+      },
+      {
+        name: currentTeam1,
+        result:(resultTeam1 != resultTeam2) ? ((resultTeam2 > resultTeam1) ? 'w' : 'l'): 'wl',
+        numcp: numCheckpointt2
+      }];
+      console.log(Team)
+      socket.emit('record-team',Team);
+      
     } else {
       $("#refresh").removeClass("btn-warning").addClass("btn-success");
       $("#refresh").html("BẮT ĐẦU");
@@ -196,6 +214,9 @@ $(document).ready(function () {
     // clearInterval(delay);
     // startDelay = 0;
     // timeDelay = 0;
+    changeTeamSide = false;
+    numCheckpointt1 = 0;
+    numCheckpointt2 = 0;
     currentCheckpoint1 = 0;
     currentCheckpoint2 = 0;
     timeTeam1 = 0;

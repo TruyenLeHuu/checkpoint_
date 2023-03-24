@@ -37,8 +37,8 @@ var i;
 		console.log(data);
 		var teamList = data;
 		teamList.forEach(element =>{
-			$("#team1").append(new Option(element.group+": "+element.name));
-			$("#team2").append(new Option(element.group+": "+element.name));
+			$("#team1").append(new Option(element.name));
+			$("#team2").append(new Option(element.name));
 		})
 	});
 	socket.on('esp-send',(data)=>{
@@ -54,6 +54,9 @@ var i;
 		var cap_layer = JSON.parse(data)
 		console.log(cap_layer.layer)
 		$('#normalnow'+ cap_layer.node).text(' pin - '+(cap_layer.pin)/1000+'V; ' + 'layer' + cap_layer.layer);
+	})
+	socket.on("restart-res", () => {
+		teamSide = false;
 	})
 	$('#ipbt').click(()=>{
 		socket.emit("Set-ip", {ip: $('#ip').val()});
@@ -77,7 +80,7 @@ var i;
 	form.addEventListener('submit', async (e) => {
 		e.preventDefault()     
 		try {
-			socket.emit("AddTeam",{ name: $('#name').val(), group: $('#group').val()})
+			socket.emit("AddTeam",{ name: $('#name').val(), group: $('#group').val(), image_link: $('#image').val()})
 			errorMessage.textContent = 'Sent request (Add team: '+$('#name').val()+') !';
 			setTimeout(() => {
 				errorMessage.textContent = '';
@@ -99,7 +102,7 @@ var i;
 		   }
 	})
 	socket.emit('GetTeam');
-	$('#change').click(() => {
+	$('#change').click(() => {	
 		socket.emit('Change-team-web', { team1: $('#team1 option:selected').text(), team2: $('#team2 option:selected').text() });
 		document.querySelector('#team1side').textContent = $('#team1 option:selected').text()
 		document.querySelector('#team2side').textContent = $('#team2 option:selected').text()

@@ -141,6 +141,7 @@ $(document).ready(function () {
     // startDelay = 0;
     // timeDelay = 0;
     // startTime = new Date().getTime();
+    changeTeamSide = !changeTeamSide;
     currentCheckpoint1 = 0;
     currentCheckpoint2 = 0;
     timeTeam1 = 0;
@@ -177,6 +178,7 @@ $(document).ready(function () {
     // clearInterval(delay);
     // startDelay = 0;
     // timeDelay = 0;
+    changeTeamSide = false;
     currentCheckpoint1 = 0;
     currentCheckpoint2 = 0;
     timeTeam1 = 0;
