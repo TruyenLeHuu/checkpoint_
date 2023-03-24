@@ -51,7 +51,7 @@ function createTable(name, array) {
   // console.log(document.getElementById("root"));
 }
 function clearRoot() {
-  document.getElementById("root").innerHTML = undefined;
+  document.getElementById("root").innerHTML = null;
 }
 var socket = io("http://192.168.0.101:3001");
 socket.emit("call-list");
@@ -81,23 +81,24 @@ socket.on("update-leader-board", async (teamList) => {
   createTable("C", groupC);
   createTable("D", groupD);
 });
-// const tableA = [
-//   {
-//     name: "Trường THPT 1",
-//     image_link: logo_NHH,
-//     score: 12,
-//   },
-//   {
-//     name: "Trường THPT 2",
-//     image_link: logo_NTN,
-//     score: 9,
-//   },
-//   {
-//     name: "Trường THPT 3",
-//     image_link: logo_NTN,
-//     score: 8,
-//   },
-// ];
-// createTable("A", tableA);
-// createTable("B", tableA);
-// createTable("C", tableA);
+const tableA = [
+  {
+    name: "Trường THPT 1",
+    image_link: logo_NHH,
+    score: 12,
+  },
+  {
+    name: "Trường THPT 2",
+    image_link: logo_NTN,
+    score: 9,
+  },
+  {
+    name: "Trường THPT 3",
+    image_link: logo_NTN,
+    score: 8,
+  },
+];
+createTable("A", tableA);
+createTable("B", tableA);
+createTable("C", tableA);
+clearRoot();
