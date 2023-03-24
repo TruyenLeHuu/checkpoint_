@@ -10,9 +10,6 @@ const hostIP = "192.168.0.101";
 const port = "3001";
 
 function createTable(name, array) {
-  array.sort(function (a, b) {
-    return a.score < b.score;
-  });
   let variable =
     '  <div class="flex flex-col rounded-[24px] rank w-full gap-3">' +
     `        <p class="text-[#1C1A1F] text-center text-[32px]">Bảng ${name}</p>` +
