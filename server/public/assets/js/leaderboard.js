@@ -6,9 +6,8 @@ const logo_NH = "/logo/logo_NH.png";
 const logo_NHH = "/logo/logo_NHH.png";
 const logo_NTN = "/logo/logo_NTN.png";
 const logo_TP = "/logo/logo_TP.png";
-const hostIP = "192.168.0.101"
-const port = "3001"
-
+const hostIP = "192.168.0.101";
+const port = "3001";
 
 function createTable(name, array) {
   array.sort(function (a, b) {
@@ -51,51 +50,54 @@ function createTable(name, array) {
   document.getElementById("root").innerHTML += variable;
   // console.log(document.getElementById("root"));
 }
-var socket = io('http://192.168.0.101:3001');
-socket.emit('call-list');
-socket.on('update-leader-board', async(teamList)=>{
+function clearRoot() {
+  document.getElementById("root").innerHTML = undefined;
+}
+var socket = io("http://192.168.0.101:3001");
+socket.emit("call-list");
+socket.on("update-leader-board", async (teamList) => {
   let groupA = [];
   await teamList.forEach(async (element) => {
-    if (element.group == 'A') await groupA.push(element);
+    if (element.group == "A") await groupA.push(element);
   });
-  
+
   let groupB = [];
   await teamList.forEach(async (element) => {
-    if (element.group == 'B') await groupB.push(element);
+    if (element.group == "B") await groupB.push(element);
   });
-  
+
   let groupC = [];
   await teamList.forEach(async (element) => {
-    if (element.group == 'C') await groupC.push(element);
+    if (element.group == "C") await groupC.push(element);
   });
-  
+
   let groupD = [];
   await teamList.forEach(async (element) => {
-    if (element.group == 'D') await groupD.push(element);
+    if (element.group == "D") await groupD.push(element);
   });
 
   createTable("A", groupA);
   createTable("B", groupB);
   createTable("C", groupC);
   createTable("D", groupD);
-})
-const tableA = [
-  {
-    name: "Trường THPT 1",
-    image_link: logo_NHH,
-    score: 12,
-  },
-  {
-    name: "Trường THPT 2",
-    image_link: logo_NTN,
-    score: 9,
-  },
-  {
-    name: "Trường THPT 3",
-    image_link: logo_NTN,
-    score: 8,
-  },
-];
-createTable("A", tableA);
-createTable("B", tableA);
-createTable("C", tableA);
+});
+// const tableA = [
+//   {
+//     name: "Trường THPT 1",
+//     image_link: logo_NHH,
+//     score: 12,
+//   },
+//   {
+//     name: "Trường THPT 2",
+//     image_link: logo_NTN,
+//     score: 9,
+//   },
+//   {
+//     name: "Trường THPT 3",
+//     image_link: logo_NTN,
+//     score: 8,
+//   },
+// ];
+// createTable("A", tableA);
+// createTable("B", tableA);
+// createTable("C", tableA);
