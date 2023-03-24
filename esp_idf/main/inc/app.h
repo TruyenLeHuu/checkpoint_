@@ -13,6 +13,7 @@ void mqtt_start();
 void send_disconnect_msg(char* );
 bool send_connect_msg();
 void send_sensor_msg();
+void send_last_sensor_msg(int );
 bool send_pincap_layer(int , int, char*);
 void led_on();
 void led_off();

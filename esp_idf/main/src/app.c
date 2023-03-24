@@ -244,6 +244,40 @@ void send_sensor_msg()
         }
     }
 }
+void send_last_sensor_msg(int addTick)
+{
+    char mac_str[30]; 
+    esp_err_t err;
+    mesh_data_t data;
+    data.data = tx_buf;
+    data.size = TX_SIZE;
+    data.proto = MESH_PROTO_JSON;
+    cJSON *root;
+    root=cJSON_CreateObject();
+    cJSON_AddStringToObject(root, "Topic", "Send-Data");
+    cJSON_AddStringToObject(root, "Data", NODE_ID);
+    cJSON_AddNumberToObject(root, "Tick", takeTick() - addTick);
+    char *rendered=cJSON_Print(root);
+    if(esp_mesh_is_root()){
+        // mqtt_app_publish("ESP-send", NODE_ID); 
+        task_send_data(rendered); 
+    } else {
+        snprintf( (char*)tx_buf, TX_SIZE,  rendered ); 
+        data.size = strlen((char*)tx_buf) + 1;
+        err = esp_mesh_send(NULL, &data, MESH_DATA_P2P, NULL, 0);   
+        if (err) 
+        {
+            ESP_LOGI( TAG, "ERROR : Sending Sensor Message!\r\n" );   
+        } else {
+                uint8_t chipid[20];
+                esp_efuse_mac_get_default(chipid);
+                snprintf( mac_str, sizeof( mac_str ), ""MACSTR"", MAC2STR( chipid ) );
+                #if DEBUG 
+                ESP_LOGI( TAG, "\r\nNON-ROOT sends (%s) (%s) to ROOT (%s)\r\n", mac_str, tx_buf, mac_address_root_str );      
+                #endif                   
+        }
+    }
+}
     /*Respond mqtt msg Root to Nonroot*/
 void send_setup_msg(char * topic, char * data){
     cJSON *root;

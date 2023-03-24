@@ -84,7 +84,7 @@ char mac_address_root_str[50];
 mesh_addr_t route_table[CONFIG_MESH_ROUTE_TABLE_SIZE];
 
 static const char *TAG = "mesh";
-static const uint8_t MESH_ID[6] = { 0x77, 0x77, 0x77, 0x77, 0x77, 0x76 };
+static const uint8_t MESH_ID[6] = { 0x77, 0x77, 0x77, 0x77, 0x77, 0x77 };
 
 static bool is_mesh_connected = false;
 static mesh_addr_t mesh_parent_addr;

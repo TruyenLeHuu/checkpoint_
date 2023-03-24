@@ -49,6 +49,8 @@ extern "C" {
 #include "sys_config.h"
 #include "vl53l0x.h"
 #include "i2c.h"
+
+#define SPECIAL_NODE 1
 /**
  * Constants;
  */
@@ -78,10 +80,17 @@ void sensor_task(void *pvParameter){
         // ESP_LOGI( TAG, "Range: %d\r\n", range );  
         while (range <= max_range && range > 20 ){
             if (++filter > 3){
-                if (flag) {
-                    send_sensor_msg();
+                #if SPECIAL_NODE
+                if(filter > 22 && flag){
+                    send_sensor_msg(); 
                     flag = 0;
                 }
+                #elif
+                if (flag) {    
+                    send_sensor_msg(); 
+                    flag = 0;
+                }
+                #endif
                 led_on();
                 vTaskDelay(50 / portTICK_RATE_MS);
                 range = sensor.readRangeSingleMillimeters();
@@ -90,6 +99,7 @@ void sensor_task(void *pvParameter){
                 }
             }
             vTaskDelay(50 / portTICK_RATE_MS);
+            
         }
         filter = 0;
         if (!flag){
