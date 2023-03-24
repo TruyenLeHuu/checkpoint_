@@ -72,22 +72,22 @@ socket.on('update-leader-board', async(teamList)=>{
   clearRoot();
   let groupA = [];
   await teamList.forEach(async (element) => {
-    if (element.group == 'A') await groupA.push(element);
+    if (element.group == "A") await groupA.push(element);
   });
-  
+
   let groupB = [];
   await teamList.forEach(async (element) => {
-    if (element.group == 'B') await groupB.push(element);
+    if (element.group == "B") await groupB.push(element);
   });
-  
+
   let groupC = [];
   await teamList.forEach(async (element) => {
-    if (element.group == 'C') await groupC.push(element);
+    if (element.group == "C") await groupC.push(element);
   });
-  
+
   let groupD = [];
   await teamList.forEach(async (element) => {
-    if (element.group == 'D') await groupD.push(element);
+    if (element.group == "D") await groupD.push(element);
   });
 
   createTable("A", groupA);
