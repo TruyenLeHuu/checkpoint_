@@ -138,6 +138,7 @@ long long takeTick(){
 }
 
 void getStick(){
+    ESP_LOGI(TAG, "I AM HEREEEEEEEEEEEEEEEEEEEEEEE");
     char output_buffer[2048] = {0};   
     int content_length = 0;
     sprintf(get_url, "http://%s:3001/getTick", ip);
@@ -165,7 +166,7 @@ void getStick(){
                 Tick = cJSON_GetObjectItem(root,"tick")->valueint;
                 previousTick = millis();
                 Tick += 27;
-                // ESP_LOGI(TAG, "%lld", Tick);
+                ESP_LOGI(TAG, "%lld", Tick);
             } else {
                 ESP_LOGE(TAG, "Failed to read response");
             }

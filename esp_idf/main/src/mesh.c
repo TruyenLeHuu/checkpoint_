@@ -389,6 +389,7 @@ void wifi_mesh_start(void)
             nvs_close(my_handle);
             initialise_wifi();
             // task_getStick();
+            
             getStick();
             ESP_ERROR_CHECK( esp_wifi_disconnect() );
             mesh_app_start();

@@ -58,3 +58,4 @@ const tableA = [
 ];
 createTable("A", tableA);
 createTable("B", tableA);
+createTable("C", tableA);

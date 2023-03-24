@@ -17,7 +17,7 @@ var timeTeam2 = 0;
 var resultTeam1 = 0;
 var resultTeam2 = 0;
 var distanceTime = { minute: 0, second: 0, mil: 0 };
-var maxCheckPoints = 10;
+var maxCheckPoints = 5;
 var changeTeamSide = false;
 var startTick = 0;
 var currentTick = 0;
@@ -33,7 +33,7 @@ var timeDelay = 0;
 var startDelay = 0;
 
 $(document).ready(function () {
-  var socket = io("http://localhost:3001");
+  var socket = io("http://192.168.0.101:3001");
   const nums = document.querySelectorAll(".nums span");
   const counter = document.querySelector(".counter");
   const finalMessage = document.querySelector(".final");
@@ -44,14 +44,14 @@ $(document).ready(function () {
   console.log(sound_start);
   /* tam thoi hide trang index */
   $("#main").hide();
-  // $('#win1').css({ 'display': 'none' });
-	// $('#win2').css({ 'display': 'none' });
+  $('#win1').css({ 'display': 'none' });
+	$('#win2').css({ 'display': 'none' });
   /* mac dinh chua co gi */
   $("#turn").html("Lượt " + currentTurn);
   updateTimeDisplay(currentCheckpoint1, 1);
   updateTimeDisplay(currentCheckpoint2, 2);
-  $("#team1").css({ 'display': 'block' });
-  $("#team2").css({ 'display': 'block' })
+  $("#team1").css({ 'display': 'none' });
+  $("#team2").css({ 'display': 'none' })
   $("#team1").html("OUT TURN");
   $("#team2").html("OUT TURN");
   /* cap nhat ten doi moi */
