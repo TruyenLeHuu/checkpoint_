@@ -33,7 +33,7 @@ function createTable(name, array) {
     '            <div class="top3-rank-container top2-rank-bg">' +
     '              <p class="top3-rank">#2</p>' +
     "            </div>" +
-    `            <img src="${array[1].image_link}" class="w-[50px] h-[50px] rounded-full object-cover" />` +
+    `            <img src="${array[1].image_link}" class="top3-img" />` +
     `            <p class="text-[#1C1A1F] text-[16px] font-[700]">${array[1].name}</p>` +
     `            <p class="text-[#777E90] text-[16px] font-[700] ml-auto">${array[1].score}</p>` +
     "          </div>" +
@@ -41,7 +41,7 @@ function createTable(name, array) {
     '            <div class="top3-rank-container top3-rank-bg">' +
     '              <p class="top3-rank">#3</p>' +
     "            </div>" +
-    `            <img src="${array[2].image_link}" class="w-[50px] h-[50px] rounded-full object-cover" />` +
+    `            <img src="${array[2].image_link}" class="top3-img" />` +
     `            <p class="text-[#1C1A1F] text-[16px] font-[700]">${array[2].name}</p>` +
     `            <p class="text-[#777E90] text-[16px] font-[700] ml-auto">${array[2].score}</p>` +
     "          </div>" +
@@ -79,23 +79,23 @@ socket.on('update-leader-board', async(teamList)=>{
   createTable("C", groupC);
   createTable("D", groupD);
 })
-// const tableA = [
-//   {
-//     name: "Trường THPT 1",
-//     logo: logo_NHH,
-//     score: 12,
-//   },
-//   {
-//     name: "Trường THPT 2",
-//     logo: logo_NTN,
-//     score: 9,
-//   },
-//   {
-//     name: "Trường THPT 3",
-//     logo: logo_NTN,
-//     score: 8,
-//   },
-// ];
-// createTable("A", tableA);
-// createTable("B", tableA);
-// createTable("C", tableA);
+const tableA = [
+  {
+    name: "Trường THPT 1",
+    image_link: logo_NHH,
+    score: 12,
+  },
+  {
+    name: "Trường THPT 2",
+    image_link: logo_NTN,
+    score: 9,
+  },
+  {
+    name: "Trường THPT 3",
+    image_link: logo_NTN,
+    score: 8,
+  },
+];
+createTable("A", tableA);
+createTable("B", tableA);
+createTable("C", tableA);
