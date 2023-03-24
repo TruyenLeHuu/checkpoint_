@@ -13,9 +13,9 @@ appExpress.use(bodyParser.json());
 
 var startTime = process.hrtime();
 
-const URI = 'mongodb+srv://1111:1234@checkpoint.dvt4rzg.mongodb.net/?retryWrites=true&w=majority' 
+// const URI = 'mongodb+srv://1111:1234@checkpoint.dvt4rzg.mongodb.net/?retryWrites=true&w=majority' 
 // const URI = 'mongodb+srv://quangduytran:habui28052003@cluster0.n11dnbs.mongodb.net/?retryWrites=true&w=majority'
-// const URI = 'mongodb://localhost:27017' 
+const URI = 'mongodb://localhost:27017' 
 
 global.__basedir  =  __dirname;
 dotenv.config();

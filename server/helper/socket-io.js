@@ -49,8 +49,17 @@ module.exports = function (io, mqtt, activeNode, startTime) {
         socket.on("web-send-record",  (data)  =>  {
             db.addrecord(data);
         })
-        socket.on("record-team",  (data)  =>  {
-            db.addrecordteam(data);
+        socket.on("call-list",  ()  =>  {
+            db.getTeam((teamList)=>{
+                io.sockets.emit('update-leader-board', teamList)
+            });
+        })
+        socket.on("record-team",  async (data)  =>  {
+            await db.addrecordteam(data);
+            await db.getTeam((teamList)=>{
+                io.sockets.emit('update-leader-board', teamList)
+            });
+            
         })
         socket.on('Change-flow',  (data)  =>  {
             // console.log(data)

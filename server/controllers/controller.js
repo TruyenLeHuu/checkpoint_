@@ -48,7 +48,7 @@ var that = (module.exports = {
   getTeam: (callback) => {
     team
       .find()
-      .select("name group -_id")
+      .select("name group score numcheckpoint image_link -_id")
       .then((respond) => {
         return callback(respond);
       })
@@ -96,27 +96,27 @@ var that = (module.exports = {
   addrecordteam: async (data) => {
     try {
       console.log(data)
-      team
+      await team
       .findOne({name: data[0].name})
       .select("name score numcheckpoint -_id")
-      .then((respond) => {
+      .then(async (respond) => {
         let updateData = ({
           score : ((data[0].result == 'w') ? 3 : ((data[0].result == 'l') ? 0 : 1))  + respond.score,
           numcheckpoint: data[0].numcp + respond.numcheckpoint,
         })
-        team.findOneAndUpdate({name: data[0].name}, {$set:updateData})
+        await team.findOneAndUpdate({name: data[0].name}, {$set:updateData})
         // console.log(respond)
       })
-      team
+      await team
       .findOne({name: data[1].name})
       .select("name score numcheckpoint -_id")
-      .then((respond) => {
+      .then(async (respond) => {
         let updateData1 = ({
           score : ((data[1].result == 'w') ? 3 : ((data[1].result == 'l') ? 0 : 1))  + respond.score,
           numcheckpoint: data[1].numcp + respond.numcheckpoint,
         })
-        team.findOneAndUpdate({name: data[1].name}, {$set:updateData1})
-        // console.log(respond)
+        await team.findOneAndUpdate({name: data[1].name}, {$set:updateData1})
+        console.log(data[1].name)
       })
       console.log({ message: "Add teamweb Successfully !" });
       } catch (err) {
