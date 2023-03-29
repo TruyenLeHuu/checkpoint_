@@ -50,7 +50,6 @@ extern "C" {
 #include "vl53l0x.h"
 #include "i2c.h"
 
-#define SPECIAL_NODE 1
 /**
  * Constants;
  */
@@ -64,42 +63,46 @@ extern "C" {
 void app_main(void);
 }
 VL53L0X sensor;
-int max_range = 500;
+int max_range = 300;
 uint16_t range;
 /**
  * Program begins here:)
  */
+uint16_t sensor_read()
+{
+    uint16_t range_measure = sensor.readRangeContinuousMillimeters();
+    if (sensor.timeoutOccurred()) {
+                ESP_LOGI( TAG, "TIMEOUT\r\n" );  
+                }
+    vTaskDelay(25 / portTICK_RATE_MS);
+    range_measure += sensor.readRangeContinuousMillimeters();
+    if (sensor.timeoutOccurred()) {
+                ESP_LOGI( TAG, "TIMEOUT\r\n" );  
+                }
+    return range/2;
+}
 void sensor_task(void *pvParameter){
     bool flag = 1;
     int filter =0;
     while (1) {
-        range = sensor.readRangeSingleMillimeters();
-        if (sensor.timeoutOccurred()) {
-                ESP_LOGI( TAG, "TIMEOUT\r\n" );  
-        }
+        range = sensor_read();
         // ESP_LOGI( TAG, "Range: %d\r\n", range );  
         while (range <= max_range && range > 20 ){
-            if (++filter > 3){
-                #if SPECIAL_NODE
-                if(filter > 22 && flag){
-                    send_sensor_msg(); 
-                    flag = 0;
-                }
-                #elif
-                if (flag) {    
-                    send_sensor_msg(); 
-                    flag = 0;
-                }
-                #endif
+            if (++filter > 5){
+                if (NODE_ID == "5" || NODE_ID == "10")
+                    if(filter > 22 && flag){
+                        send_sensor_msg(); 
+                        flag = 0;
+                    }
+                    else
+                    if (flag) {    
+                        send_sensor_msg(); 
+                        flag = 0;
+                    }
                 led_on();
-                vTaskDelay(50 / portTICK_RATE_MS);
-                range = sensor.readRangeSingleMillimeters();
-                if (sensor.timeoutOccurred()) {
-                ESP_LOGI( TAG, "TIMEOUT\r\n" );  
-                }
             }
-            vTaskDelay(50 / portTICK_RATE_MS);
-            
+            range = sensor_read();    
+            vTaskDelay(25 / portTICK_RATE_MS);
         }
         filter = 0;
         if (!flag){
@@ -107,7 +110,6 @@ void sensor_task(void *pvParameter){
             vTaskDelay(500 / portTICK_RATE_MS);
         }
         flag = 1;
-        
         vTaskDelay(50 / portTICK_RATE_MS);
     }
 }

@@ -6,8 +6,6 @@ const logo_NH = "/logo/logo_NH.png";
 const logo_NHH = "/logo/logo_NHH.png";
 const logo_NTN = "/logo/logo_NTN.png";
 const logo_TP = "/logo/logo_TP.png";
-const hostIP = "192.168.0.101"
-const port = "3001"
 
 function compare( a, b ) {
   if ( a.score > b.score ){

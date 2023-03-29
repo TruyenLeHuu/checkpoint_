@@ -10,8 +10,8 @@
  * NODE_ID
  */
 
-#define NODE_ID "5"
 
+#define NODE_ID "5"
 /**
  * GPIOs defs
  */
