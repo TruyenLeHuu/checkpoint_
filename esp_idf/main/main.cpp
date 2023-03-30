@@ -70,36 +70,40 @@ uint16_t range;
  */
 uint16_t sensor_read()
 {
-    uint16_t range_measure = sensor.readRangeContinuousMillimeters();
+    uint16_t range_measure = sensor.readRangeSingleMillimeters();
     if (sensor.timeoutOccurred()) {
                 ESP_LOGI( TAG, "TIMEOUT\r\n" );  
                 }
     vTaskDelay(25 / portTICK_RATE_MS);
-    range_measure += sensor.readRangeContinuousMillimeters();
+    range_measure += sensor.readRangeSingleMillimeters();
     if (sensor.timeoutOccurred()) {
                 ESP_LOGI( TAG, "TIMEOUT\r\n" );  
                 }
-    return range/2;
+    return range_measure/2;
 }
 void sensor_task(void *pvParameter){
     bool flag = 1;
-    int filter =0;
+    int filter = 0;
     while (1) {
+        // range = sensor_read();
+        // sensor.readRangeContinuousMillimeters
         range = sensor_read();
-        // ESP_LOGI( TAG, "Range: %d\r\n", range );  
+        ESP_LOGI( TAG, "Range: %d\r\n", range );  
         while (range <= max_range && range > 20 ){
+            if (filter > 2) led_on();
             if (++filter > 5){
-                if (NODE_ID == "5" || NODE_ID == "10")
-                    if(filter > 22 && flag){
-                        send_sensor_msg(); 
-                        flag = 0;
-                    }
-                    else
-                    if (flag) {    
-                        send_sensor_msg(); 
-                        flag = 0;
-                    }
-                led_on();
+                #if END_NODE
+                if(filter > 22 && flag){
+                    send_sensor_msg(); 
+                    flag = 0;
+                }
+                #else
+                if (flag) {    
+                    send_sensor_msg(); 
+                    flag = 0;
+                }
+                #endif
+                // led_on();
             }
             range = sensor_read();    
             vTaskDelay(25 / portTICK_RATE_MS);
@@ -123,6 +127,8 @@ void sensor_start(){
             vTaskDelay(10 / portTICK_RATE_MS);
         }
     }
+    
+    // sensor.startContinuous(100);
     sensor.setMeasurementTimingBudget(40000);
     sensor.setSignalRateLimit(0.3);
     #if defined LONG_RANGE

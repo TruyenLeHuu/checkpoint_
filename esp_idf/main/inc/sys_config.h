@@ -11,7 +11,9 @@
  */
 
 
-#define NODE_ID "5"
+#define NODE_ID "1"
+
+#define END_NODE 1
 /**
  * GPIOs defs
  */

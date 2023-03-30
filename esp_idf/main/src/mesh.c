@@ -359,6 +359,7 @@ void set_ip(char * ip_set){
 }
 void wifi_mesh_start(void)
 {   
+    // set_ip(ip);
     //Firstly, opening nvs storage to take ssid and password
     esp_err_t err = nvs_open("storage", NVS_READWRITE, &my_handle);
     if (err != ESP_OK) {
