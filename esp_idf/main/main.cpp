@@ -74,7 +74,7 @@ uint16_t sensor_read()
     if (sensor.timeoutOccurred()) {
                 ESP_LOGI( TAG, "TIMEOUT\r\n" );  
                 }
-    vTaskDelay(25 / portTICK_RATE_MS);
+    vTaskDelay(15 / portTICK_RATE_MS);
     range_measure += sensor.readRangeSingleMillimeters();
     if (sensor.timeoutOccurred()) {
                 ESP_LOGI( TAG, "TIMEOUT\r\n" );  
@@ -90,10 +90,11 @@ void sensor_task(void *pvParameter){
         range = sensor_read();
         // ESP_LOGI( TAG, "Range: %d\r\n", range );  
         while (range <= max_range && range > 20 ){
-            if (filter > 2) led_on();
-            if (++filter > 4){
+            // ESP_LOGI( TAG, "Range: %d\r\n", range );  
+            // if (filter > 2) led_on();
+            if (++filter > 3){
                 #if END_NODE
-                if(filter > 20 && flag){
+                if(filter > 24 && flag){
                     send_sensor_msg(); 
                     flag = 0;
                 }
@@ -103,7 +104,7 @@ void sensor_task(void *pvParameter){
                     flag = 0;
                 }
                 #endif
-                // led_on();
+                led_on();
             }
             range = sensor_read();    
             vTaskDelay(25 / portTICK_RATE_MS);
@@ -114,7 +115,7 @@ void sensor_task(void *pvParameter){
             vTaskDelay(500 / portTICK_RATE_MS);
         }
         flag = 1;
-        vTaskDelay(50 / portTICK_RATE_MS);
+        vTaskDelay(25 / portTICK_RATE_MS);
     }
 }
 void sensor_start(){
@@ -129,8 +130,8 @@ void sensor_start(){
     }
     
     // sensor.startContinuous(100);
-    sensor.setMeasurementTimingBudget(40000);
-    sensor.setSignalRateLimit(0.3);
+    sensor.setMeasurementTimingBudget(30000);
+    sensor.setSignalRateLimit(0.25);
     #if defined LONG_RANGE
         // lower the return signal rate limit (default is 0.25 MCPS)
         sensor.setSignalRateLimit(0.1);

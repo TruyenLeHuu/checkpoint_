@@ -103,6 +103,18 @@ module.exports = function (io, mqtt, activeNode, startTime) {
         socket.on('Change-team-side',(data)=>{
             io.sockets.emit('Change-team-side', data)
         })
+        socket.on('outline1',()=>{
+            io.sockets.emit('_outline1')
+        })
+        socket.on('outline2',()=>{
+            io.sockets.emit('_outline2')
+        })
+        socket.on('subcheckpoint1',(data)=>{
+            io.sockets.emit('_subcheckpoint1', data)
+        })
+        socket.on('subcheckpoint2',(data)=>{
+            io.sockets.emit('_subcheckpoint2', data)
+        })
         socket.on('Connection-refresh',()=>{
             mqtt.refreshConnection();
         })

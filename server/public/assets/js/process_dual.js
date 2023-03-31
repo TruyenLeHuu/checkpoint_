@@ -170,7 +170,7 @@ $.getScript('./configClient/config.js',function(){
       // startTime = new Date().getTime();
       numCheckpointt1 += currentCheckpoint1;
       numCheckpointt2 += currentCheckpoint2;
-      // changeTeamSide = !changeTeamSide;
+      changeTeamSide = !changeTeamSide;
       currentCheckpoint1 = 0;
       currentCheckpoint2 = 0;
       timeTeam1 = 0;
@@ -264,16 +264,16 @@ $.getScript('./configClient/config.js',function(){
           distanceTime.second * 100 +
           distanceTime.minute * 60 * 100 +
           startTick;
-        if (!changeTeamSide)
+        // if (!changeTeamSide)
           socket.emit("esp-send-1", {
             id: currentCheckpoint1 + 1,
             tick: timeTeam,
           });
-        else
-          socket.emit("esp-send-2", {
-            id: currentCheckpoint1 + 1,
-            tick: timeTeam,
-          });
+        // else
+        //   socket.emit("esp-send-2", {
+        //     id: currentCheckpoint1 + 1,
+        //     tick: timeTeam,
+        //   });
       }
       if (e.which == 50) {
         // console.log("key 2:" + currentCheckpoint1);
@@ -282,45 +282,62 @@ $.getScript('./configClient/config.js',function(){
           distanceTime.second * 100 +
           distanceTime.minute * 60 * 100 +
           startTick;
-        if (changeTeamSide)
-          socket.emit("esp-send-1", {
-            id: currentCheckpoint2 + 1,
-            tick: timeTeam,
-          });
-        else
+        // if (changeTeamSide)
+        //   socket.emit("esp-send-1", {
+        //     id: currentCheckpoint2 + 1,
+        //     tick: timeTeam,
+        //   });
+        // else
           socket.emit("esp-send-2", {
             id: currentCheckpoint2 + 1,
             tick: timeTeam,
           });
       }
-      if (e.which == 52) {
-        if (startSignal) {
-          outlineTeam1 = !outlineTeam1;
-          if (outlineTeam1) $("#team1").css({ display: "block" });
-          else $("#team1").css({ display: "none" });
-        }
-      }
-      if (e.which == 53) {
-        if (startSignal) {
-          outlineTeam2 = !outlineTeam2;
-          if (outlineTeam2) $("#team2").css({ display: "block" });
-          else $("#team2").css({ display: "none" });
-        }
-      }
       if (e.which == 55) {
-        currentCheckpoint1 = currentCheckpoint1 - 1;
-        clearTimeDisplay(currentCheckpoint1, 1);
-        updateCheckpoint(currentCheckpoint1, 1);
-        let a = $("#timecp" + currentCheckpoint1)
-          .text()
-          .split(":");
-        timeTeam1 =
-          /*parseInt(a[2]) + */ parseInt(a[1]) * 100 + parseInt(a[0]) * 60 * 100;
-        console.log(a);
-        console.log(timeTeam1);
+        socket.emit("outline1");
       }
       if (e.which == 56) {
-        currentCheckpoint2 = currentCheckpoint2 - 1;
+        socket.emit("outline2");
+      }
+      if (e.which == 52) {
+        socket.emit("subcheckpoint1");
+      }
+      if (e.which == 53) {
+        socket.emit("subcheckpoint2");
+      }
+      console.log(e.which);
+    });
+    
+    socket.on("_outline1", ()=>{
+      if (startSignal) {
+        sound_eli.play();
+        outlineTeam1 = !outlineTeam1;
+        if (outlineTeam1) $("#team1").css({ display: "block" });
+        else $("#team1").css({ display: "none" });
+      }
+    })
+    socket.on("_outline2", ()=>{
+      if (startSignal) {
+        sound_eli.play();
+        outlineTeam2 = !outlineTeam2;
+        if (outlineTeam2) $("#team2").css({ display: "block" });
+        else $("#team2").css({ display: "none" });
+      }
+    })
+    socket.on("_subcheckpoint1", ()=>{
+      currentCheckpoint1 = currentCheckpoint1 - 1;
+      clearTimeDisplay(currentCheckpoint1, 1);
+      updateCheckpoint(currentCheckpoint1, 1);
+      let a = $("#timecp" + currentCheckpoint1)
+        .text()
+        .split(":");
+      timeTeam1 =
+        /*parseInt(a[2]) + */ parseInt(a[1]) * 100 + parseInt(a[0]) * 60 * 100;
+      console.log(a);
+      console.log(timeTeam1);
+    })
+    socket.on("_subcheckpoint2", ()=>{
+      currentCheckpoint2 = currentCheckpoint2 - 1;
         clearTimeDisplay(currentCheckpoint2, 2);
         updateCheckpoint(currentCheckpoint2, 2);
         let a = $("#timecp" + currentCheckpoint2 + "-1")
@@ -328,10 +345,7 @@ $.getScript('./configClient/config.js',function(){
           .split(":");
         timeTeam2 =
           /*parseInt(a[2]) + */ parseInt(a[1]) * 100 + parseInt(a[0]) * 60 * 100;
-      }
-      console.log(e.which);
-    });
-  
+    })
     socket.on("send-tick", (tick) => {
       startTick = tick;
       console.log(startTick);
@@ -584,7 +598,7 @@ $.getScript('./configClient/config.js',function(){
       $("#nameofteam-1").html(currentTeam1);
     });
     socket.on("Change-team-side", function (data) {
-      // changeTeamSide = data;
+      changeTeamSide = data;
     });
     socket.emit("Get-line");
     socket.on("List-line", (data) => {

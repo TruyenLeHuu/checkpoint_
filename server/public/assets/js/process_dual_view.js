@@ -215,7 +215,46 @@ $.when(
       $("#turn").html("Lượt " + currentTurn);
       // $('#restart').addClass('disabled');
     });
-
+    socket.on("_outline1", ()=>{
+      if (startSignal) {
+        sound_eli.play();
+        outlineTeam1 = !outlineTeam1;
+        if (outlineTeam1) $("#team1").css({ display: "block" });
+        else $("#team1").css({ display: "none" });
+      }
+      
+    })
+    socket.on("_outline2", ()=>{
+      if (startSignal) {
+        sound_eli.play();
+        outlineTeam2 = !outlineTeam2;
+        if (outlineTeam2) $("#team2").css({ display: "block" });
+        else $("#team2").css({ display: "none" });
+      }
+      
+    })
+    socket.on("_subcheckpoint1", ()=>{
+      currentCheckpoint1 = currentCheckpoint1 - 1;
+      clearTimeDisplay(currentCheckpoint1, 1);
+      updateCheckpoint(currentCheckpoint1, 1);
+      let a = $("#timecp" + currentCheckpoint1)
+        .text()
+        .split(":");
+      timeTeam1 =
+        /*parseInt(a[2]) + */ parseInt(a[1]) * 100 + parseInt(a[0]) * 60 * 100;
+      console.log(a);
+      console.log(timeTeam1);
+    })
+    socket.on("_subcheckpoint2", ()=>{
+      currentCheckpoint2 = currentCheckpoint2 - 1;
+      clearTimeDisplay(currentCheckpoint2, 2);
+      updateCheckpoint(currentCheckpoint2, 2);
+      let a = $("#timecp" + currentCheckpoint2 + "-1")
+        .text()
+        .split(":");
+      timeTeam2 =
+        /*parseInt(a[2]) + */ parseInt(a[1]) * 100 + parseInt(a[0]) * 60 * 100;
+    })
     socket.on("send-tick", (tick) => {
       startTick = tick;
       console.log(startTick);
