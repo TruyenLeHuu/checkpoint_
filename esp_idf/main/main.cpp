@@ -63,7 +63,7 @@ extern "C" {
 void app_main(void);
 }
 VL53L0X sensor;
-int max_range = 300;
+int max_range = 250;
 uint16_t range;
 /**
  * Program begins here:)
@@ -88,12 +88,12 @@ void sensor_task(void *pvParameter){
         // range = sensor_read();
         // sensor.readRangeContinuousMillimeters
         range = sensor_read();
-        ESP_LOGI( TAG, "Range: %d\r\n", range );  
+        // ESP_LOGI( TAG, "Range: %d\r\n", range );  
         while (range <= max_range && range > 20 ){
             if (filter > 2) led_on();
-            if (++filter > 5){
+            if (++filter > 4){
                 #if END_NODE
-                if(filter > 22 && flag){
+                if(filter > 20 && flag){
                     send_sensor_msg(); 
                     flag = 0;
                 }
