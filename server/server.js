@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const config = require('./config/config');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const Flow = require('./model/flow')
 
 appExpress.use(bodyParser.urlencoded({extended:true, limit:"30mb" }));
 appExpress.use(bodyParser.json());
@@ -15,7 +16,12 @@ var startTime = process.hrtime();
 
 // const URI = 'mongodb+srv://1111:1234@checkpoint.dvt4rzg.mongodb.net/?retryWrites=true&w=majority' 
 // const URI = 'mongodb+srv://quangduytran:habui28052003@cluster0.n11dnbs.mongodb.net/?retryWrites=true&w=majority'
-const URI = 'mongodb://localhost:27017' 
+const URI = 'mongodb://0.0.0.0:27017/Test' 
+
+
+
+// const URI = 'mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.8.0/Test'
+// const URI = 'mongodb://localhost:27017/Test'
 
 global.__basedir  =  __dirname;
 dotenv.config();
@@ -47,6 +53,10 @@ mongoose
     //InitRole()
     appPort = config.port;
 	appHost = config.host;
+     Flow.find()
+     .then(flow => {
+        console.log(flow)
+     })
 	server.listen(appPort, appHost, () => {
 		console.log(`Server listening at host ${appHost} port ${appPort}`);
 });

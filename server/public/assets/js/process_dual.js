@@ -44,6 +44,7 @@ $.getScript('./configClient/config.js',function(){
     Socket_port = port;
 })).done(function(){
   socket = io.connect('http://' + Socket_hostIP + ':' + Socket_port, { transports : ['websocket'] });
+  // socket = io.connect('http://192.168.0.101:3001', { transports : ['websocket'] });
   $(document).ready(function () {
     const nums = document.querySelectorAll(".nums span");
     const counter = document.querySelector(".counter");
@@ -602,6 +603,9 @@ $.getScript('./configClient/config.js',function(){
     });
     socket.emit("Get-line");
     socket.on("List-line", (data) => {
+      // map = [0,1,2,3,4,5,6,7,8,9,10]
+
+      console.log("data" + data)
       map = data[0].flow;
       console.info(map);
     });
