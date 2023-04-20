@@ -16,8 +16,12 @@ var timeTeam1 = 0;
 var timeTeam2 = 0;
 var resultTeam1 = 0;
 var resultTeam2 = 0;
+var maxCheckPointsTeam = 5;
+var maxCheckPointsTeam1 = 5;
+var maxCheckPointsTeam2 = 5;
+var team1nstop = 0;
+var team2nstop = 0;
 var distanceTime = { minute: 0, second: 0, mil: 0 };
-var maxCheckPoints = 5;
 var changeTeamSide = false;
 var startTick = 0;
 var currentTick = 0;
@@ -85,6 +89,10 @@ $.when(
             distanceTime.minute = 0;
             distanceTime.second = 0;
             distanceTime.mil = 0;
+            maxCheckPointsTeam1 = 5;
+            maxCheckPointsTeam2 = 5;
+            team1nstop = false;
+            team2nstop = false;
             // if (state == true)
             startTime = new Date().getTime();
             // socket.emit("get-tick");
@@ -259,6 +267,15 @@ $.when(
       startTick = tick;
       console.log(startTick);
     });
+    
+    socket.on("send-web-change-team-nstop", (data) => {
+      console.log(data)
+      maxCheckPointsTeam1 = data[0]
+      team1nstop = data[1]
+      maxCheckPointsTeam2 = data[2]
+      team2nstop = data[3]
+      
+    });
     // socket.on("esp-send", (data)=>{
     // 	// console.log(data)
     // 	const id = Number(data.Data);
@@ -282,6 +299,10 @@ $.when(
     socket.on("esp-send-1", function (data) {
       console.log("node send esp: " + data.id); //du lieu esp gui
       console.log(data.tick);
+      maxCheckPointsTeam1 = data.arr[0]
+      team1nstop = data.arr[1]
+      maxCheckPointsTeam2 = data.arr[2]
+      team2nstop = data.arr[3]
       currentTick = data.tick;
       /* kiem tra tin hieu bat dau */
       let a = outlineTeam1 == false;
@@ -299,10 +320,11 @@ $.when(
         updateTimeDisplay(currentCheckpointVal, 1);
 
         //neu den duoc checkpoint cuoi cung => ngung tin gio + dung nhan du lieu tu node_mcu
-        if (currentCheckpointVal == maxCheckPoints) {
+        // console.log(currentCheckpointVal + ":  "+maxCheckPointsTeam1 +":  " +  maxCheckPointsTeam2)
+        if (currentCheckpointVal == maxCheckPointsTeam1  && maxCheckPointsTeam1 == maxCheckPointsTeam2 || currentCheckpointVal == maxCheckPointsTeam) {
           clearInterval(functionPoint);
           startSignal = false;
-        }
+        } else if (currentCheckpointVal == maxCheckPointsTeam1 && maxCheckPointsTeam1 < maxCheckPointsTeam2) outlineTeam1 = true
         // timeTeam1 = distanceTime.mil + distanceTime.second * 100 + distanceTime.minute * 60 * 100;
         timeTeam1 = currentTick - startTick;
         //gui ve server luu db
@@ -312,14 +334,18 @@ $.when(
     socket.on("esp-send-2", function (data) {
       console.log("node send esp 2: " + data.id); //du lieu esp gui
       currentTick = data.tick;
+      maxCheckPointsTeam1 = data.arr[0]
+      team1nstop = data.arr[1]
+      maxCheckPointsTeam2 = data.arr[2]
+      team2nstop = data.arr[3]
       /* kiem tra tin hieu bat dau */
       let a = outlineTeam2 == false;
       if (startSignal && a) {
         //kiem tra xem gan den checkpoint cuoi hay chua?
         let currentCheckpointVal = currentCheckpoint2;
-        if (currentCheckpointVal + 2 == maxCheckPoints) {
-          socket.emit("end-point-signal");
-        }
+        // if (currentCheckpointVal + 2 == maxCheckPoints) {
+        //   socket.emit("end-point-signal");
+        // }
         // currentCheckpoint1 = currentCheckpoint1 + 1;
         // 		updateCheckpoint(currentCheckpoint1);
         //xac nhan qua check point thanh cong
@@ -329,10 +355,10 @@ $.when(
         updateCheckpoint(currentCheckpointVal, 2);
         updateTimeDisplay(currentCheckpointVal, 2);
         //neu den duoc checkpoint cuoi cung => ngung tin gio + dung nhan du lieu tu node_mcu
-        if (currentCheckpointVal == maxCheckPoints) {
+        if (currentCheckpointVal == maxCheckPointsTeam2  && maxCheckPointsTeam1 == maxCheckPointsTeam2 || currentCheckpointVal == maxCheckPointsTeam) {
           clearInterval(functionPoint);
           startSignal = false;
-        }
+        } else if (currentCheckpointVal == maxCheckPointsTeam2 && maxCheckPointsTeam1 > maxCheckPointsTeam2) outlineTeam2 = true
         timeTeam2 = currentTick - startTick;
         //gui ve server luu db
       }

@@ -69,8 +69,8 @@ nodeEsp activeNode[30];
 int lengthOfActiveNode = 0;
 long long Tick = 0;
 long long previousTick = 0;
-char post_url [200] = "http://192.168.137.1:3001/send-data";
-char get_url [200] = "http://192.168.137.1:3001/getTick";
+char post_url [200] = "http://192.168.0.101:3001/send-data";
+char get_url [200] = "http://192.168.0.101:3001/getTick";
 /**
  * Constants;
  */
@@ -210,7 +210,7 @@ void send_mesh(char* data_t)
         }
     }
 }
-void send_sensor_msg()
+void send_sensor_msg(char* type)
 {
     char mac_str[30]; 
     esp_err_t err;
@@ -222,6 +222,7 @@ void send_sensor_msg()
     root=cJSON_CreateObject();
     cJSON_AddStringToObject(root, "Topic", "Send-Data");
     cJSON_AddStringToObject(root, "Data", NODE_ID);
+    cJSON_AddStringToObject(root, "Type", type);
     cJSON_AddNumberToObject(root, "Tick", takeTick());
     char *rendered=cJSON_Print(root);
     if(esp_mesh_is_root()){
@@ -562,6 +563,7 @@ bool send_pincap_layer(int voltage, int layer, char* ID){
     }
 }
 void create_task_send_bat_capacity(){
+    
      if( xTaskCreate( task_send_bat_capacity, "task_send_bat_capacity", 1024 * 5, NULL, 1, NULL) != pdPASS )
                             {
                                 #if DEBUG

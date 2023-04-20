@@ -92,9 +92,15 @@ void sensor_task(void *pvParameter){
         while (range <= max_range && range > 20 ){
             // ESP_LOGI( TAG, "Range: %d\r\n", range );  
             // if (filter > 2) led_on();
-            if (++filter > 3){
+            if (++filter > 2){
                 #if END_NODE
-                if(filter > 24 && flag){
+                if(filter > 25 && flag){
+                    send_sensor_msg(); 
+                    flag = 0;
+                }
+                #else
+                #if STOP_STATION_NODE
+                if(filter > 43 && flag){
                     send_sensor_msg(); 
                     flag = 0;
                 }

@@ -23,15 +23,20 @@ var timeTeam2 = 0;
 var resultTeam1 = 0;
 var resultTeam2 = 0;
 var distanceTime = { minute: 0, second: 0, mil: 0 };
-var maxCheckPoints = 5;
+
 var changeTeamSide = false;
 var startTick = 0;
 var currentTick = 0;
 var functionPoint = null;
 
 var map = null;
+var types = null;
 var limitTime = 5;
-
+var maxCheckPointsTeam = 5;
+var maxCheckPointsTeam1 = 5;
+var maxCheckPointsTeam2 = 5;
+var team1nstop = 0;
+var team2nstop = 0;
 var startTime = new Date().getTime();
 // var state = true;
 var delay = null;
@@ -97,6 +102,10 @@ $.getScript('./configClient/config.js',function(){
             distanceTime.minute = 0;
             distanceTime.second = 0;
             distanceTime.mil = 0;
+            maxCheckPointsTeam1 = 5;
+            maxCheckPointsTeam2 = 5;
+            team1nstop = false;
+            team2nstop = false;
             // if (state == true)
   
             startTime = new Date().getTime();
@@ -120,10 +129,10 @@ $.getScript('./configClient/config.js',function(){
       $("#stop").html("LƯỢT KẾ");
       $("#stop").attr("id", "refresh");
       $("#restart").removeClass("disabled");
-      console.log("timeteam1: ", timeTeam1);
-      console.log("timeteam2: ", timeTeam2);
-      console.log("currencheckpoint: ", currentCheckpoint1);
-      console.log("currencheckpoint1: ", currentCheckpoint2);
+      // console.log("timeteam1: ", timeTeam1);
+      // console.log("timeteam2: ", timeTeam2);
+      // console.log("currencheckpoint: ", currentCheckpoint1);
+      // console.log("currencheckpoint1: ", currentCheckpoint2);
       // if (!changeTeamSide) {
       if (
         currentCheckpoint1 > currentCheckpoint2 ||
@@ -141,6 +150,7 @@ $.getScript('./configClient/config.js',function(){
         $("#result").html(resultTeam1);
         $("#result-1").html(resultTeam2);
       }
+      console.log(timeTeam1+ "`````" +timeTeam2)
       if (resultTeam1 == 2) {$('#win1').css({ 'display': 'block' }); sound_congra.play();}
         else if (resultTeam2 == 2 ) {$('#win2').css({ 'display': 'block' }); sound_congra.play();}
   
@@ -357,37 +367,60 @@ $.getScript('./configClient/config.js',function(){
       // var hrTime = process.hrtime()
       // console.log(Math.round((hrTime[0]-startTime[0]) * 100 + (hrTime[1]-startTime[1]) / 10000000))
       if (!changeTeamSide) {
-        if (id == Number(map[currentCheckpoint1 + 1])) {
+        if ((id == Number(map[currentCheckpoint1 + 1 + team1nstop])
+        || (types[id-1] == "stop" &&  id == Number(map[currentCheckpoint1 + 2]))) && !outlineTeam1) {
+          if (types[id-1] == "stop" && id == Number(map[currentCheckpoint1 + 2]))
+          {
+            maxCheckPointsTeam1--
+            team1nstop = true
+          }
           socket.emit("esp-send-1", {
             id: currentCheckpoint1 + 1,
             tick: data.Tick,
+            arr : [maxCheckPointsTeam1, team1nstop, maxCheckPointsTeam2, team2nstop]
           });
-        } else if (
-          id ==
-          (currentCheckpoint2 + 1 <= 5
-            ? Number(map[currentCheckpoint2 + 1 + 5])
-            : Number(map[currentCheckpoint2 + 1 - 5]))
-        ) {
-          socket.emit("esp-send-2", {
-            id: currentCheckpoint2 + 1,
-            tick: data.Tick,
+        } else if ((id == (currentCheckpoint2 + 1 + team2nstop <= 5 ? Number(map[currentCheckpoint2 + 1 + 5 + team2nstop]) : Number(map[currentCheckpoint2 + 1 - 5 + team2nstop]))
+              || (types[id-1] == "stop" && id == (currentCheckpoint2 + 2 <= 5 ? Number(map[currentCheckpoint2 + 2 + 5]) : Number(map[currentCheckpoint2 + 2 - 5])))) && !outlineTeam2) 
+            {
+              if (types[id-1] == "stop" && id == (currentCheckpoint2 + 2 <= 5 ? Number(map[currentCheckpoint2 + 2 + 5]) : Number(map[currentCheckpoint2 + 2 - 5])))
+              {
+                maxCheckPointsTeam2--
+                team2nstop = true
+              }
+              socket.emit("esp-send-2", {
+                id: currentCheckpoint2 + 1,
+                tick: data.Tick,
+                arr : [maxCheckPointsTeam1, team1nstop, maxCheckPointsTeam2, team2nstop]
           });
         }
       } else {
-        if (
-          id ==
-          (currentCheckpoint1 + 1 <= 5
-            ? Number(map[currentCheckpoint1 + 1 + 5])
-            : Number(map[currentCheckpoint1 + 1 - 5]))
-        ) {
-          socket.emit("esp-send-1", {
+        
+        if ((id == (currentCheckpoint1 + 1 + team1nstop <= 5 ? Number(map[currentCheckpoint1 + 1 + 5 + team1nstop]) : Number(map[currentCheckpoint1 + 1 - 5 + team1nstop]))
+        || (types[id-1] == "stop" && id == (currentCheckpoint1 + 2 <= 5 ? Number(map[currentCheckpoint1 + 2 + 5]) : Number(map[currentCheckpoint1 + 2 - 5]))))&& !outlineTeam1)
+        {
+          if (types[id-1] == "stop" && id == (currentCheckpoint1 + 2 <= 5 ? Number(map[currentCheckpoint1 + 2 + 5 ]) : Number(map[currentCheckpoint1 + 2 - 5])))
+          {
+            maxCheckPointsTeam1--
+            team1nstop = true
+          }
+          socket.emit("esp-send-1", 
+          {
             id: currentCheckpoint1 + 1,
             tick: data.Tick,
+            arr : [maxCheckPointsTeam1, team1nstop, maxCheckPointsTeam2, team2nstop]
           });
-        } else if (id == map[currentCheckpoint2 + 1]) {
+        } else if ((id == Number(map[currentCheckpoint2 + 1 + team2nstop])
+        || (types[id-1] == "stop" &&  id == Number(map[currentCheckpoint2 + 2]))) && !outlineTeam2)
+        {
+          if (types[id-1] == "stop" && id == Number(map[currentCheckpoint2 + 2]))
+          {
+            maxCheckPointsTeam2--
+            team2nstop = true
+          }
           socket.emit("esp-send-2", {
             id: currentCheckpoint2 + 1,
             tick: data.Tick,
+            arr : [maxCheckPointsTeam1, team1nstop, maxCheckPointsTeam2, team2nstop]
           });
         }
       }
@@ -412,10 +445,11 @@ $.getScript('./configClient/config.js',function(){
         updateTimeDisplay(currentCheckpointVal, 1);
   
         //neu den duoc checkpoint cuoi cung => ngung tin gio + dung nhan du lieu tu node_mcu
-        if (currentCheckpointVal == maxCheckPoints) {
+        console.log(currentCheckpointVal + ":  "+maxCheckPointsTeam1 +":  " +  maxCheckPointsTeam2)
+        if (currentCheckpointVal == maxCheckPointsTeam1 && maxCheckPointsTeam1 == maxCheckPointsTeam2 || currentCheckpointVal == maxCheckPointsTeam) {
           clearInterval(functionPoint);
           startSignal = false;
-        }
+        } else if (currentCheckpointVal == maxCheckPointsTeam1 && maxCheckPointsTeam1 < maxCheckPointsTeam2) outlineTeam1 = true
         // timeTeam1 = distanceTime.mil + distanceTime.second * 100 + distanceTime.minute * 60 * 100;
         timeTeam1 = currentTick - startTick;
         //gui ve server luu db
@@ -437,9 +471,9 @@ $.getScript('./configClient/config.js',function(){
       if (startSignal && a) {
         //kiem tra xem gan den checkpoint cuoi hay chua?
         let currentCheckpointVal = currentCheckpoint2;
-        if (currentCheckpointVal + 2 == maxCheckPoints) {
-          socket.emit("end-point-signal");
-        }
+        // if (currentCheckpointVal + 2 == maxCheckPoints2) {
+        //   socket.emit("end-point-signal");
+        // }
         // currentCheckpoint1 = currentCheckpoint1 + 1;
         // 		updateCheckpoint(currentCheckpoint1);
         //xac nhan qua check point thanh cong
@@ -449,10 +483,10 @@ $.getScript('./configClient/config.js',function(){
         updateCheckpoint(currentCheckpointVal, 2);
         updateTimeDisplay(currentCheckpointVal, 2);
         //neu den duoc checkpoint cuoi cung => ngung tin gio + dung nhan du lieu tu node_mcu
-        if (currentCheckpointVal == maxCheckPoints) {
+        if (currentCheckpointVal == maxCheckPointsTeam2  && maxCheckPointsTeam1 == maxCheckPointsTeam2 || currentCheckpointVal == maxCheckPointsTeam) {
           clearInterval(functionPoint);
           startSignal = false;
-        }
+        } else if (currentCheckpointVal == maxCheckPointsTeam2 && maxCheckPointsTeam1 > maxCheckPointsTeam2) outlineTeam2 = true
         timeTeam2 = currentTick - startTick;
         //gui ve server luu db
         socket.emit("web-send-record", {
@@ -602,8 +636,11 @@ $.getScript('./configClient/config.js',function(){
     });
     socket.emit("Get-line");
     socket.on("List-line", (data) => {
+      types = data[0].type;
       map = data[0].flow;
       console.info(map);
+      console.info(types);
+
     });
   });
 });

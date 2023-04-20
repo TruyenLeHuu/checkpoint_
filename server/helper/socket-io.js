@@ -89,6 +89,10 @@ module.exports = function (io, mqtt, activeNode, startTime) {
             var hrTime = process.hrtime()
             io.sockets.emit('send-tick', Math.round((hrTime[0]-startTime[0]) * 100 + (hrTime[1]-startTime[1]) / 10000000));
         })
+        socket.on('get-tick-setup',(data)=>{
+            var hrTime = process.hrtime()
+            io.sockets.emit('send-tick-setup', {Data: data.id, Tick: (Math.round((hrTime[0]-startTime[0]) * 100 + (hrTime[1]-startTime[1]) / 10000000) - data.tick)});
+        })
         socket.on('esp-send-1',(data)=>{
             io.sockets.emit('esp-send-1', data)
             // console.log(data);

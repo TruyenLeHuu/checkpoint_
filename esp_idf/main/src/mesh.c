@@ -94,7 +94,7 @@ static bool smart_config = 0;
 
 uint8_t ssid[33] = { 0 };
 uint8_t password[65] = { 0 };
-char ip[50] = "192.168.137.1";
+char ip[50] = "192.168.0.101";
 extern long long Tick;
 nvs_handle my_handle;
 int s_retry_num = 0;

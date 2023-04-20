@@ -1,6 +1,8 @@
 var maxCheckPoints = 10;
 var nowNode = 0;
 var teamgroupData = 0;
+var startTick = 0;
+var currentTick = 0;
 var teamSide = false;
 $.getScript('./configClient/config.js', function () {
 	socket = io('http://' + hostIP + ':' + port);
@@ -16,6 +18,12 @@ var i;
 		$('#esp' + i).css({ 'color': 'black' });
 		$('#esp' + i).css({ 'background': 'red' });
 	}
+	socket.on("send-tick-setup", (tick) => {
+		socket.emit("esp-send", {Data: tick.Data, Tick: tick.Tick});
+	});
+	socket.on("send-tick", (tick) => {
+	startTick = tick;
+	});
 	socket.on('ESP-check-data', (data) => {
 		// console.log(data);
 		data.forEach(element => {
@@ -63,10 +71,11 @@ var i;
 		console.log($('#ip').val());
 	})
 	for (let i = 1; i <= maxCheckPoints; i++) {
-		$('#button-range' + i).click(() => {
+		$('#button-range' + i).click( () => {
+			socket.emit("get-tick-setup", {id: i.toString(), tick: startTick});
+
 			// nowNode = i;
 			// socket.emit("SetTopBot", { node: i.toString(), top: parseInt($('#top' + i).val()), bot: parseInt($('#bot' + i).val()), normal: parseInt($('#normal' + i).val()) });
-			socket.emit("esp-send", {Data: i.toString(), Tick: 0});
 		})
 		$('#button' + i).click(() => {
 			nowNode = i;
@@ -137,10 +146,21 @@ var i;
 	});
 	$('#flow').click(()=>{
 		var floww = ['0'];
+		var typee = ['0'];
 		for (let i = 1; i <= 10; i++) {
+			if ($('#flow' + i).val() != "")
 			floww.push($('#flow' + i).val());
+			else
+			floww.push(i.toString());
+			if ($('#type' + i).val() != "")
+				typee.push($('#type' + i).val());
+			else
+				typee.push("normal");
+				
 		}
-		socket.emit('Change-flow', {flow: floww});
+		console.info(floww)
+		console.info(typee)
+		socket.emit('Change-flow', {flow: floww, type: typee});
 	})
     for (i = 0; i < acc.length; i++) {
     acc[i].nextElementSibling.style.display = "none"

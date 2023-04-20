@@ -56,11 +56,12 @@ var that = (module.exports = {
         console.log({ error: err });
       });
   },
-  addFlow: async (data) => {
+    addFlow: async (data) => {
     try {
       flow.collection.deleteMany();
       const newFlow = new flow({
         flow: data.flow,
+        type: data.type,
       });
       await newFlow.save();
       console.log({ message: "Add flow Successfully" });
