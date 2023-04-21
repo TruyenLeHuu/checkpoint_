@@ -55,6 +55,7 @@ $.getScript('./configClient/config.js',function(){
     const counter = document.querySelector(".counter");
     const finalMessage = document.querySelector(".final");
     const sound_start = document.getElementById("start_sound");
+    const sound_car = document.getElementById("car_start_sound");
     const sound_eli = document.getElementById("eli_sound");
     const sound_congra = document.getElementById("congra_sound");
   
@@ -80,7 +81,9 @@ $.getScript('./configClient/config.js',function(){
     $("#btnStartStop").on("click", "#start", function () {
       socket.emit("start");
     });
-    socket.on("start-res", () => {
+    socket.on("start-res", ( ) => {
+      sound_car.play();
+      // setTimeout(() => {sound_start.play();}, 0)
       sound_start.play();
       Start(() => {
         setTimeout(() => {
@@ -279,6 +282,7 @@ $.getScript('./configClient/config.js',function(){
           socket.emit("esp-send-1", {
             id: currentCheckpoint1 + 1,
             tick: timeTeam,
+            arr : [5, false, 5, false]
           });
         // else
         //   socket.emit("esp-send-2", {
@@ -302,6 +306,7 @@ $.getScript('./configClient/config.js',function(){
           socket.emit("esp-send-2", {
             id: currentCheckpoint2 + 1,
             tick: timeTeam,
+            arr : [5, false, 5, false]
           });
       }
       if (e.which == 55) {
@@ -641,7 +646,6 @@ $.getScript('./configClient/config.js',function(){
       map = data[0].flow;
       console.info(map);
       console.info(types);
-
     });
   });
 });

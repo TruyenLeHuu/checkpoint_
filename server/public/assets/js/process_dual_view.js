@@ -500,8 +500,10 @@ $.when(
     });
     // socket.emit("Get-line");
     socket.on("List-line", (data) => {
+      types = data[0].type;
       map = data[0].flow;
       console.info(map);
+      console.info(types);
     });
   });
 })
