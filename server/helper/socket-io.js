@@ -125,6 +125,7 @@ module.exports = function (io, mqtt, activeNode, startTime) {
         socket.on("Get-line",()=>{
             db.getLine((lineList)=>{
                 io.sockets.emit('List-line',lineList)
+                console.log("get line")
             });
         });
     })

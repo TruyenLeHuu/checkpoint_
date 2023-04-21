@@ -73,6 +73,7 @@ var that = (module.exports = {
     flow
       .find()
       .then((respond) => {
+        console.log(respond)
         return callback(respond);
       })
       .catch((err) => {
