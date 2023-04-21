@@ -11,7 +11,7 @@
  */
 
 
-#define NODE_ID "2"
+#define NODE_ID "3"
 
 #define END_NODE 0
 
@@ -20,7 +20,7 @@
  * GPIOs defs
  */
 // #define LED_BUILDING         ( 2 ) 
-#define LED_BUILDING         ( 27 ) 
+#define LED_BUILDING         ( 2 ) 
 #define GPIO_OUTPUT_PIN_SEL  ( 1ULL<<LED_BUILDING )
 
 #define BUTTON_PIN               ( 0 )

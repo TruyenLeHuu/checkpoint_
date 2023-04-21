@@ -210,7 +210,7 @@ void send_mesh(char* data_t)
         }
     }
 }
-void send_sensor_msg(char* type)
+void send_sensor_msg()
 {
     char mac_str[30]; 
     esp_err_t err;
@@ -222,7 +222,6 @@ void send_sensor_msg(char* type)
     root=cJSON_CreateObject();
     cJSON_AddStringToObject(root, "Topic", "Send-Data");
     cJSON_AddStringToObject(root, "Data", NODE_ID);
-    cJSON_AddStringToObject(root, "Type", type);
     cJSON_AddNumberToObject(root, "Tick", takeTick());
     char *rendered=cJSON_Print(root);
     if(esp_mesh_is_root()){
