@@ -13,8 +13,6 @@ bool send_connect_msg();
 void send_sensor_msg();
 bool send_pincap_layer(int , int, char*);
 
-
-
 void task_mesh_rx ( void *pvParameter );
 void task_send_bat_capacity ( void *pvParameter );
 void task_send_bat_capacity_create();
