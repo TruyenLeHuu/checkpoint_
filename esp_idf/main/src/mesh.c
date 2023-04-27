@@ -54,7 +54,7 @@
 #include "driver/gpio.h"
 
 /**
- * PINOUT; 
+ * Standard configurations loaded
  */
 #include "sys_config.h"
 
@@ -64,6 +64,8 @@
 #include "app.h"
 
 #include "mesh.h"
+
+#include "mqtt.h"
 
 /**
 * Json
@@ -80,23 +82,30 @@
 /**
  * Global defs
  */
-char mac_address_root_str[50];
-mesh_addr_t route_table[CONFIG_MESH_ROUTE_TABLE_SIZE];
-
 static const char *TAG = "mesh";
-static const uint8_t MESH_ID[6] = { 0x77, 0x77, 0x77, 0x77, 0x77, 0x76 };
 
-static bool is_mesh_connected = false;
+/* Root mac address */
+char mac_address_root_str[50];
+/* Route Table */
+mesh_addr_t route_table[CONFIG_MESH_ROUTE_TABLE_SIZE];
+/* Mesh ID */
+static const uint8_t MESH_ID[6] = { 0x77, 0x77, 0x77, 0x77, 0x77, 0x77 };
+/* Parent address -not using- */
 static mesh_addr_t mesh_parent_addr;
+/* Node mesh layer */
 static int mesh_layer = -1;
+/* Mesh send connect flag */
 static bool is_esp_mesh_sent_connect = false;
-static bool smart_config = 0;
-
+/* ssid and password */
 uint8_t ssid[33] = { 0 };
 uint8_t password[65] = { 0 };
-char ip[50] = "192.168.0.101";
+/* ip server */
+char ip[50];
+/* tick for sync */
 extern long long Tick;
+/* nvs_handle */
 nvs_handle my_handle;
+/* number retry connect mesh */
 int s_retry_num = 0;
 
 //reset button
@@ -106,22 +115,17 @@ unsigned long buttonPressTime = 0; //Amount of time the button has been held dow
 unsigned long actualBtnState = 0;
 int lastButtonState = 1;
 int buttonState; 
-//smart config
+
+/* Smart config */
 EventGroupHandle_t s_wifi_event_group;
 static const int CONNECTED_BIT = BIT0;
 static const int ESPTOUCH_DONE_BIT = BIT1;
+/* Is smart config ran? -not using- */
+static bool smart_config = 0;
 
-/**
- * Function prototypes
- */
-static void esp_mesh_rx_start( void );
-void mesh_event_handler( void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data );
-void mesh_app_start( void );
-void smartconfig_task(void *);
-
-//taking millis function
+/* Taking millis function */
 unsigned long IRAM_ATTR millis(){return (unsigned long) (esp_timer_get_time() / 1000ULL);}
-
+/* Press button 0 over 3s to reset ssid and password */
 void clearBtn(void *pvParameters)
 {   
     //Turn on led for debug
@@ -133,60 +137,60 @@ void clearBtn(void *pvParameters)
     { 
         // read the state of the switch into a local variable:
         int reading = gpio_get_level(BUTTON_PIN);
-        if (!reading)
-        actualBtnState = reading;
+        if (!reading)   
+            actualBtnState = reading;
         if (reading != lastButtonState) // If the switch changed, due to noise or pressing:
         {
-        lastDebounceTime = millis(); // reset the debouncing timer
+            lastDebounceTime = millis(); // reset the debouncing timer
         }
         unsigned long timeSinceDebounce = millis() - lastDebounceTime;
         if (timeSinceDebounce > debounceDelay)
         {
-        // whatever the reading is at, it's been there for longer than the debounce
-        // delay, so take it as the actual current state:
-        buttonState = reading;
-        if (buttonState == 0)
-        {
-            buttonPressTime += timeSinceDebounce;
-        }
-        else if (buttonPressTime > 3000)
-        { 
-            buttonPressTime = 0;
-            //Delete ssid and password
-            esp_err_t err = nvs_open("storage", NVS_READWRITE, &my_handle);
-            if (err != ESP_OK) {
-                #if DEBUG
-                ESP_LOGW(TAG, "Error (%s) opening NVS handle!\n", esp_err_to_name(err));
-                #endif
-            } else {
-            ESP_ERROR_CHECK(nvs_erase_key(my_handle, "ssid"));
-            ESP_ERROR_CHECK(nvs_erase_key(my_handle, "password"));
-            #if DEBUG
-            ESP_LOGW(TAG, "Committing updates in NVS ... ");
-            #endif
-            err = nvs_commit(my_handle);
-            #if DEBUG
-            printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
-            #endif
-            // Close
-            nvs_close(my_handle);
-            gpio_set_level(LED_BUILDING, 0);
-            esp_restart();
+            // whatever the reading is at, it's been there for longer than the debounce
+            // delay, so take it as the actual current state:
+            buttonState = reading;
+            if (buttonState == 0)
+            {
+                buttonPressTime += timeSinceDebounce;
             }
-        }
-        else
-        {
-            buttonPressTime = 0;
-        }
+            else if (buttonPressTime > 3000)
+            { 
+                buttonPressTime = 0;
+                //Delete ssid and password
+                esp_err_t err = nvs_open("storage", NVS_READWRITE, &my_handle);
+                if (err != ESP_OK) {
+                    #if DEBUG
+                    ESP_LOGW(TAG, "Error (%s) opening NVS handle!\n", esp_err_to_name(err));
+                    #endif
+                } else {
+                ESP_ERROR_CHECK(nvs_erase_key(my_handle, "ssid"));
+                ESP_ERROR_CHECK(nvs_erase_key(my_handle, "password"));
+                #if DEBUG
+                ESP_LOGW(TAG, "Committing updates in NVS ... ");
+                #endif
+                err = nvs_commit(my_handle);
+                #if DEBUG
+                printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
+                #endif
+                // Close
+                nvs_close(my_handle);
+                gpio_set_level(LED_BUILDING, 0);
+                esp_restart();
+                }
+            }
+            else
+            {
+                buttonPressTime = 0;
+            }
         }
         // save the reading. Next time through the loop, it'll be the lastButtonState:
         lastButtonState = reading;
         vTaskDelay(50);
     }
 }
-//Creating delete ssid and password task 
+/* Creating delete ssid and password task */ 
 void start_btn_task(){xTaskCreate(clearBtn, "clearBtn", 1024*2, NULL, 10, NULL);}
-
+/* Wifi event handler */
 static void wf_event_handler(void* arg, esp_event_base_t event_base,
                                 int32_t event_id, void* event_data)
 {
@@ -208,6 +212,7 @@ static void wf_event_handler(void* arg, esp_event_base_t event_base,
         xEventGroupSetBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
     }
 }
+/* Init wifi */
 static void initialise_wifi(void)
 {   
     s_wifi_event_group = xEventGroupCreate();
@@ -246,7 +251,7 @@ static void initialise_wifi(void)
     memcpy((uint8_t *) &wifi_config.sta.password, password, strlen((char*)password));
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA) );
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config) );
-    ESP_ERROR_CHECK(esp_wifi_start() );
+    ESP_ERROR_CHECK(esp_wifi_start());
 
     EventBits_t bits = xEventGroupWaitBits(s_wifi_event_group,
             WIFI_CONNECTED_BIT | WIFI_FAIL_BIT,
@@ -256,10 +261,10 @@ static void initialise_wifi(void)
 
     if (bits & WIFI_CONNECTED_BIT) {
         ESP_LOGI(TAG, "connected to ap SSID:%s password:%s",
-                 "1111", "01245678");
+                 ssid, password);
     } else if (bits & WIFI_FAIL_BIT) {
         ESP_LOGI(TAG, "Failed to connect to SSID:%s, password:%s",
-                 "1111", "01245678");
+                 ssid, password);
     } else {
         ESP_LOGE(TAG, "UNEXPECTED EVENT");
     }
@@ -269,6 +274,7 @@ static void initialise_wifi(void)
     ESP_ERROR_CHECK(esp_event_handler_instance_unregister(WIFI_EVENT, ESP_EVENT_ANY_ID, instance_any_id));
     vEventGroupDelete(s_wifi_event_group);
 }
+/* Smart config event handler */
 static void event_handler(void* arg, esp_event_base_t event_base,
                                 int32_t event_id, void* event_data)
 {
@@ -330,6 +336,7 @@ static void event_handler(void* arg, esp_event_base_t event_base,
         xEventGroupSetBits(s_wifi_event_group, ESPTOUCH_DONE_BIT);
     }
 }
+
 void set_ip(char * ip_set){
     esp_err_t err = nvs_open("storage", NVS_READWRITE, &my_handle);
     if (err != ESP_OK) {
@@ -390,7 +397,6 @@ void wifi_mesh_start(void)
             nvs_close(my_handle);
             initialise_wifi();
             // task_getStick();
-            
             getStick();
             ESP_ERROR_CHECK( esp_wifi_disconnect() );
             mesh_app_start();
@@ -471,13 +477,11 @@ void mesh_event_handler(void *arg, esp_event_base_t event_base,
     case MESH_EVENT_STARTED: {
         esp_mesh_get_id(&id);
         ESP_LOGI(TAG, "<MESH_EVENT_STARTED>ID:"MACSTR"", MAC2STR(id.addr));
-        is_mesh_connected = false;
         mesh_layer = esp_mesh_get_layer();
     }
     break;
     case MESH_EVENT_STOPPED: {
         ESP_LOGI(TAG, "<MESH_EVENT_STOPPED>");
-        is_mesh_connected = false;
         mesh_layer = esp_mesh_get_layer();
     }
     break;
@@ -736,7 +740,7 @@ void ip_event_handler(void *arg, esp_event_base_t event_base,
     ESP_ERROR_CHECK(esp_netif_get_dns_info(netif, ESP_NETIF_DNS_MAIN, &dns));
 #endif
     if (esp_mesh_is_root()) {
-                            mqtt_start();
+                            mqtt_app_start();
                             vTaskDelay( 1000/portTICK_PERIOD_MS);
                             send_connect_msg();
                         } 
@@ -846,5 +850,4 @@ void mesh_app_start( void )
      * Mesh start;
      */
     ESP_ERROR_CHECK(esp_mesh_start());
-
 }

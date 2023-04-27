@@ -54,55 +54,41 @@
 
 #include "mesh.h"
 
-// interaction with public mqtt broker
-void mqtt_app_start(void);
-void mqtt_app_publish(char* topic, char *publish_string);
-/**
- * Gloabal Variables; 
- */
-static esp_adc_cal_characteristics_t adc1_chars;
-extern mesh_addr_t route_table[];
-extern char mac_address_root_str[];
-extern int max_range;
-extern char ip[50];
-nodeEsp activeNode[30];
-int lengthOfActiveNode = 0;
-long long Tick = 0;
-long long previousTick = 0;
-char post_url [200] = "http://192.168.0.101:3001/send-data";
-char get_url [200] = "http://192.168.0.101:3001/getTick";
+#include "mqtt.h"
 /**
  * Constants;
  */
 static const char *TAG = "app: ";
 
+/**
+ * Global Variables; 
+ */
+static esp_adc_cal_characteristics_t adc1_chars;
+/* Route Table */
+extern mesh_addr_t route_table[];
+/* Mac address root */
+extern char mac_address_root_str[];
+/* Max range to measure */
+extern uint16_t *max_range_extern;
+/* Ip server */
+extern char ip[50];
+/* Contain node online */
+nodeEsp activeNode[30];
+int lengthOfActiveNode = 0;
+/* Tick using for async */
+long long Tick = 0;
+long long previousTick = 0;
+/* Send signal url */
+char post_url [200] = "http://192.168.0.101:3001/send-data";
+/* Get tick url */
+char get_url [200] = "http://192.168.0.101:3001/getTick";
+/* Buffer using for mesh */
 #define RX_SIZE          (200)
 static uint8_t rx_buf[RX_SIZE] = { 0, };
-
 #define TX_SIZE          (200)  
 static uint8_t tx_buf[TX_SIZE] = { 0, };
 
-/**
- * Configure the ESP32 gpios (LED & button );
- */
-void led_on(){
-    gpio_set_level( LED_BUILDING, 1 ); 
-}
-void led_off(){
-    gpio_set_level( LED_BUILDING, 0 ); 
-}
-void gpios_setup( void )
-{
-    gpio_pad_select_gpio(BUTTON_PIN);
-    gpio_set_direction(BUTTON_PIN, GPIO_MODE_INPUT);
-    /**
-     * Configure the GPIO LED BUILDING
-     */
-    gpio_reset_pin(LED_BUILDING);
-    /* Set the GPIO as a push/pull output */
-    gpio_set_direction(LED_BUILDING, GPIO_MODE_OUTPUT);
-    gpio_set_level( LED_BUILDING, 0 ); 
-}
+
     /* Function to send child*/
 esp_err_t client_event_post_handler(esp_http_client_event_handle_t evt)
 {
@@ -244,40 +230,6 @@ void send_sensor_msg()
         }
     }
 }
-void send_last_sensor_msg(int addTick)
-{
-    char mac_str[30]; 
-    esp_err_t err;
-    mesh_data_t data;
-    data.data = tx_buf;
-    data.size = TX_SIZE;
-    data.proto = MESH_PROTO_JSON;
-    cJSON *root;
-    root=cJSON_CreateObject();
-    cJSON_AddStringToObject(root, "Topic", "Send-Data");
-    cJSON_AddStringToObject(root, "Data", NODE_ID);
-    cJSON_AddNumberToObject(root, "Tick", takeTick() - addTick);
-    char *rendered=cJSON_Print(root);
-    if(esp_mesh_is_root()){
-        // mqtt_app_publish("ESP-send", NODE_ID); 
-        task_send_data(rendered); 
-    } else {
-        snprintf( (char*)tx_buf, TX_SIZE,  rendered ); 
-        data.size = strlen((char*)tx_buf) + 1;
-        err = esp_mesh_send(NULL, &data, MESH_DATA_P2P, NULL, 0);   
-        if (err) 
-        {
-            ESP_LOGI( TAG, "ERROR : Sending Sensor Message!\r\n" );   
-        } else {
-                uint8_t chipid[20];
-                esp_efuse_mac_get_default(chipid);
-                snprintf( mac_str, sizeof( mac_str ), ""MACSTR"", MAC2STR( chipid ) );
-                #if DEBUG 
-                ESP_LOGI( TAG, "\r\nNON-ROOT sends (%s) (%s) to ROOT (%s)\r\n", mac_str, tx_buf, mac_address_root_str );      
-                #endif                   
-        }
-    }
-}
     /*Respond mqtt msg Root to Nonroot*/
 void send_setup_msg(char * topic, char * data){
     cJSON *root;
@@ -285,9 +237,9 @@ void send_setup_msg(char * topic, char * data){
         root = cJSON_Parse(data);
         char* ID = cJSON_GetObjectItem(root,"node")->valuestring;
         if (strcmp(ID, NODE_ID)==0){
-            max_range = cJSON_GetObjectItem(root,"range")->valueint;
+            *max_range_extern = cJSON_GetObjectItem(root,"range")->valueint;
             #if DEBUG 
-            ESP_LOGI( TAG, "%d", max_range );   
+            ESP_LOGI( TAG, "%d", *max_range_extern );   
             #endif
             #if DEBUG 
             ESP_LOGI(TAG,"It root");
@@ -497,7 +449,7 @@ void task_mesh_rx ( void *pvParameter )
             esp_efuse_mac_get_default( mac_address );
             snprintf( mac_address_str, sizeof( mac_address_str ), ""MACSTR"", MAC2STR( mac_address ) );
             if (strcmp(topic,"range")==0){
-                max_range = cJSON_GetObjectItem(root,"range")->valueint;
+                *max_range_extern = cJSON_GetObjectItem(root,"range")->valueint;
                 #if DEBUG 
                 ESP_LOGI(TAG, "MQTT send %s", myJson);  
                 #endif
@@ -528,6 +480,7 @@ bool send_pincap_layer(int voltage, int layer, char* ID){
     data.data = tx_buf;
     data.size = TX_SIZE;
     data.proto = MESH_PROTO_JSON;   
+
     cJSON *root;
     root=cJSON_CreateObject();
     cJSON_AddNumberToObject(root, "pin", voltage);
@@ -561,15 +514,15 @@ bool send_pincap_layer(int voltage, int layer, char* ID){
         return 0;
     }
 }
-void create_task_send_bat_capacity(){
+void task_send_bat_capacity_create(){
     
      if( xTaskCreate( task_send_bat_capacity, "task_send_bat_capacity", 1024 * 5, NULL, 1, NULL) != pdPASS )
-                            {
-                                #if DEBUG
-                                ESP_LOGI( TAG, "ERROR - task_mesh_rx NOT ALLOCATED :/\r\n" );  
-                                #endif
-                                return;   
-                            }
+        {
+            #if DEBUG
+            ESP_LOGI( TAG, "ERROR - task_mesh_rx NOT ALLOCATED :/\r\n" );  
+            #endif
+            return;   
+        }
 }
 void task_send_bat_capacity ( void *pvParameter )
 {   
@@ -591,9 +544,6 @@ void task_send_bat_capacity ( void *pvParameter )
         }
         vTaskDelay(600000/ portTICK_PERIOD_MS);    
     }
-}
-void mqtt_start(){
-    mqtt_app_start();
 }
 
 void task_app_create( void )

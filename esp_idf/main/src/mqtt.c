@@ -13,6 +13,7 @@
 #include "esp_mesh.h"
 #include "esp_mesh_internal.h"
 #include "mqtt_client.h"
+#include "mqtt.h"
 
 static const char *TAG = "mesh_mqtt";
 static esp_mqtt_client_handle_t s_client = NULL;
