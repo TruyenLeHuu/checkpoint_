@@ -11,7 +11,7 @@
  */
 
 
-#define NODE_ID "3"
+#define NODE_ID "2"
 
 #define END_NODE 0
 
