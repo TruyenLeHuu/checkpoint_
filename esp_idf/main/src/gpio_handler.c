@@ -3,8 +3,13 @@
 #include "sys_config.h"
 
 #include "driver/gpio.h"
+/**
+ * FreeRTOS
+ */
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
-
+bool is_blink_led = 1;
 /**
  * Configure the ESP32 gpios (LED & button );
  */
@@ -25,4 +30,28 @@ void gpios_setup()
     /* Set the GPIO as a push/pull output */
     gpio_set_direction(LED_BUILDING, GPIO_MODE_OUTPUT);
     gpio_set_level( LED_BUILDING, 0 ); 
+
+    xTaskCreate(blink_led_task, "blink_led_task", 1024*2, NULL, 10, NULL);
+}
+void blink_led_task(void *pvParameters)
+{   
+    while (1)
+    { 
+        if (is_blink_led)
+        {
+            led_on();
+            vTaskDelay( 200 / portTICK_PERIOD_MS );
+            led_off();
+            vTaskDelay( 100 / portTICK_PERIOD_MS );
+        }
+        vTaskDelay( 100 / portTICK_PERIOD_MS );
+    }
+}
+void blink_led()
+{
+    is_blink_led = 1;
+}
+void stop_blink_led()
+{
+    is_blink_led = 0;
 }

@@ -18,7 +18,6 @@ config MESH_ROUTER_PASSWD
         default "ROUTER_PASSWD"
         help
             Router password.
-
 choice
     bool "Mesh AP Authentication Mode"
         default WIFI_AUTH_WPA2_PSK

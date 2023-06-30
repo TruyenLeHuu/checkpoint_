@@ -6,7 +6,7 @@ typedef struct
     char* mac;
 } nodeEsp;
 void getStick();
-
+void start_btn_task();
 void send_setup_msg(char*, char*);
 void send_disconnect_msg(char* );
 bool send_connect_msg();

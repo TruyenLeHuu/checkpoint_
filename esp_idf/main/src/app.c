@@ -55,6 +55,10 @@
 #include "mesh.h"
 
 #include "mqtt.h"
+
+#include "gpio_handler.h"
+
+#include "nvs_handler.h"
 /**
  * Constants;
  */
@@ -78,6 +82,10 @@ int lengthOfActiveNode = 0;
 /* Tick using for async */
 long long Tick = 0;
 long long previousTick = 0;
+
+extern bool is_tick_be_get; 
+/* nvs_handle */
+extern nvs_handle my_handle;
 /* Send signal url */
 char post_url [200] = "http://192.168.0.101:3001/send-data";
 /* Get tick url */
@@ -88,8 +96,62 @@ static uint8_t rx_buf[RX_SIZE] = { 0, };
 #define TX_SIZE          (200)  
 static uint8_t tx_buf[TX_SIZE] = { 0, };
 
-
-    /* Function to send child*/
+/* Taking millis function */
+unsigned long IRAM_ATTR millis(){return (unsigned long) (esp_timer_get_time() / 1000ULL);}
+/* Press button 0 over 3s to reset ssid and password */
+void clear_ssid_pass_button(void *pvParameters)
+{   
+    unsigned long   lastDebounceTime = 0, // the last time the output pin was toggled
+                    debounceDelay = 50,   // the debounce time; increase if the output flickers
+                    buttonPressTime = 0, //Amount of time the button has been held down
+                    actualBtnState = 0,
+                    timeSinceDebounce = 0;
+    int lastButtonState = 1, buttonState;
+    while (1)
+    { 
+        // read the state of the switch into a local variable:
+        int reading = gpio_get_level(BUTTON_PIN);
+        if (!reading)   
+            actualBtnState = reading;
+        if (reading != lastButtonState) // If the switch changed, due to noise or pressing:
+        {
+            led_on();
+            lastDebounceTime = millis(); // reset the debouncing timer
+        }
+        timeSinceDebounce = millis() - lastDebounceTime;
+        if (timeSinceDebounce > debounceDelay)
+        {
+            // whatever the reading is at, it's been there for longer than the debounce
+            // delay, so take it as the actual current state:
+            buttonState = reading;
+            if (buttonState == 0)
+            {
+                buttonPressTime += timeSinceDebounce;
+            }
+            else if (buttonPressTime > 3000)
+            { 
+                buttonPressTime = 0;
+                //Delete ssid and password
+                nvs_delete_ssid_pass(&my_handle);
+                led_off();
+                esp_restart();
+            }
+            else
+            {
+                buttonPressTime = 0;
+            }
+        }
+        // save the reading. Next time through the loop, it'll be the lastButtonState:
+        lastButtonState = reading;
+        vTaskDelay( debounceDelay/portTICK_PERIOD_MS );
+    }
+}
+/* Creating delete ssid and password task */ 
+void start_btn_task()
+{
+    xTaskCreate(clear_ssid_pass_button, "clear_ssid_pass_button", 1024*2, NULL, 10, NULL);
+}
+/* Function to send child*/
 esp_err_t client_event_post_handler(esp_http_client_event_handle_t evt)
 {
     switch (evt->event_id)
@@ -124,7 +186,6 @@ long long takeTick(){
 }
 
 void getStick(){
-    ESP_LOGI(TAG, "I AM HEREEEEEEEEEEEEEEEEEEEEEEE");
     char output_buffer[2048] = {0};   
     int content_length = 0;
     sprintf(get_url, "http://%s:3001/getTick", ip);
@@ -132,7 +193,6 @@ void getStick(){
         .url = get_url,
     };
     esp_http_client_handle_t client = esp_http_client_init(&config);
-
     esp_http_client_set_method(client, HTTP_METHOD_GET);
     esp_err_t err = esp_http_client_open(client, 0);
     if (err != ESP_OK) {
@@ -152,13 +212,15 @@ void getStick(){
                 Tick = cJSON_GetObjectItem(root,"tick")->valueint;
                 previousTick = millis();
                 Tick += 27;
-                ESP_LOGI(TAG, "%lld", Tick);
+                // ESP_LOGI(TAG, "%lld", Tick);
+                
             } else {
                 ESP_LOGE(TAG, "Failed to read response");
             }
         }
     }
     esp_http_client_close(client);
+    is_tick_be_get = 1;
 };
 void task_send_data(char *post_data){
     xTaskCreate(post_rest_function, "post_rest_function", 1024*4, post_data, 2, NULL);
@@ -265,7 +327,7 @@ void send_setup_msg(char * topic, char * data){
         cJSON_AddStringToObject(root, "Topic", topic);
         char *rendered = cJSON_Print(root);   
         send_mesh(rendered);
-        set_ip(ip_setup);
+        nvs_set_ip(ip_setup, &my_handle);
     }
 }
 void send_disconnect_msg(char* macID){    
@@ -363,7 +425,7 @@ void task_mesh_rx ( void *pvParameter )
         data.size = RX_SIZE;
         if( esp_mesh_is_root() )
         {   //Is it root node? Then turn on the led building
-            gpio_set_level( LED_BUILDING, 1 );        
+            led_on();      
         }
        /**
         * Waits for message reception
@@ -461,7 +523,7 @@ void task_mesh_rx ( void *pvParameter )
                 }
             } else if (strcmp(topic,"ip")==0){
                 char *ip_setup =  cJSON_GetObjectItem(root,"ip")->valuestring;
-                set_ip(ip_setup);
+                nvs_set_ip(ip_setup, &my_handle);
             }
             #if DEBUG 
                 ESP_LOGI( TAG, "NON-ROOT(MAC:%s)- Msg: %s, ", mac_address_str, (char*)data.data );  

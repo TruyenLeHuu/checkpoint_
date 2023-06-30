@@ -27,11 +27,6 @@
 #include "esp_event.h"
 
 /**
- * Drivers
- */
-#include "nvs_flash.h"
-
-/**
  * Aplications (App);
  */
 extern "C" {
@@ -44,6 +39,8 @@ extern "C" {
 
 /* Gpio handler */
 #include "gpio_handler.h"
+
+#include "nvs_handler.h"
 }
 /**
  * PINOUT; 
@@ -53,6 +50,7 @@ extern "C" {
 #include "vl53l0x_handler.h"
 
 #include "vl53l0x.h"
+
 #include "i2c.h"
 
 
@@ -81,13 +79,10 @@ uint16_t *max_range_extern = &vl53l0x.max_range;
  */
 void app_main( void )
 {
-    esp_err_t ret = nvs_flash_init();
-    if (ret == ESP_ERR_NVS_NO_FREE_PAGES) {
-      ESP_ERROR_CHECK(nvs_flash_erase());
-      ret = nvs_flash_init();
-    }
-    ESP_ERROR_CHECK(ret);
-    // Batcap init();
+    /* Nvs flash init */
+    nvs_init();
+
+    /* Batcap init(); */
     task_send_bat_capacity_create();
     /**
      * Initial GPIOs;

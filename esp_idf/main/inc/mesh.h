@@ -4,8 +4,6 @@ unsigned long IRAM_ATTR millis();
 
 void mesh_app_start( void ); 
 void wifi_mesh_start(void);
-void start_btn_task();
-void set_ip(char *);
 void smartconfig_task(void *);
 void mesh_app_start( void );
 void esp_mesh_rx_start( void );

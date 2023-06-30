@@ -24,12 +24,13 @@ uint16_t sensor_read(vl53l0x_t* vl53l0x)
     if (vl53l0x->sensor->timeoutOccurred()) {
                 ESP_LOGI( TAG, "TIMEOUT\r\n" );  
                 }
-    vTaskDelay(15 / portTICK_RATE_MS);
-    range_measure += vl53l0x->sensor->readRangeSingleMillimeters();
-    if (vl53l0x->sensor->timeoutOccurred()) {
-                ESP_LOGI( TAG, "TIMEOUT\r\n" );  
-                }
-    return range_measure/2;
+    // vTaskDelay(15 / portTICK_RATE_MS);
+    // range_measure += vl53l0x->sensor->readRangeSingleMillimeters();
+    // if (vl53l0x->sensor->timeoutOccurred()) {
+    //             ESP_LOGI( TAG, "TIMEOUT\r\n" );  
+    //             }
+    // return range_measure/2;
+    return range_measure;
 }
 void sensor_task(void* pvParameters){
     vl53l0x_t* vl53l0x = (vl53l0x_t*) pvParameters;
@@ -44,7 +45,7 @@ void sensor_task(void* pvParameters){
             // ESP_LOGI( TAG, "Range: %d\r\n", range );  
             // if (filter > 2) led_on();
             // ESP_LOGI( TAG, "Console log %d", filter );  
-            if (++filter > 2){
+            if (++filter > 3){
                 #if END_NODE
                 if(filter > 25 && flag)
                 {
@@ -91,8 +92,8 @@ void sensor_start(vl53l0x_t * vl53l0x){
     }
     
     // sensor->startContinuous(100);
-    vl53l0x->sensor->setMeasurementTimingBudget(30000);
-    vl53l0x->sensor->setSignalRateLimit(0.25);
+    vl53l0x->sensor->setMeasurementTimingBudget(25000);
+    vl53l0x->sensor->setSignalRateLimit(0.3);
     #if defined LONG_RANGE
         // lower the return signal rate limit (default is 0.25 MCPS)
         vl53l0x->sensor.setSignalRateLimit(0.1);

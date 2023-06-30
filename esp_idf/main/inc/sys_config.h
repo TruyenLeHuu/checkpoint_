@@ -11,11 +11,11 @@
  */
 
 
-#define NODE_ID "7"
+#define NODE_ID "5"
 
 #define END_NODE 0
 
-#define STOP_STATION_NODE 1
+#define STOP_STATION_NODE 0
 /**
  * GPIOs defs
  */
