@@ -34,9 +34,9 @@
 		<div id ="espbg8">Node 08: <span id="esp8"></span></div>
 		<div id ="espbg9">Node 09: <span id="esp9"></span></div>
 		<div id ="espbg10">Node 10: <span id="esp10"></span></div>
-		<h5>Last sent: <span id="lastsent"></span></h5>
-		<input placeholder="IP" type = "text" id="ip">
-		<button id="ipbt" style="margin-top: 4px;">Save IP</button>
+		<!-- <h5>Last sent: <span id="lastsent"></span></h5> -->
+		<!-- <input placeholder="IP" type = "text" id="ip">
+		<button id="ipbt" style="margin-top: 4px;">Save IP</button> -->
 	</div>
 	<div id = "setup" class="col-md-10">
 		<div class="row">
@@ -44,10 +44,11 @@
 		var mapHtml = '';
 		for(var iCp=1; iCp<=maxCheckPoints; iCp++) {
 			mapHtml += 	'<p class="col-md-3" id="esp-setup'+iCp+'">Check point '+iCp+': ';
+			
 			mapHtml += 	'<span id="normalnow'+iCp+'"></span>';
 			mapHtml += '<br><button id="button-range'+iCp+'">Send esp </button>';
-			mapHtml += '<button style="margin-left: 4px;" id="button-check'+iCp+'">Check esp </button>';
-			mapHtml +=	'<br><input placeholder="Range sensor" type="number" value="100" id="range'+iCp+'">';
+			mapHtml += '<button style="margin-left: 4px; margin-bottom: 4px;" id="button-check'+iCp+'">Check esp </button>';
+			mapHtml +=	'<br><input placeholder="Range sensor" type="number" value="100" id="range'+iCp+'" style="margin-bottom: 4px;">';
 			mapHtml += '<br><button id="button'+iCp+'">Set checkpoint '+iCp+'</button>';
 			mapHtml += '</p>';
 		}
@@ -55,6 +56,7 @@
 			<%- mapHtml %>
 		</div>
 	</div>
+	
 	
 	<div class="col-md-8">
 		<h3>Team:</h3>
@@ -91,16 +93,16 @@
 			</select>
 			<select id="team2">
 			</select>
-			<button id="change">Change</button>
+			<button id="change" style="margin-top: 5px;">Change</button>
 		</div>
-		<h4>Start at:</h4>
+		<!-- <h4>Start at:</h4>
 		<label for="team1side">Cp1: </label>
 		<div id="team1side"></div>
 		<label for="team2side">Cp6: </label>
 		<div id="team2side"></div>
-		<button id="toggle">Change Team Side</button>
+		<button id="toggle">Change Team Side</button> -->
 	</div>
-	<div class="col-md-12">
+	<!-- <div class="col-md-12">
 		<h3>Flow - Type Node:</h3>
 		<h4>Flow:</h4>
 		<input class="col-md-1" placeholder="1" id="flow1">
@@ -145,7 +147,7 @@
 		<input class="col-md-1" placeholder="normal" id="type10">
 		</input>
 		<button class="col-md-2" id = "flow" style="margin-top: 10px;">Change flow & type node</button>
-	</div>
+	</div> -->
 	
 	
 </body>

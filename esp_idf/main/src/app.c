@@ -604,7 +604,7 @@ void task_send_bat_capacity ( void *pvParameter )
         while (!send_pincap_layer(voltage*2, esp_mesh_get_layer(), NODE_ID)){
             vTaskDelay(5000/ portTICK_PERIOD_MS); 
         }
-        vTaskDelay(600000/ portTICK_PERIOD_MS);    
+        vTaskDelay(300000/ portTICK_PERIOD_MS);    
     }
 }
 

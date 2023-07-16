@@ -238,7 +238,7 @@ static void event_handler(void* arg, esp_event_base_t event_base,
 }
 void wifi_mesh_start(void)
 {   
-    // nvs_set_ip("192.168.137.1", &my_handle);
+    
     esp_err_t err = nvs_get_ssid_password(ssid, password, ip, &my_handle);
     switch (err) {
         case ESP_OK:

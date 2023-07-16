@@ -30,6 +30,7 @@ void nvs_delete_ssid_pass(void * arg)
     {
         ESP_ERROR_CHECK(nvs_erase_key(*my_handle, "ssid"));
         ESP_ERROR_CHECK(nvs_erase_key(*my_handle, "password"));
+        ESP_ERROR_CHECK(nvs_erase_key(*my_handle, "ip"));
         #if DEBUG
         ESP_LOGW(TAG, "Committing updates in NVS ... ");
         #endif
@@ -119,7 +120,12 @@ esp_err_t nvs_get_ssid_password(uint8_t* ssid, uint8_t* password, char* ip, void
             size_t required_size_pw = 100;
             nvs_get_str(*my_handle, "password", (char *)password, &required_size_pw);
             size_t required_size_ip = 100;
-            nvs_get_str(*my_handle, "ip", (char *)ip, &required_size_ip);
+            if (ESP_OK != nvs_get_str(*my_handle, "ip", (char *)ip, &required_size_ip))
+            {
+                nvs_close(*my_handle);
+                nvs_commit(*my_handle);
+                nvs_set_ip("192.168.137.1", &my_handle);
+            }
             nvs_commit(*my_handle);
             #if DEBUG
             ESP_LOGW(TAG,"Password = %s", password);

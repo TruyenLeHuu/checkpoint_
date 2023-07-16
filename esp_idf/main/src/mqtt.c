@@ -87,7 +87,8 @@ void mqtt_app_start(void)
             .lwt_msg = NODE_ID,
             .lwt_msg_len = 0,
             .lwt_qos = 1,
-            .lwt_retain = 1 
+            .lwt_retain = 1,
+            .keepalive = 60
     };
 
     s_client = esp_mqtt_client_init(&mqtt_cfg);
