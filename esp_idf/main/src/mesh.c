@@ -22,6 +22,8 @@
 
 #include "esp_wifi.h"
 #include "esp_system.h"
+#include "esp_mac.h"
+#include "esp_timer.h"
 
 /**
  * Callback do WiFi e MQTT;
@@ -80,6 +82,8 @@
 /**
  * Global defs
  */
+
+esp_netif_t *sta_netif = NULL;
 char mac_address_root_str[50];
 mesh_addr_t route_table[CONFIG_MESH_ROUTE_TABLE_SIZE];
 
@@ -213,7 +217,7 @@ static void initialise_wifi(void)
     s_wifi_event_group = xEventGroupCreate();
     ESP_ERROR_CHECK(esp_netif_init());
     ESP_ERROR_CHECK(esp_event_loop_create_default());
-    esp_netif_t *sta_netif = esp_netif_create_default_wifi_sta();
+    sta_netif = esp_netif_create_default_wifi_sta();
     assert(sta_netif);
 
 
@@ -404,7 +408,7 @@ void wifi_mesh_start(void)
             ESP_ERROR_CHECK(esp_netif_init());
             s_wifi_event_group = xEventGroupCreate();
             ESP_ERROR_CHECK(esp_event_loop_create_default());
-            esp_netif_t *sta_netif = esp_netif_create_default_wifi_sta();
+            sta_netif = esp_netif_create_default_wifi_sta();
             assert(sta_netif);
 
             wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
@@ -465,7 +469,7 @@ void mesh_event_handler(void *arg, esp_event_base_t event_base,
 {
     mesh_addr_t id = {0,};
     static uint8_t last_layer = 0;
-    ESP_LOGD(TAG, "esp_event_handler:%d", event_id);
+    ESP_LOGD(TAG, "esp_event_handler:%ld", event_id);
 
     switch (event_id) {
     case MESH_EVENT_STARTED: {
@@ -483,14 +487,14 @@ void mesh_event_handler(void *arg, esp_event_base_t event_base,
     break;
     case MESH_EVENT_CHILD_CONNECTED: {
         mesh_event_child_connected_t *child_connected = (mesh_event_child_connected_t *)event_data;
-        ESP_LOGI(TAG, "<MESH_EVENT_CHILD_CONNECTED>aid:%d, "MACSTR"",
+        ESP_LOGI(TAG, "<MESH_EVENT_CHILD_CONNECTED>aid:%u, "MACSTR"",
                  child_connected->aid,
                  MAC2STR(child_connected->mac));
     }
     break;
     case MESH_EVENT_CHILD_DISCONNECTED: {
         mesh_event_child_disconnected_t *child_disconnected = (mesh_event_child_disconnected_t *)event_data;
-        ESP_LOGI(TAG, "<MESH_EVENT_CHILD_DISCONNECTED>aid:%d, "MACSTR"",
+        ESP_LOGI(TAG, "<MESH_EVENT_CHILD_DISCONNECTED>aid:%u "MACSTR"",
                  child_disconnected->aid,
                  MAC2STR(child_disconnected->mac));
         char mac_id[20];
@@ -502,7 +506,7 @@ void mesh_event_handler(void *arg, esp_event_base_t event_base,
     break;
     case MESH_EVENT_ROUTING_TABLE_ADD: {
         mesh_event_routing_table_change_t *routing_table = (mesh_event_routing_table_change_t *)event_data;
-        ESP_LOGW(TAG, "<MESH_EVENT_ROUTING_TABLE_ADD>add %d, new:%d",
+        ESP_LOGW(TAG, "<MESH_EVENT_ROUTING_TABLE_ADD>add %u, new:%u",
                  routing_table->rt_size_change,
                  routing_table->rt_size_new);
     }
@@ -538,7 +542,7 @@ void mesh_event_handler(void *arg, esp_event_base_t event_base,
              * FIXED IP?
              */
             #if !FIXED_IP
-                tcpip_adapter_dhcpc_start(TCPIP_ADAPTER_IF_STA);
+                esp_netif_dhcpc_start(sta_netif);
             #endif
         }
         /**
@@ -716,11 +720,11 @@ void mesh_event_handler(void *arg, esp_event_base_t event_base,
     case MESH_EVENT_ROUTER_SWITCH: {
         mesh_event_router_switch_t *router_switch = (mesh_event_router_switch_t *)event_data;
         ESP_LOGI(TAG, "<MESH_EVENT_ROUTER_SWITCH>new router:%s, channel:%d, "MACSTR"",
-                 router_switch->ssid, router_switch->channel, MAC2STR(router_switch->bssid));
+                (char *) router_switch->ssid, router_switch->channel, MAC2STR(router_switch->bssid));
     }
     break;
     default:
-        ESP_LOGI(TAG, "unknown id:%d", event_id);
+        ESP_LOGI(TAG, "unknown id:%ld", event_id);
         break;
     }
 }
@@ -748,14 +752,15 @@ void ip_event_handler(void *arg, esp_event_base_t event_base,
 void mesh_app_start( void )
 {
     /*  tcpip stack init */
-    tcpip_adapter_init();
+    // tcpip_adapter_init();
+    esp_netif_init();
     // ESP_ERROR_CHECK(esp_netif_init());
     /* for mesh
      * stop DHCP server on softAP interface by default
      * stop DHCP client on station interface by default
      * */
-    ESP_ERROR_CHECK(tcpip_adapter_dhcps_stop(TCPIP_ADAPTER_IF_AP));
-    ESP_ERROR_CHECK(tcpip_adapter_dhcpc_stop(TCPIP_ADAPTER_IF_STA));
+    ESP_ERROR_CHECK(esp_netif_dhcps_start(sta_netif));
+    ESP_ERROR_CHECK(esp_netif_dhcps_stop(sta_netif));
 
 #if FIXED_IP
     /**

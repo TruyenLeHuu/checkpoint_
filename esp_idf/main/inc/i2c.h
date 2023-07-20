@@ -9,7 +9,7 @@ class _i2c {
     void read(uint8_t addr, uint8_t* data, size_t size);
 
    private:
-    int i2c_master_port = 0;
+    i2c_port_t i2c_master_port = I2C_NUM_0;
 };
 
 extern _i2c i2c;

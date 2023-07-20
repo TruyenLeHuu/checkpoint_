@@ -1,0 +1,23 @@
+{
+  "type": "Compass Connections",
+  "version": {
+    "$numberInt": "1"
+  },
+  "connections": [
+    {
+      "id": "6fa883cc-3d4c-46bb-8380-d637ae5f54bc",
+      "connectionOptions": {
+        "connectionString": "mongodb://localhost:27017/"
+      },
+      "favorite": {
+        "name": "CheckpointLocal",
+        "color": "color2"
+      },
+      "lastUsed": {
+        "$date": {
+          "$numberLong": "1680920984044"
+        }
+      }
+    }
+  ]
+}

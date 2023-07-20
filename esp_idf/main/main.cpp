@@ -55,6 +55,11 @@ extern "C" {
  */
  static const char *TAG = "main: ";
 
+
+/*
+* global defines
+*/
+#define portTICK_RATE_MS portTICK_PERIOD_MS
 /**
  * Prototypes Functions;
  */
@@ -98,8 +103,7 @@ void sensor_task(void *pvParameter){
                     send_sensor_msg(); 
                     flag = 0;
                 }
-                #else
-                #if STOP_STATION_NODE
+                #elif STOP_STATION_NODE
                 if(filter > 43 && flag){
                     send_sensor_msg(); 
                     flag = 0;

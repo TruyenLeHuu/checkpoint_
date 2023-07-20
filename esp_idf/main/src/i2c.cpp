@@ -1,5 +1,6 @@
 #include "i2c.h"
 #include <driver/i2c.h>
+#define portTICK_RATE_MS portTICK_PERIOD_MS
 
 _i2c i2c;
 

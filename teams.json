@@ -1,0 +1,121 @@
+[{
+  "_id": {
+    "$oid": "641da5de98a2004d20161612"
+  },
+  "name": "THPT Ngô Thời Nhiệm 1",
+  "group": "A",
+  "image_link": "/logo/logo_NTN.png",
+  "score": 6,
+  "numcheckpoint": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641da5ed98a2004d20161614"
+  },
+  "name": "THPT Long Trường 1",
+  "group": "A",
+  "image_link": "/logo/logo_LT.png",
+  "score": 0,
+  "numcheckpoint": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641da5ff98a2004d20161616"
+  },
+  "name": "THPT Dương Văn Thì 1",
+  "group": "A",
+  "image_link": "/logo/logo_DVT.jpg",
+  "score": 3,
+  "numcheckpoint": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641da63898a2004d20161618"
+  },
+  "name": "THPT Ngô Thời Nhiệm 2",
+  "group": "B",
+  "image_link": "/logo/logo_NTN.png",
+  "score": 0,
+  "numcheckpoint": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641da67298a2004d2016161a"
+  },
+  "name": "THPT Bình Chiểu",
+  "group": "B",
+  "image_link": "/logo/logo_BC.png",
+  "score": 3,
+  "numcheckpoint": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641da68498a2004d2016161c"
+  },
+  "name": "THPT Nguyễn Huệ",
+  "group": "B",
+  "image_link": "/logo/logo_NH.jpg",
+  "score": 6,
+  "numcheckpoint": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641da69398a2004d2016161e"
+  },
+  "name": "THPT Nguyễn Hữu Huân 2",
+  "group": "C",
+  "image_link": "/logo/logo_NHH.jpg",
+  "score": 4,
+  "numcheckpoint": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641da6a198a2004d20161620"
+  },
+  "name": "THPT Dương Văn Thì 2",
+  "group": "C",
+  "image_link": "/logo/logo_DVT.jpg",
+  "score": 3,
+  "numcheckpoint": 6,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641da6db98a2004d20161622"
+  },
+  "name": "THPT Tam Phú",
+  "group": "C",
+  "image_link": "/logo/logo_TP.jpg",
+  "score": 1,
+  "numcheckpoint": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641da6ea98a2004d20161624"
+  },
+  "name": "THPT Nguyễn Hữu Huân 1",
+  "group": "D",
+  "image_link": "/logo/logo_NHH.jpg",
+  "score": 6,
+  "numcheckpoint": 19,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641da6fc98a2004d20161626"
+  },
+  "name": "THPT Long Trường 2",
+  "group": "D",
+  "image_link": "/logo/logo_LT.png",
+  "score": 0,
+  "numcheckpoint": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641da70b98a2004d20161628"
+  },
+  "name": "THPT Đào Sơn Tây",
+  "group": "D",
+  "image_link": "/logo/logo_DST.png",
+  "score": 0,
+  "numcheckpoint": 4,
+  "__v": 0
+}]

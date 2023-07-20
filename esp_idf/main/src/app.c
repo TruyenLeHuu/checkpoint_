@@ -19,6 +19,7 @@
 #include "driver/gpio.h"
 #include "driver/adc.h"
 #include "esp_adc_cal.h"
+#include "esp_mac.h"
 /**
  * GPIOs Config;
  */
@@ -53,6 +54,9 @@
 #include "cJSON.h"
 
 #include "mesh.h"
+
+
+#define portTICK_RATE_MS portTICK_PERIOD_MS
 
 // interaction with public mqtt broker
 void mqtt_app_start(void);
@@ -93,7 +97,8 @@ void led_off(){
 }
 void gpios_setup( void )
 {
-    gpio_pad_select_gpio(BUTTON_PIN);
+    // gpio_pad_select_gpio(BUTTON_PIN);
+    esp_rom_gpio_pad_select_gpio(BUTTON_PIN);
     gpio_set_direction(BUTTON_PIN, GPIO_MODE_INPUT);
     /**
      * Configure the GPIO LED BUILDING
@@ -158,7 +163,7 @@ void getStick(){
         } else {
             int data_read = esp_http_client_read_response(client, output_buffer, 2048);
             if (data_read >= 0) {
-                ESP_LOGI(TAG, "HTTP GET Status = %d, content_length = %d",
+                ESP_LOGI(TAG, "HTTP GET Status = %d, content_length = %lld",
                 esp_http_client_get_status_code(client),
                 esp_http_client_get_content_length(client));
                 ESP_LOGI(TAG, "%s", (char*) output_buffer);
@@ -574,7 +579,7 @@ void create_task_send_bat_capacity(){
 }
 void task_send_bat_capacity ( void *pvParameter )
 {   
-    esp_adc_cal_characterize(ADC_UNIT_2, ADC_ATTEN_DB_11, ADC_WIDTH_12Bit, 0, &adc1_chars);
+    esp_adc_cal_characterize(ADC_UNIT_2, ADC_ATTEN_DB_11, ADC_WIDTH_BIT_12, 0, &adc1_chars);
     adc2_config_channel_atten(ADC2_CHANNEL_0, ADC_ATTEN_DB_11);
     uint32_t voltage;
     while (1) 

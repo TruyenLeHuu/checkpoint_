@@ -62,7 +62,7 @@ static esp_err_t mqtt_event_handler_cb(esp_mqtt_event_handle_t event)
 }
 
 static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event_id, void *event_data) {
-    ESP_LOGD(TAG, "Event dispatched from event loop base=%s, event_id=%d", base, event_id);
+    ESP_LOGD(TAG, "Event dispatched from event loop base=%s, event_id=%ld", base, event_id);
     mqtt_event_handler_cb(event_data);
 }
 
@@ -79,14 +79,14 @@ bool mqtt_app_publish(char* topic, char *publish_string)
 void mqtt_app_start(void)
 { 
     esp_mqtt_client_config_t mqtt_cfg = {
-            .host = ip,
-            .port = 1883,
+            .broker.address.uri = ip,
+            .broker.address.port = 1883,
             //Public after disconnect 30s
-            .lwt_topic = "ESP-disconnect",
-            .lwt_msg = NODE_ID,
-            .lwt_msg_len = 0,
-            .lwt_qos = 1,
-            .lwt_retain = 1 
+            .session.last_will.topic = "ESP-disconnect",
+            .session.last_will.msg = NODE_ID,
+            .session.last_will.msg_len = 0,
+            .session.last_will.qos = 1,
+            .session.last_will.retain = 1 
     };
 
     s_client = esp_mqtt_client_init(&mqtt_cfg);
