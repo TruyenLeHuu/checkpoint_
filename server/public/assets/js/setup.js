@@ -72,6 +72,7 @@ var i;
 	})
 	for (let i = 1; i <= maxCheckPoints; i++) {
 		$('#button-range' + i).click( () => {
+			console.log("rang set")
 			socket.emit("get-tick-setup", {id: i.toString(), tick: startTick});
 
 			// nowNode = i;
@@ -83,6 +84,7 @@ var i;
 		})
 		$('#button-check' + i).click(() => {
 			nowNode = i;
+			console.log("Check " + i)
 			socket.emit("Check-esp", {node: i.toString()});
 		})
 	}

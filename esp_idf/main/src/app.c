@@ -40,12 +40,17 @@
 #include "esp_mesh.h"
 #include "esp_mesh_internal.h"
 #include "esp_http_client.h"
+#include "esp_mac.h"
 /**
  * Lwip
  */
 #include "lwip/err.h"
 #include "lwip/sys.h"
 #include <lwip/sockets.h>
+/*
+ESP timer
+*/
+#include "esp_timer.h"
 
 /**
 * Json
@@ -188,6 +193,9 @@ long long takeTick(){
 void getStick(){
     char output_buffer[2048] = {0};   
     int content_length = 0;
+    #if DEBUG
+    ESP_LOGI(TAG,"%s",ip);
+    #endif
     sprintf(get_url, "http://%s:3001/getTick", ip);
     esp_http_client_config_t config = {
         .url = get_url,
@@ -195,6 +203,7 @@ void getStick(){
     esp_http_client_handle_t client = esp_http_client_init(&config);
     esp_http_client_set_method(client, HTTP_METHOD_GET);
     esp_err_t err = esp_http_client_open(client, 0);
+    ESP_LOGI(TAG,"HTTP Get");
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "Failed to open HTTP connection: %s", esp_err_to_name(err));
     } else {
@@ -204,7 +213,7 @@ void getStick(){
         } else {
             int data_read = esp_http_client_read_response(client, output_buffer, 2048);
             if (data_read >= 0) {
-                ESP_LOGI(TAG, "HTTP GET Status = %d, content_length = %d",
+                ESP_LOGI(TAG, "HTTP GET Status = %d, content_length = %lld",
                 esp_http_client_get_status_code(client),
                 esp_http_client_get_content_length(client));
                 ESP_LOGI(TAG, "%s", (char*) output_buffer);
@@ -420,6 +429,8 @@ void task_mesh_rx ( void *pvParameter )
     char mac_address_str[30];
     int flag = 0;
 
+    ESP_LOGI(TAG,"Rx start");
+
     for( ;; )
     {
         data.size = RX_SIZE;
@@ -588,7 +599,7 @@ void task_send_bat_capacity_create(){
 }
 void task_send_bat_capacity ( void *pvParameter )
 {   
-    esp_adc_cal_characterize(ADC_UNIT_2, ADC_ATTEN_DB_11, ADC_WIDTH_12Bit, 0, &adc1_chars);
+    esp_adc_cal_characterize(ADC_UNIT_2, ADC_ATTEN_DB_11, ADC_WIDTH_BIT_12, 0, &adc1_chars);
     adc2_config_channel_atten(ADC2_CHANNEL_0, ADC_ATTEN_DB_11);
     uint32_t voltage;
     while (1) 

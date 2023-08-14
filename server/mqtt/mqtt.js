@@ -60,7 +60,7 @@ module.exports = function (io, activeNode) {
         client.publish('ip', JSON.stringify(data), {qos: 1, retain: false});
     }
     exports.checkEsp = function (data) {
-        // console.log('Data Range: ', data);
+        console.log('Data Range: ', data);
         client.publish('check', JSON.stringify(data), {qos: 1, retain: false});
     }
     exports.refreshConnection = function () {

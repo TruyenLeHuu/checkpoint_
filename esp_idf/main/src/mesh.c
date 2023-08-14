@@ -38,6 +38,7 @@
  */
 #include "esp_mesh.h"
 #include "esp_mesh_internal.h"
+#include "esp_mac.h"
 
 /**
  * Lwip
@@ -96,6 +97,7 @@ static const uint8_t MESH_ID[6] = { 0x77, 0x77, 0x77, 0x77, 0x77, 0x77 };
 static mesh_addr_t mesh_parent_addr;
 /* Node mesh layer */
 static int mesh_layer = -1;
+static esp_netif_t *sta_netif = NULL;
 /* Mesh send connect flag */
 static bool is_esp_mesh_sent_connect = false;
 
@@ -149,7 +151,7 @@ static void wifi_init_start(void)
     s_wifi_event_group = xEventGroupCreate();
     ESP_ERROR_CHECK(esp_netif_init());
     ESP_ERROR_CHECK(esp_event_loop_create_default());
-    esp_netif_t *sta_netif = esp_netif_create_default_wifi_sta();
+    sta_netif = esp_netif_create_default_wifi_sta();
     assert(sta_netif);
 
 
@@ -263,7 +265,7 @@ void wifi_mesh_start(void)
             ESP_ERROR_CHECK(esp_netif_init());
             s_wifi_event_group = xEventGroupCreate();
             ESP_ERROR_CHECK(esp_event_loop_create_default());
-            esp_netif_t *sta_netif = esp_netif_create_default_wifi_sta();
+            sta_netif = esp_netif_create_default_wifi_sta();
             assert(sta_netif);
 
             wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
@@ -322,7 +324,7 @@ void mesh_event_handler(void *arg, esp_event_base_t event_base,
 {
     mesh_addr_t id = {0,};
     static uint8_t last_layer = 0;
-    ESP_LOGD(TAG, "esp_event_handler:%d", event_id);
+    ESP_LOGD(TAG, "esp_event_handler:%ld", event_id);
 
     switch (event_id) {
     case MESH_EVENT_STARTED: {
@@ -393,7 +395,7 @@ void mesh_event_handler(void *arg, esp_event_base_t event_base,
              * FIXED IP?
              */
             #if !FIXED_IP
-                tcpip_adapter_dhcpc_start(TCPIP_ADAPTER_IF_STA);
+                esp_netif_dhcpc_start(sta_netif);
             #endif
         }
         /**
@@ -577,7 +579,7 @@ void mesh_event_handler(void *arg, esp_event_base_t event_base,
     }
     break;
     default:
-        ESP_LOGI(TAG, "unknown id:%d", event_id);
+        ESP_LOGI(TAG, "unknown id:%ld", event_id);
         break;
     }
 }
@@ -605,14 +607,14 @@ void ip_event_handler(void *arg, esp_event_base_t event_base,
 void mesh_app_start( void )
 {
     /*  tcpip stack init */
-    tcpip_adapter_init();
+    esp_netif_init();
     // ESP_ERROR_CHECK(esp_netif_init());
     /* for mesh
      * stop DHCP server on softAP interface by default
      * stop DHCP client on station interface by default
      * */
-    ESP_ERROR_CHECK(tcpip_adapter_dhcps_stop(TCPIP_ADAPTER_IF_AP));
-    ESP_ERROR_CHECK(tcpip_adapter_dhcpc_stop(TCPIP_ADAPTER_IF_STA));
+    ESP_ERROR_CHECK(esp_netif_dhcpc_start(sta_netif));
+    ESP_ERROR_CHECK(esp_netif_dhcpc_stop(sta_netif));
 
 #if FIXED_IP
     /**
