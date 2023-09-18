@@ -75,6 +75,7 @@ module.exports = function (io, mqtt, activeNode, startTime) {
         })
         socket.on('start', ()=>{
             io.sockets.emit('start-res')
+            mqtt.sendStartTraffic({start: "all"})
         })
         socket.on('stop', ()=>{
             io.sockets.emit('stop-res')
@@ -121,6 +122,10 @@ module.exports = function (io, mqtt, activeNode, startTime) {
         })
         socket.on('Connection-refresh',()=>{
             mqtt.refreshConnection();
+        })
+        socket.on("set-light-time",(data) => {
+            console.log(data)
+            mqtt.setTrafficTime(data)
         })
         socket.on("Get-line",()=>{
             db.getLine((lineList)=>{

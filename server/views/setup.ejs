@@ -42,6 +42,7 @@
 		<div class="row">
 			<%
 		var mapHtml = '';
+		var timeHtml = '';
 		for(var iCp=1; iCp<=maxCheckPoints; iCp++) {
 			mapHtml += 	'<p class="col-md-3" id="esp-setup'+iCp+'">Check point '+iCp+': ';
 			
@@ -52,8 +53,16 @@
 			mapHtml += '<br><button id="button'+iCp+'">Set checkpoint '+iCp+'</button>';
 			mapHtml += '</p>';
 		}
+		<!-- timeHtml += 'p<p class="col-md-3" id="esp-setup'+iCp+'">Check point '+iCp+':'; -->
 		%>
 			<%- mapHtml %>
+			<!-- <%- timeHtml %> -->
+			<div>
+				<input type="number" placeholder="green time" value="10" class="input-led" id="green-led">
+				<input type="number" placeholder="yellow time" value="10" class="input-led" id="yellow-led">
+				<input type="number" placeholder="red time" value="10" class="input-led" id="red-led">
+				<button id="setLightTime">Set light time</button>
+			</div>	
 		</div>
 	</div>
 	
