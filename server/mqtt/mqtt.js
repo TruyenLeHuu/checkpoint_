@@ -71,9 +71,10 @@ module.exports = function (io, activeNode) {
     exports.restartLight = function(data) {
         client.publish('light-restart',JSON.stringify(data),{qos:1,retain: false})
     }
-    exports.setTrafficTime = function (data) {
-        client.publish('light-time',JSON.stringify(data),{qos:1, retain: false})
+    exports.setTrafficSignal = function (data) {
+        client.publish('light-signal',JSON.stringify(data),{qos:1, retain: false})
     }
+
 
     exports.setRange = function (data) {
         // console.log('Data Range: ', data);

@@ -1,5 +1,10 @@
 const db = require('../controllers/controller')
 module.exports = function (io, mqtt, activeNode, startTime) {
+    let LightTime = {
+        Green: 10000,
+        Red: 10000,
+        Yellow: 10000
+    }
     var nowNode = 0;
     io.on("connection", function (socket) {
         // console.log("Socket connected")
@@ -63,12 +68,10 @@ module.exports = function (io, mqtt, activeNode, startTime) {
             
         })
         socket.on('Change-flow',  (data)  =>  {
-            // console.log(data)
             db.addFlow(data);
         })
         socket.on('esp-send',(data)=>{
             io.sockets.emit('esp-send', data)
-            // console.log(data.id)
             // while (1){
             // var hrTime = process.hrtime()
             
@@ -86,9 +89,9 @@ module.exports = function (io, mqtt, activeNode, startTime) {
             console.log("reset light")
             mqtt.restartLight({restart: 'all'})
         })
-        socket.on('stop', ()=>{
-            io.sockets.emit('stop-res')
-        })
+        // socket.on('stop', ()=>{
+        //     io.sockets.emit('stop-res')
+        // })
         socket.on('refresh', ()=>{
             io.sockets.emit('refresh-res')
         })
@@ -133,8 +136,9 @@ module.exports = function (io, mqtt, activeNode, startTime) {
             mqtt.refreshConnection();
         })
         socket.on("set-light-time",(data) => {
-            console.log(data)
-            mqtt.setTrafficTime(data)
+            console.log(LightTime)
+            
+            
         })
         socket.on("stop-light",(data)=>{
             console.log(data)
