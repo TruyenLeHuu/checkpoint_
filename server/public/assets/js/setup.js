@@ -4,9 +4,10 @@ var teamgroupData = 0;
 var startTick = 0;
 var currentTick = 0;
 var teamSide = false;
-$.getScript('./configClient/config.js', function () {
-	socket = io('http://' + hostIP + ':' + port);
-});
+// $.getScript('./configClient/config.js', function () {
+// 	socket = io('http://' + hostIP + ':' + port);
+// });
+socket = io ('http://localhost:3001')
 $(document).ready(function () {
 const form = document.querySelector('form')
 const delForm = document.querySelector('#delForm')

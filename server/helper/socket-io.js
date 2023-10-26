@@ -1,10 +1,15 @@
 const db = require('../controllers/controller')
+// const schedule = require('node-schedule');
+// const { TaskTimer } = require('tasktimer');
+const { ToadScheduler, SimpleIntervalJob, Task } = require('toad-scheduler')
 module.exports = function (io, mqtt, activeNode, startTime) {
-    let LightTime = {
-        Green: 10000,
-        Red: 10000,
-        Yellow: 10000
+    let LightSignal = {
+        Green: 0,
+        Red: 1,
+        Yellow: 2
     }
+    // const timer = new TaskTimer(1000);
+    const scheduler = new ToadScheduler();  
     var nowNode = 0;
     io.on("connection", function (socket) {
         // console.log("Socket connected")
@@ -72,26 +77,19 @@ module.exports = function (io, mqtt, activeNode, startTime) {
         })
         socket.on('esp-send',(data)=>{
             io.sockets.emit('esp-send', data)
-            // while (1){
-            // var hrTime = process.hrtime()
-            
-            // console.log(Math.round((hrTime[0]-startTime[0]) * 100 + (hrTime[1]-startTime[1]) / 10000000))}
         })
         socket.on('start', () =>{
             io.sockets.emit('start-res')
             mqtt.sendStartTraffic({start: "all"})
         })
         socket.on('start-light', () => {
-            console.log("start light")
-            mqtt.sendStartTraffic({start: 'all'})
+            taskTimer.start();
+            console.log("Traffic Light starte")            
         })
         socket.on('reset-light', () => {
             console.log("reset light")
             mqtt.restartLight({restart: 'all'})
         })
-        // socket.on('stop', ()=>{
-        //     io.sockets.emit('stop-res')
-        // })
         socket.on('refresh', ()=>{
             io.sockets.emit('refresh-res')
         })
@@ -108,11 +106,9 @@ module.exports = function (io, mqtt, activeNode, startTime) {
         })
         socket.on('esp-send-1',(data)=>{
             io.sockets.emit('esp-send-1', data)
-            // console.log(data);
         })
         socket.on('esp-send-2',(data)=>{
             io.sockets.emit('esp-send-2', data)
-            // console.log(data);
         })
         socket.on('Change-team-web',(data)=>{
             io.sockets.emit('Change-team-web', data)
@@ -133,15 +129,60 @@ module.exports = function (io, mqtt, activeNode, startTime) {
             io.sockets.emit('_subcheckpoint2', data)
         })
         socket.on('Connection-refresh',()=>{
-            mqtt.refreshConnection();
+            mqtt.refreshConnection();   
         })
         socket.on("set-light-time",(data) => {
-            console.log(LightTime)
+            let cycle = data.red+data.green+data.yellow       
+            const red_task = new Task('red_task', () => {
+                let hrTime = process.hrtime()
+                console.log("Time started: "+Math.round((hrTime[0]-startTime[0]) * 100 + (hrTime[1]-startTime[1]) / 10000000));
+                console.log('red_task triggered');
+            });
+            const green_task = new Task('green_task', () => {
+                let hrTime = process.hrtime()
+                console.log("Time started: "+Math.round((hrTime[0]-startTime[0]) * 100 + (hrTime[1]-startTime[1]) / 10000000));
+                console.log('green_task triggered');
+            });
+            const yellow_task = new Task('yellow_task', () => {
+                let hrTime = process.hrtime()
+                console.log("Time started: "+Math.round((hrTime[0]-startTime[0]) * 100 + (hrTime[1]-startTime[1]) / 10000000));
+                console.log('yellow_task triggered');
+            });
             
-            
+            const red_job = new SimpleIntervalJob(
+                { seconds: cycle, runImmediately: true },
+                red_task,
+                { 
+                    id: 'red',
+                    preventOverrun: true,
+                }
+            );
+            const green_job = new SimpleIntervalJob(
+                { seconds: cycle, runImmediately: true },
+                green_task,
+                { 
+                    id: 'green',
+                    preventOverrun: true,
+                }
+            );
+            const yellow_job = new SimpleIntervalJob(
+                { seconds: cycle, runImmediately: true },
+                yellow_task,
+                { 
+                    id: 'yellow',
+                    preventOverrun: true,
+                }
+            );   
+            let sTime = process.hrtime()
+            scheduler.addSimpleIntervalJob(red_job);        
+            while(!(process.hrtime(sTime)[0] >= data.red)){}
+            scheduler.addSimpleIntervalJob(green_job);
+            while(!(process.hrtime(sTime)[0] >= data.green+data.red)){}
+            scheduler.addSimpleIntervalJob(yellow_job);
         })
         socket.on("stop-light",(data)=>{
-            console.log(data)
+            taskTimer.stop()
+            console.log("Traffic Light: stop")
             mqtt.stopLight()
         })
         socket.on("Get-line",()=>{
