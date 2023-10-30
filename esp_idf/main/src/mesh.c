@@ -225,7 +225,7 @@ static void event_handler(void* arg, esp_event_base_t event_base,
         ESP_LOGW(TAG, "Found channel");
     } else if (event_base == SC_EVENT && event_id == SC_EVENT_GOT_SSID_PSWD) {
         smartconfig_event_got_ssid_pswd_t *evt = (smartconfig_event_got_ssid_pswd_t *)event_data;
-        uint8_t rvd_data[33] = { 0 };
+        // uint8_t rvd_data[33] = { 0 };
         memcpy(ssid, evt->ssid, sizeof(evt->ssid));
         memcpy(password, evt->password, sizeof(evt->password));
         #if DEBUG

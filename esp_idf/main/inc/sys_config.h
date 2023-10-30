@@ -28,9 +28,9 @@
 /**
  * Info wifi your ssid & passwd
  */
-#define WIFI_SSID       "3 Thang"
-#define WIFI_PASSWORD   "123bathang"
-#define SERVER_IP       "192.168.1.147"
+#define WIFI_SSID       "CEEC_Tenda"
+#define WIFI_PASSWORD   "1denmuoi1"
+#define SERVER_IP       "192.168.2.101"
 
 /**
  * Globals defs

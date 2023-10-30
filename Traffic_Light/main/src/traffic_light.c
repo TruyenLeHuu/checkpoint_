@@ -7,7 +7,7 @@
 #include "freertos/task.h"
 
 LightTime LT = {
-    .red = 4,
+    .red = 3,
     .green = 8,
     .yellow = 1
 };

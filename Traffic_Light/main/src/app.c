@@ -207,6 +207,7 @@ void getStick()
 {
     char output_buffer[2048] = {0};
     int content_length = 0;
+    ESP_LOGI(TAG, "getTick");
 #if DEBUG
     ESP_LOGI(TAG, "%s", ip);
 #endif
@@ -336,41 +337,43 @@ void send_sensor_msg()
 void send_setup_msg(char *topic, char *data)
 {
     cJSON *root;
-    if (strcmp(topic, "light") == 0)
-    {
-        root = cJSON_Parse(data);
-        char *light = cJSON_GetObjectItem(root, "light")->valuestring;
-        // set_traffic_led(light);
-        char *rendered = cJSON_Print(root);
-        send_mesh(rendered);
-    }
-
+#if START_NODE
     if (strcmp(topic, "light-start") == 0)
     {
         root = cJSON_Parse(data);
-        char *start = cJSON_GetObjectItem(root, "start")->valuestring;
+        // char *start = cJSON_GetObjectItem(root, "start")->valuestring;
         printf("Light start\n");
         TrafficLight_start();
         char *rendered = cJSON_Print(root);
         ESP_LOGI(TAG, "%s", rendered);
         send_mesh(rendered);
     }
+#else
+    if (strcmp(topic, "light") == 0)
+    {
+        root = cJSON_Parse(data);
+        char *light = cJSON_GetObjectItem(root, "light")->valuestring;
+        TrafficLight_setLight(light);
+        char *rendered = cJSON_Print(root);
+        send_mesh(rendered);
+    }
+#endif
 
-    else if (strcmp(topic, "light-restart") == 0)
+    else if (strcmp(topic, "light-stop") == 0)
     {
         TrafficLight_setLight("red");
     }
 
-    else if (strcmp(topic, "light-time") == 0)
-    {  
-        #ifndef START_NODE
-            root = cJSON_Parse(data);
-            uint8_t green = cJSON_GetObjectItem(root, "green")->valueint;
-            uint8_t yellow = cJSON_GetObjectItem(root, "yellow")->valueint;
-            uint8_t red = cJSON_GetObjectItem(root, "red")->valueintt;
-            TrafficLight_setTime(green, yellow, red);
-        #endif
-    }
+    // else if (strcmp(topic, "light-time") == 0)
+    // {
+    // #ifndef START_NODE
+    //         root = cJSON_Parse(data);
+    //         uint8_t green = cJSON_GetObjectItem(root, "green")->valueint;
+    //         uint8_t yellow = cJSON_GetObjectItem(root, "yellow")->valueint;
+    //         uint8_t red = cJSON_GetObjectItem(root, "red")->valueintt;
+    //         TrafficLight_setTime(green, yellow, red);
+    // #endif
+    // }
     // else if(strcmp(topic,"range")==0){
     //     root = cJSON_Parse(data);
     //     char* ID = cJSON_GetObjectItem(root,"node")->valuestring;
@@ -394,7 +397,7 @@ void send_setup_msg(char *topic, char *data)
         char *ID = cJSON_GetObjectItem(root, "node")->valuestring;
         if (strcmp(ID, NODE_ID) == 0)
         {
-            mqtt_app_publish("ESP-connect", NODE_ID);
+            mqtt_app_publish("LIGHT-connect", NODE_ID);
         }
         else
         {
@@ -414,7 +417,7 @@ void send_setup_msg(char *topic, char *data)
     }
     // if (root != NULL) {
     //     cJSON_free(root);
-    // }
+    // }zzz
     // root = NULL;
 }
 void send_disconnect_msg(char *macID)
@@ -479,8 +482,8 @@ bool send_connect_msg()
         cJSON *root;
         root = cJSON_CreateObject();
         cJSON_AddStringToObject(root, "Topic", "Connect-Mesh");
-        //cJSON_AddStringToObject(root,"Node","Traffic-Light");
-        //cJSON_AddStringToObject(root, "ID", NODE_ID);
+        // cJSON_AddStringToObject(root,"Node","Traffic-Light");
+        // cJSON_AddStringToObject(root, "ID", NODE_ID);
         cJSON_AddStringToObject(root, "MAC", mac_str);
         char *rendered = cJSON_Print(root);
         snprintf((char *)tx_buf, TX_SIZE, rendered);
@@ -621,6 +624,17 @@ void task_mesh_rx(void *pvParameter)
             uint8_t mac_address[10];
             esp_efuse_mac_get_default(mac_address);
             snprintf(mac_address_str, sizeof(mac_address_str), "" MACSTR "", MAC2STR(mac_address));
+#if START_NODE
+            if (strcmp(topic, "light-start") == 0)
+            {
+                // char *light = cJSON_GetObjectItem(root, "light")->valuestring;
+#if DEBUG
+                ESP_LOGI(TAG, "Start light");
+#endif
+                // set_traffic_led(light);
+                TrafficLight_start();
+            }
+#else
             if (strcmp(topic, "light") == 0)
             {
                 char *light = cJSON_GetObjectItem(root, "light")->valuestring;
@@ -628,6 +642,15 @@ void task_mesh_rx(void *pvParameter)
                 ESP_LOGI(TAG, "Set light: %s", light);
 #endif
                 // set_traffic_led(light);
+                TrafficLight_setLight(light);
+            }
+#endif
+            else if (strcmp(topic, "light-stop"))
+            {
+#if DEBUG
+                ESP_LOGI(TAG, "Set light: %s", "red");
+#endif
+                TrafficLight_setLight("red");
             }
             // if (strcmp(topic,"range")==0){
             //     *max_range_extern = cJSON_GetObjectItem(root,"range")->valueint;

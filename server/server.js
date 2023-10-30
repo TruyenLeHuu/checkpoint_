@@ -14,6 +14,8 @@ var startTime = process.hrtime();
 const config = require('./config/config');
 const dotenv = require('dotenv');
 // const { setLight } = require('./mqtt/mqtt');
+//Import socket io
+var io = require("socket.io")(server);
 dotenv.config();
 // Using ejs as a tool simulate HTML
 appExpress.set("view engine", "ejs");
@@ -48,8 +50,6 @@ global.__basedir = __dirname;
 console.log("Max number check points: " + process.env.maxCheckPoints);
 
 
-//Import socket io
-var io = require("socket.io")(server);
 
 //MQTT
 const mqtt = require('./mqtt/mqtt')(io, activeNode, startTime);

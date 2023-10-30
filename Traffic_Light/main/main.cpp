@@ -86,15 +86,15 @@ void app_main( void )
     nvs_init();
 
     /* Batcap init(); */
-    task_send_bat_capacity_create();
+    // task_send_bat_capacity_create();
     /**
      * Initial GPIOs;
      */
-	gpios_setup();
+	// gpios_setup();
     /**
      * Initial reset ssid and password button;
      */
-    start_btn_task();
+    // start_btn_task();
     /**
      * Initial of stack mesh;
      */

@@ -17,9 +17,10 @@ module.exports = function (io, startTime) {
   router.post("/send-data", (req, res, next) => {
     try {
       io.sockets.emit("esp-send", req.body);
-      console.log("Esp send " + req.body.Data);
+      console.log("Esp send " + req.body);
       res.json({ message: "Send data successful!" });
     } catch (err) {
+      console.log(err);
       res.json({ message: "Error" });
     }
   });

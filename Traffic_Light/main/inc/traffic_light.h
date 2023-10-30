@@ -16,9 +16,10 @@ void TrafficLight_GPIOinit(void );
 //start light
 void TrafficLight_setTime(uint8_t green, uint8_t yellow, uint8_t red);
 void TrafficLight_start(void );
-
+// void TrafficLight_setLED()
 
 //other
 void TrafficLight_setLight(char* light);
+
 
 #endif

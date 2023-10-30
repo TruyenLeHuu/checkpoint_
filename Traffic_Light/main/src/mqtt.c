@@ -29,7 +29,8 @@ static esp_err_t mqtt_event_handler_cb(esp_mqtt_event_handle_t event)
             ESP_LOGI(TAG, "MQTT_EVENT_CONNECTED");
             if (esp_mqtt_client_subscribe(s_client, "light", 0) < 0 || esp_mqtt_client_subscribe(s_client, "refresh", 0) < 0 
             || esp_mqtt_client_subscribe(s_client, "check", 0) < 0 || esp_mqtt_client_subscribe(s_client, "ip", 0) < 0
-            || esp_mqtt_client_subscribe(s_client, "light-start", 0) < 0) {
+            || esp_mqtt_client_subscribe(s_client, "light-start", 0) < 0 || esp_mqtt_client_subscribe(s_client, "light-time", 0) < 0) 
+            {
                 // Disconnect to retry the subscribe after auto-reconnect timeout
                 esp_mqtt_client_disconnect(s_client);
             }
@@ -83,7 +84,7 @@ bool mqtt_app_publish(char* topic, char *publish_string)
 void mqtt_app_start(void)
 { 
     char broker_host[70] = {0};
-    sprintf(broker_host,"mqtt://%s:1883","192.168.0.101");
+    sprintf(broker_host,"mqtt://%s:1883","192.168.2.101");
     ESP_LOGI(TAG,"Broker: %s",broker_host);
     esp_mqtt_client_config_t mqtt_cfg = {
             .broker.address.uri = broker_host,

@@ -1,6 +1,6 @@
 #ifndef __MESH_H__
 #define __MESH_H__
-unsigned long IRAM_ATTR millis();
+uint64_t IRAM_ATTR millis();
 
 void mesh_app_start( void ); 
 void wifi_mesh_start(void);

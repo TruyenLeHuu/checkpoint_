@@ -10,13 +10,13 @@
 /**
  * NODE_ID
  */
-#define NODE_ID "1"
+#define NODE_ID "3"
 
-#define END_NODE 0
+// #define END_NODE 0
 
-#define STOP_STATION_NODE 0
+// #define STOP_STATION_NODE 0
 
-#define START_NODE 1
+#define START_NODE 0
 
 /**
  * GPIOs defs
@@ -43,7 +43,7 @@
  */
 #define WIFI_SSID       "3 Thang"
 #define WIFI_PASSWORD   "123bathang"
-#define SERVER_IP       "192.168.1.147"
+#define SERVER_IP       "192.168.2.101"
 
 /**
  * Globals defs
