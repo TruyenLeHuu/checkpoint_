@@ -21,7 +21,7 @@ const yellowLed = document.querySelector("#yellow-led")
 const redLed = document.querySelector("#red-led")
 
 setTimeBtn.addEventListener('click',() => {
-	// console.log(setTimeBtn)
+	console.log(setTimeBtn)
 	const data = {
 		green: Number(greenLed.value),
 		yellow: Number(yellowLed.value),
@@ -93,6 +93,7 @@ var i;
 		})
 	});
 	socket.on('esp-send',(data)=>{
+		console.log("esp-send")
 		$('#espbg' + data.Data).css({ 'color': 'black' });
 		$('#espbg' + data.Data).css({ 'background': 'yellow' });
 		$('#lastsent').text(data.Data);

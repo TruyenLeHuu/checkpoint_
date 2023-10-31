@@ -132,6 +132,7 @@ module.exports = function (io, mqtt, activeNode, startTime) {
             mqtt.refreshConnection();   
         })
         socket.on("set-light-time",(data) => {
+            console.log("Set light")
             let cycle = data.red+data.green+data.yellow       
             const red_task = new Task('red_task', () => {
                 let hrTime = process.hrtime()

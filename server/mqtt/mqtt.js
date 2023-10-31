@@ -1,7 +1,10 @@
 var mqtt = require('mqtt');
 var config = require('../config/config');
 const { stringify } = require('postcss');
-var client = mqtt.connect('mqtt://' + config.host + ":" + config.mqttPort, {
+// host = config.host
+host = "192.168.1.147"
+
+var client = mqtt.connect('mqtt://' + host + ":" + config.mqttPort, {
     clientId: 'Server_Client',
     reconnectPeriod: 1000,
     keepalive: 300,

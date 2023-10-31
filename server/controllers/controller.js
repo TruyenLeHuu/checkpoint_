@@ -5,6 +5,7 @@ const { response } = require("express");
 
 var that = (module.exports = {
   setupPage: async (req, res, next) => {
+    // console.log(req.hostname)
     res.render(__basedir + "/views/setup.ejs", {
       maxCheckPoints: process.env.maxCheckPoints,
     });
@@ -18,6 +19,7 @@ var that = (module.exports = {
     res.render(__basedir + "/views/dual_v2.ejs");
   },
   mainPage: async (req, res, next) => {
+    // console.log(req.body)
     res.render(__basedir + "/views/dual_view_v2.ejs");
   },
   addTeam: async (data) => {

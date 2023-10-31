@@ -17,6 +17,8 @@ const dotenv = require('dotenv');
 //Import socket io
 var io = require("socket.io")(server);
 dotenv.config();
+//set json
+appExpress.use(express.json())
 // Using ejs as a tool simulate HTML
 appExpress.set("view engine", "ejs");
 // Add router for ejs
