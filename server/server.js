@@ -60,33 +60,36 @@ require('./helper/socket-io')(io, mqtt, activeNode, startTime);
 
 global._io = io;
 
-mongoose
-    .connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => {
-        console.log("Connected to db")
-        appPort = config.port;
-        appHost = config.host;
-        server.listen(appPort, appHost, () => {
-            console.log(`Server listening at host ${appHost} port ${appPort}`);
-            // setInterval(() => {
-            //     setTimeout(() => {
-            //         mqtt.setLight({ light: "yellow" })
-            //         console.log(`Yellow: ${new Date()}`)
-            //     }, LightObj.Green)
+// mongoose
+//     .connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
+//     .then(() => {
+//         console.log("Connected to db")
+//         appPort = config.port;
+//         appHost = config.host;
+//         server.listen(appPort, appHost, () => {
+//             console.log(`Server listening at host ${appHost} port ${appPort}`);
+//             // setInterval(() => {
+//             //     setTimeout(() => {
+//             //         mqtt.setLight({ light: "yellow" })
+//             //         console.log(`Yellow: ${new Date()}`)
+//             //     }, LightObj.Green)
 
-            //     setTimeout(() => {
-            //         mqtt.setLight({ light: "red" })
-            //         console.log(`Red: ${new Date()}`)
-            //     }, LightObj.Yellow)
-            //     setTimeout(() => {
-            //         mqtt.setLight({ light: "green" })
-            //         console.log(`Green: ${new Date()}`)
-            //     }, LightObj.Red)
-            // }, 44000);
+//             //     setTimeout(() => {
+//             //         mqtt.setLight({ light: "red" })
+//             //         console.log(`Red: ${new Date()}`)
+//             //     }, LightObj.Yellow)
+//             //     setTimeout(() => {
+//             //         mqtt.setLight({ light: "green" })
+//             //         console.log(`Green: ${new Date()}`)
+//             //     }, LightObj.Red)
+//             // }, 44000);
 
 
-        });
-    }).catch((err) => {
-        console.log(err)
-    })
-
+//         });
+//     }).catch((err) => {
+//         console.log(err)
+//     })
+    appPort = config.port;
+    appHost = config.host;
+    server.listen(appPort, appHost, () => {
+        console.log(`Server listening at host ${appHost} port ${appPort}`)});
