@@ -15,6 +15,9 @@ void nvs_init()
         if (ret == ESP_ERR_NVS_NO_FREE_PAGES) {
         ESP_ERROR_CHECK(nvs_flash_erase());
         ret = nvs_flash_init();
+        #if DEBUG
+        ESP_LOGI(TAG,"Init");
+        #endif
         }
         ESP_ERROR_CHECK(ret);
 }
@@ -80,12 +83,12 @@ void nvs_set_ip(char * ip_set, void * arg)
     } else 
     {
         #if DEBUG
-        ESP_LOGW(TAG,"Add ip ... ");
+        ESP_LOGI(TAG,"Add ip ... ");
         #endif
         err = nvs_set_str(*my_handle, "ip", ip_set);
         printf(TAG,(err != ESP_OK) ? "Add ip to nvs failed!\n" : "Add ip to nvs done\n");
         #if DEBUG
-        ESP_LOGW(TAG,"Committing updates in NVS ... ");
+        ESP_LOGI(TAG,"Committing updates in NVS ... ");
         #endif
         err = nvs_commit(*my_handle);
         #if DEBUG
@@ -124,7 +127,7 @@ esp_err_t nvs_get_ssid_password(uint8_t* ssid, uint8_t* password, char* ip, void
             {
                 nvs_close(*my_handle);
                 nvs_commit(*my_handle);
-                nvs_set_ip("192.168.137.1", &my_handle);
+                nvs_set_ip(SERVER_IP, my_handle);
             }
             nvs_commit(*my_handle);
             #if DEBUG

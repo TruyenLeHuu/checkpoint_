@@ -6,6 +6,10 @@ div {
     border-width: 5px;
     border-color: rgb(66, 235, 80); 
 }
+#input-led {
+    width: 100px;
+    margin-left: 15px;
+}
 #setup {
     border-style: groove;
     border-width: 5px;

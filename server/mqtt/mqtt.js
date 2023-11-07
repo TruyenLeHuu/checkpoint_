@@ -51,6 +51,16 @@ module.exports = function (io, activeNode) {
         }
     });
 
+    exports.setLight = function (data) {
+        client.publish('light',JSON.stringify(data),{qos:1, retain: false})
+    }
+    exports.sendStartTraffic = function(data) {
+        client.publish('light-start',JSON.stringify(data),{qos:1, retain: false})
+    }
+    exports.setTrafficTime = function (data) {
+        client.publish('light-time',JSON.stringify(data),{qos:1, retain: false})
+    }
+
     exports.setRange = function (data) {
         // console.log('Data Range: ', data);
         client.publish('range', JSON.stringify(data), {qos: 1, retain: false});
@@ -60,7 +70,7 @@ module.exports = function (io, activeNode) {
         client.publish('ip', JSON.stringify(data), {qos: 1, retain: false});
     }
     exports.checkEsp = function (data) {
-        // console.log('Data Range: ', data);
+        console.log('Data Range: ', data);
         client.publish('check', JSON.stringify(data), {qos: 1, retain: false});
     }
     exports.refreshConnection = function () {

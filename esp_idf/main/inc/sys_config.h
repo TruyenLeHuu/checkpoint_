@@ -4,13 +4,13 @@
 /**
  * Debugger?
  */
-#define DEBUG 0
+#define DEBUG 1
 
 #define SEND_DISCONNECT 1
 /**
  * NODE_ID
  */
-#define NODE_ID "3"
+#define NODE_ID "1"
 
 #define END_NODE 0
 
@@ -28,8 +28,9 @@
 /**
  * Info wifi your ssid & passwd
  */
-#define WIFI_SSID       "1111"
-#define WIFI_PASSWORD   "01245678"
+#define WIFI_SSID       "3 Thang"
+#define WIFI_PASSWORD   "123bathang"
+#define SERVER_IP       "192.168.1.147"
 
 /**
  * Globals defs

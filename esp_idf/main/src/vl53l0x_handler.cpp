@@ -69,15 +69,15 @@ void sensor_task(void* pvParameters){
                 led_on();
             }
             vl53l0x->range = sensor_read(vl53l0x);    
-            vTaskDelay(25 / portTICK_RATE_MS);
+            vTaskDelay(25 / portTICK_PERIOD_MS);
         }
         filter = 0;
         if (!flag){
             led_off();
-            vTaskDelay(500 / portTICK_RATE_MS);
+            vTaskDelay(500 / portTICK_PERIOD_MS);
         }
         flag = 1;
-        vTaskDelay(25 / portTICK_RATE_MS);
+        vTaskDelay(25 / portTICK_PERIOD_MS);
     }
 }
 void sensor_start(vl53l0x_t * vl53l0x){
@@ -87,7 +87,7 @@ void sensor_start(vl53l0x_t * vl53l0x){
         ESP_LOGI( TAG, "Failed to detect and initialize sensor!\r\n" );  
         return;
         while (1) {
-            vTaskDelay(10 / portTICK_RATE_MS);
+            vTaskDelay(10 / portTICK_PERIOD_MS);
         }
     }
     
@@ -109,7 +109,7 @@ void sensor_start(vl53l0x_t * vl53l0x){
         // increase timing budget to 200 ms
         vl53l0x->sensor.setMeasurementTimingBudget(200000);
     #endif
-    vTaskDelay(2000 / portTICK_RATE_MS);
+    vTaskDelay(2000 / portTICK_PERIOD_MS);
     if( xTaskCreate( sensor_task, "sensor_task", 1024 * 8, vl53l0x, 2, NULL) != pdPASS )
     {
         #if DEBUG

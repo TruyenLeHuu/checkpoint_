@@ -11,7 +11,22 @@ $(document).ready(function () {
 const form = document.querySelector('form')
 const delForm = document.querySelector('#delForm')
 const errorMessage = document.querySelector('.error')
+const setTimeBtn = document.querySelector('#setLightTime')
 var acc = document.getElementsByClassName("accordion");
+const greenLed = document.querySelector("#green-led")
+const yellowLed = document.querySelector("#yellow-led")
+const redLed = document.querySelector("#red-led")
+
+setTimeBtn.addEventListener('click',() => {
+	console.log(setTimeBtn)
+	const data = {
+		green: greenLed.value,
+		yellow: yellowLed.value,
+		red: redLed.value
+	}
+	console.log("set time")
+	socket.emit("set-light-time",data)
+})
 var i;
 	for (let i = 1; i <= 10; i++) {
 		$('#esp' + i).text('disconnected');
@@ -72,6 +87,7 @@ var i;
 	})
 	for (let i = 1; i <= maxCheckPoints; i++) {
 		$('#button-range' + i).click( () => {
+			console.log("rang set")
 			socket.emit("get-tick-setup", {id: i.toString(), tick: startTick});
 
 			// nowNode = i;
@@ -83,6 +99,7 @@ var i;
 		})
 		$('#button-check' + i).click(() => {
 			nowNode = i;
+			console.log("Check " + i)
 			socket.emit("Check-esp", {node: i.toString()});
 		})
 	}

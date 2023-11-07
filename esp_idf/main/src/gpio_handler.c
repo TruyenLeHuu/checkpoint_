@@ -21,7 +21,7 @@ void led_off(){
 }
 void gpios_setup()
 {
-    gpio_pad_select_gpio(BUTTON_PIN);
+    esp_rom_gpio_pad_select_gpio(BUTTON_PIN);
     gpio_set_direction(BUTTON_PIN, GPIO_MODE_INPUT);
     /**
      * Configure the GPIO LED BUILDING
