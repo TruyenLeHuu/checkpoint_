@@ -39,15 +39,19 @@ const URI = 'mongodb://localhost:27017/test'
 global.__basedir  =  __dirname;
 console.log("Max number check points: " + process.env.maxCheckPoints);
 
+
 //Import socket io
 var io = require("socket.io")(server);
+
+//MQTT
+const mqtt = require('./mqtt/mqtt')(io, activeNode, startTime);
+
 // Import socket io for server
 require('./helper/socket-io')(io, mqtt, activeNode, startTime);
 
 global._io  =  io;
 
-//MQTT
-const mqtt = require('./mqtt/mqtt')(io, activeNode, startTime);
+
 // Start and connect mongoDB and server
 mongoose
 .connect(URI, {useNewUrlParser:true, useUnifiedTopology:true})
