@@ -50,7 +50,8 @@ console.log("Max number check points: " + process.env.maxCheckPoints);
 //Import socket io
 var io = require("socket.io")(server);
 
-
+//MQTT
+const mqtt = require('./mqtt/mqtt')(io, activeNode, startTime);
 // Start and connect mongoDB and server
 
 // Import socket io for server
