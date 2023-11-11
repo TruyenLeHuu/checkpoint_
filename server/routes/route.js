@@ -4,6 +4,7 @@ const {
   dualPage,
   addFlow,
   leaderBoard,
+  scoreBoard,
   sendData,
   mainPage,
 } = require("../controllers/controller");
@@ -13,6 +14,7 @@ module.exports = function (io, startTime) {
   router.get("/setup", setupPage);
   router.get("/dual", dualPage);
   router.get("/leaderBoard", leaderBoard);
+  router.get("/scoreBoard", scoreBoard);
   router.post("/add_flow", addFlow);
   router.post("/send-data", (req, res, next) => {
     try {

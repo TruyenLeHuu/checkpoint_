@@ -75,6 +75,7 @@ module.exports = function (io, mqtt, activeNode, startTime) {
         })
         socket.on('start', ()=>{
             io.sockets.emit('start-res')
+            console.log("start")
             mqtt.sendStartTraffic({start: "all"})
         })
         socket.on('stop', ()=>{

@@ -14,6 +14,11 @@ var that = (module.exports = {
       maxCheckPoints: process.env.maxCheckPoints,
     });
   },
+  scoreBoard: async (req, res, next) => {
+    res.render(__basedir + "/views/scoreboard.ejs", {
+      maxCheckPoints: process.env.maxCheckPoints,
+    });
+  },
   dualPage: async (req, res, next) => {
     res.render(__basedir + "/views/dual_v2.ejs");
   },
