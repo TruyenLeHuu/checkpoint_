@@ -92,7 +92,7 @@
 
 .my-btn {
   color: white;
-  height: 11vh;
+  height: 10vh;
   width: 16vw;
   font-size: 3vw;
   border-radius: 50px;
@@ -446,17 +446,23 @@
   clear: both;
 }
 .positive{
-  color: #60ec65;
+  color: #6aff6f;
   font: 20px sans-serif;
 }
 .negative{
-  color: #d45a5a;
+  color: #e02c2f;
   font: 20px sans-serif;
 }
 .sub{
   margin-left: 10px;
 }
 .active{
-  border-width: 3px;
-  border-color: #ffffff;
+  /* border-radius: 30px;
+  border: 3px solid;
+  border-image-source: linear-gradient(to right, #f64f59, #c471ed, #12c2e9); 
+  border-image-slice :1; */
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)) padding-box,
+              linear-gradient(to right, #02d9b5, #fe080b) border-box;
+  border-radius: 30px;
+  border: 3px solid transparent;
 }

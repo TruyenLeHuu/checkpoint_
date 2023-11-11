@@ -293,30 +293,37 @@ $.getScript('./configClient/config.js',function(){
       } 
       if (e.which == 49) {
         $("#plus-"+boardActive+"-0").html(" " + (Number($("#plus-"+boardActive+"-0").text())+1))
+        blinkPlusScore("#main-plus-"+boardActive+"-0")
         sound_pass.play()
       } 
       if (e.which == 50) {
         $("#plus-"+boardActive+"-1").html(" " + (Number($("#plus-"+boardActive+"-1").text())+1))
+        blinkPlusScore("#main-plus-"+boardActive+"-1")
         sound_pass.play()
       } 
       if (e.which == 51) {
         $("#plus-"+boardActive+"-2").html(" " + (Number($("#plus-"+boardActive+"-2").text())+1))
+        blinkPlusScore("#main-plus-"+boardActive+"-2")
         sound_pass.play()
       } 
       if (e.which == 52) {
         $("#plus-"+boardActive+"-3").html(" " + (Number($("#plus-"+boardActive+"-3").text())+1))
+        blinkPlusScore("#main-plus-"+boardActive+"-3")
         sound_pass.play()
       } 
       if (e.which == 53) {
         $("#subtract-"+boardActive+"-0").html(" " + (Number($("#subtract-"+boardActive+"-0").text())+1))
+        blinkSubtractScore("#main-subtract-"+boardActive+"-0")
         sound_eli.play()
       } 
       if (e.which == 54) {
         $("#subtract-"+boardActive+"-1").html(" " + (Number($("#subtract-"+boardActive+"-1").text())+1))
+        blinkSubtractScore("#main-subtract-"+boardActive+"-1")
         sound_eli.play()
       } 
       if (e.which == 55) {
         $("#subtract-"+boardActive+"-2").html(" " + (Number($("#subtract-"+boardActive+"-2").text())+1))
+        blinkSubtractScore("#main-subtract-"+boardActive+"-2")
         sound_eli.play()
       } 
 
@@ -641,7 +648,22 @@ $.getScript('./configClient/config.js',function(){
         color: "white",
       });
     }
-  
+    function blinkPlusScore(elem){
+      $(elem).css({
+        color: "white"
+      })
+      setTimeout(()=>{$(elem).css({
+        color: "#60ec65"
+      })}, 500)
+    }
+    function blinkSubtractScore(elem){
+      $(elem).css({
+        color: "white"
+      })
+      setTimeout(()=>{$(elem).css({
+        color: "#d45a5a"
+      })}, 500)
+    }
     function updateTimeDisplay(number, team) {
       var distanceTick = currentTick - startTick;
       console.log(distanceTick);

@@ -35,9 +35,9 @@ let LightObj = {
     Yellow: 10000
 }
 console.log(LightObj.Green)
-const URI = 'mongodb+srv://1111:1234@checkpoint.dvt4rzg.mongodb.net/?retryWrites=true&w=majority' 
+// const URI = 'mongodb+srv://1111:1234@checkpoint.dvt4rzg.mongodb.net/?retryWrites=true&w=majority' 
 // const URI = 'mongodb+srv://quangduytran:habui28052003@cluster0.n11dnbs.mongodb.net/?retryWrites=true&w=majority'
-// const URI = 'mongodb://0.0.0.0:27017/Test'
+const URI = 'mongodb://0.0.0.0:27017/Test'
 // const URI = 'mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.8.0/Test'
 
 // URI of mongo DB
