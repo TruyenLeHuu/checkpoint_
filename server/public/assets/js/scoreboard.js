@@ -55,7 +55,7 @@ $.getScript('./configClient/config.js',function(){
     const sound_car = document.getElementById("car_start_sound");
     const sound_eli = document.getElementById("eli_sound");
     const sound_congra = document.getElementById("congra_sound");
-  
+    const sound_pass = document.getElementById('checkpoint_passed')
     // console.log(sound_start);
     /* tam thoi hide trang index */
     $("#main").hide();
@@ -293,24 +293,31 @@ $.getScript('./configClient/config.js',function(){
       } 
       if (e.which == 49) {
         $("#plus-"+boardActive+"-0").html(" " + (Number($("#plus-"+boardActive+"-0").text())+1))
+        sound_pass.play()
       } 
       if (e.which == 50) {
         $("#plus-"+boardActive+"-1").html(" " + (Number($("#plus-"+boardActive+"-1").text())+1))
+        sound_pass.play()
       } 
       if (e.which == 51) {
         $("#plus-"+boardActive+"-2").html(" " + (Number($("#plus-"+boardActive+"-2").text())+1))
+        sound_pass.play()
       } 
       if (e.which == 52) {
         $("#plus-"+boardActive+"-3").html(" " + (Number($("#plus-"+boardActive+"-3").text())+1))
+        sound_pass.play()
       } 
       if (e.which == 53) {
         $("#subtract-"+boardActive+"-0").html(" " + (Number($("#subtract-"+boardActive+"-0").text())+1))
+        sound_eli.play()
       } 
       if (e.which == 54) {
         $("#subtract-"+boardActive+"-1").html(" " + (Number($("#subtract-"+boardActive+"-1").text())+1))
+        sound_eli.play()
       } 
       if (e.which == 55) {
         $("#subtract-"+boardActive+"-2").html(" " + (Number($("#subtract-"+boardActive+"-2").text())+1))
+        sound_eli.play()
       } 
 
         $("#plus-"+boardActive).html(" " +((Number($("#plus-"+boardActive+"-0").text()))+(Number($("#plus-"+boardActive+"-1").text()))+(Number($("#plus-"+boardActive+"-2").text()))+(Number($("#plus-"+boardActive+"-3").text()))))
