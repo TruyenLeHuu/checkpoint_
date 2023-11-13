@@ -10,6 +10,8 @@ var currentTurn = 1;
 var maxTurn = 10;
 var currentCheckpoint1 = 0;
 var currentCheckpoint2 = 0;
+var currentTurnTeam = [1,1,1,1]
+let currentCheckpoint = [1,-1,-1,-1]
 var numCheckpointt1 = 0;
 var numCheckpointt2 = 0;
 var outlineTeam1 = false;
@@ -425,67 +427,23 @@ $.getScript('./configClient/config.js',function(){
     socket.on("esp-send", (data) => {
       // console.log(data)
       const id = Number(data.Data);
+      console.log(id, currentCheckpoint,boardActive )
       // console.log(id)
       // var hrTime = process.hrtime()
       // console.log(Math.round((hrTime[0]-startTime[0]) * 100 + (hrTime[1]-startTime[1]) / 10000000))
-      if (!changeTeamSide) {
-        if ((id == Number(map[currentCheckpoint1 + 1 + team1nstop])
-        || (types[id-1] == "stop" &&  id == Number(map[currentCheckpoint1 + 2]))) && !outlineTeam1) {
-          if (types[id-1] == "stop" && id == Number(map[currentCheckpoint1 + 2]))
-          {
-            maxCheckPointsTeam1--
-            team1nstop = true
-          }
-          socket.emit("esp-send-1", {
-            id: currentCheckpoint1 + 1,
-            tick: data.Tick,
-            arr : [maxCheckPointsTeam1, team1nstop, maxCheckPointsTeam2, team2nstop]
-          });
-        } else if ((id == (currentCheckpoint2 + 1 + team2nstop <= 5 ? Number(map[currentCheckpoint2 + 1 + 5 + team2nstop]) : Number(map[currentCheckpoint2 + 1 - 5 + team2nstop]))
-              || (types[id-1] == "stop" && id == (currentCheckpoint2 + 2 <= 5 ? Number(map[currentCheckpoint2 + 2 + 5]) : Number(map[currentCheckpoint2 + 2 - 5])))) && !outlineTeam2) 
-            {
-              if (types[id-1] == "stop" && id == (currentCheckpoint2 + 2 <= 5 ? Number(map[currentCheckpoint2 + 2 + 5]) : Number(map[currentCheckpoint2 + 2 - 5])))
-              {
-                maxCheckPointsTeam2--
-                team2nstop = true
-              }
-              socket.emit("esp-send-2", {
-                id: currentCheckpoint2 + 1,
-                tick: data.Tick,
-                arr : [maxCheckPointsTeam1, team1nstop, maxCheckPointsTeam2, team2nstop]
-          });
-        }
-      } else {
-        
-        if ((id == (currentCheckpoint1 + 1 + team1nstop <= 5 ? Number(map[currentCheckpoint1 + 1 + 5 + team1nstop]) : Number(map[currentCheckpoint1 + 1 - 5 + team1nstop]))
-        || (types[id-1] == "stop" && id == (currentCheckpoint1 + 2 <= 5 ? Number(map[currentCheckpoint1 + 2 + 5]) : Number(map[currentCheckpoint1 + 2 - 5]))))&& !outlineTeam1)
-        {
-          if (types[id-1] == "stop" && id == (currentCheckpoint1 + 2 <= 5 ? Number(map[currentCheckpoint1 + 2 + 5 ]) : Number(map[currentCheckpoint1 + 2 - 5])))
-          {
-            maxCheckPointsTeam1--
-            team1nstop = true
-          }
-          socket.emit("esp-send-1", 
-          {
-            id: currentCheckpoint1 + 1,
-            tick: data.Tick,
-            arr : [maxCheckPointsTeam1, team1nstop, maxCheckPointsTeam2, team2nstop]
-          });
-        } else if ((id == Number(map[currentCheckpoint2 + 1 + team2nstop])
-        || (types[id-1] == "stop" &&  id == Number(map[currentCheckpoint2 + 2]))) && !outlineTeam2)
-        {
-          if (types[id-1] == "stop" && id == Number(map[currentCheckpoint2 + 2]))
-          {
-            maxCheckPointsTeam2--
-            team2nstop = true
-          }
-          socket.emit("esp-send-2", {
-            id: currentCheckpoint2 + 1,
-            tick: data.Tick,
-            arr : [maxCheckPointsTeam1, team1nstop, maxCheckPointsTeam2, team2nstop]
-          });
-        }
+      if (id == currentCheckpoint[boardActive] + 1)
+      {
+        currentTick = data.Tick
+        teamTick = currentTick - startTick
+        currentCheckpoint[boardActive] += 1
+        socket.emit("web-send-record", {
+          team: teamName[boardActive],
+          time: teamTick,
+          cp: currentCheckpoint[boardActive],
+        });
+
       }
+      
     });
     socket.on("esp-send-1", function (data) {
       console.log("node send esp: " + data.id); //du lieu esp gui

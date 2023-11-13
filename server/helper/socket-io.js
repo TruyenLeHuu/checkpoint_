@@ -47,6 +47,7 @@ module.exports = function (io, mqtt, activeNode, startTime) {
             });
         })
         socket.on("web-send-record",  (data)  =>  {
+            console.log(data.team)
             db.addrecord(data);
         })
         socket.on("call-list",  ()  =>  {

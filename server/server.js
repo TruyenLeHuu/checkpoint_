@@ -12,7 +12,11 @@ var startTime = process.hrtime();
 // Import evironment variables
 const config = require('./config/config');
 const dotenv = require('dotenv');
+
+appExpress.use(express.json())
 // const { setLight } = require('./mqtt/mqtt');
+//Import socket io
+var io = require("socket.io")(server);
 dotenv.config();
 // Using ejs as a tool simulate HTML
 appExpress.set("view engine", "ejs");
@@ -29,15 +33,15 @@ appExpress.use(bodyParser.urlencoded({ extended: true, limit: "30mb" }));
 appExpress.use(bodyParser.json());
 
 var activeNode = new Set();
-let LightObj = {
-    Green: 30000,
-    Red: 3000,
-    Yellow: 10000
-}
-console.log(LightObj.Green)
-// const URI = 'mongodb+srv://1111:1234@checkpoint.dvt4rzg.mongodb.net/?retryWrites=true&w=majority' 
+// let LightObj = {
+//     Green: 30000,
+//     Red: 3000,
+//     Yellow: 10000
+// }
+// console.log(LightObj.Green)
+const URI = 'mongodb+srv://1111:1234@checkpoint.dvt4rzg.mongodb.net/?retryWrites=true&w=majority' 
 // const URI = 'mongodb+srv://quangduytran:habui28052003@cluster0.n11dnbs.mongodb.net/?retryWrites=true&w=majority'
-const URI = 'mongodb://0.0.0.0:27017/Test'
+// const URI = 'mongodb://0.0.0.0:27017/Test'
 // const URI = 'mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.8.0/Test'
 
 // URI of mongo DB
@@ -47,8 +51,7 @@ global.__basedir = __dirname;
 console.log("Max number check points: " + process.env.maxCheckPoints);
 
 
-//Import socket io
-var io = require("socket.io")(server);
+
 
 //MQTT
 const mqtt = require('./mqtt/mqtt')(io, activeNode, startTime);

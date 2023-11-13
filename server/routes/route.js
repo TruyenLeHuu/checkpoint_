@@ -18,10 +18,12 @@ module.exports = function (io, startTime) {
   router.post("/add_flow", addFlow);
   router.post("/send-data", (req, res, next) => {
     try {
-      io.sockets.emit("esp-send", req.body);
+      js = JSON.stringify(req.body)
       console.log("Esp send " + req.body.Data);
+      io.sockets.emit("esp-send", req.body);
       res.json({ message: "Send data successful!" });
     } catch (err) {
+      console.log(err)
       res.json({ message: "Error" });
     }
   });
