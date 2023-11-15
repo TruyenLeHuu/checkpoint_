@@ -62,6 +62,15 @@ module.exports = function (io, mqtt, activeNode, startTime) {
             });
             
         })
+        socket.on("team-score-record", async(data) =>{
+            db.addRecordScore(data)
+            // console.log(data)
+        })
+        socket.on("get-team-score-record",()=>{
+            db.getScore((scores)=>{
+                io.sockets.emit('score-record',scores)
+            });
+        });
         socket.on('Change-flow',  (data)  =>  {
             // console.log(data)
             db.addFlow(data);

@@ -1,6 +1,7 @@
 const team = require("../model/team.js");
 const flow = require("../model/flow.js");
 const teamweb = require("../model/teamweb.js");
+const score = require("../model/score.js");
 const { response } = require("express");
 
 var that = (module.exports = {
@@ -129,5 +130,28 @@ var that = (module.exports = {
       } catch (err) {
         console.log({ error: err });
       }
+  },
+  addRecordScore: async (data) => {
+    try {
+      await score.collection.deleteMany();
+      const newScore = new score({
+        scores: data
+      });
+      await newScore.save();
+      // console.log({ message: "Add score Successfully" });
+    } catch (err) {
+      console.log({ error: err });
+    }
+  },
+  getScore: (callback) => {
+    score
+      .find()
+      .then((respond) => {
+        console.log(respond)
+        return callback(respond);
+      })
+      .catch((err) => {
+        console.log({ error: err });
+      });
   },
 });
