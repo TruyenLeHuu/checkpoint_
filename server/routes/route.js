@@ -9,7 +9,7 @@ const {
   mainPage,
 } = require("../controllers/controller");
 
-module.exports = function (io, startTime) {
+module.exports = function (io,mqtt, startTime,lightNode) {
   router.get("/", mainPage);
   router.get("/setup", setupPage);
   router.get("/dual", dualPage);
@@ -18,10 +18,14 @@ module.exports = function (io, startTime) {
   router.post("/add_flow", addFlow);
   router.post("/send-data", (req, res, next) => {
     try {
-      js = JSON.stringify(req.body)
+      // js = JSON.stringify(req.body)
+      console.log(lightNode)
       console.log("Esp send " + req.body.Data);
       io.sockets.emit("esp-send", req.body);
       res.json({ message: "Send data successful!" });
+      if (lightNode.value == req.body.Data) {
+        mqtt.startCrossLight()
+      }
     } catch (err) {
       console.log(err)
       res.json({ message: "Error" });

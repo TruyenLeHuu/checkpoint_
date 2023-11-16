@@ -1,5 +1,5 @@
 const db = require('../controllers/controller')
-module.exports = function (io, mqtt, activeNode, startTime) {
+module.exports = function (io, mqtt, activeNode, startTime,lightNode) {
     var nowNode = 0;
     io.on("connection", function (socket) {
         console.log("Socket connected")
@@ -135,5 +135,9 @@ module.exports = function (io, mqtt, activeNode, startTime) {
                 console.log("get line")
             });
         });
+        socket.on("set-light-node", (data) => {
+            lightNode.value = data
+            console.log("set light node", lightNode)
+        })
     })
 }

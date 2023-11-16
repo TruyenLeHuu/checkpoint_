@@ -11,21 +11,20 @@ $(document).ready(function () {
 const form = document.querySelector('form')
 const delForm = document.querySelector('#delForm')
 const errorMessage = document.querySelector('.error')
-const setTimeBtn = document.querySelector('#setLightTime')
+const setLightBtn = document.querySelector('#setLightNode')
 var acc = document.getElementsByClassName("accordion");
-const greenLed = document.querySelector("#green-led")
-const yellowLed = document.querySelector("#yellow-led")
-const redLed = document.querySelector("#red-led")
+const lightNode = document.getElementById('light-node')
+// const greenLed = document.querySelector("#green-led")
+// const yellowLed = document.querySelector("#yellow-led")
+// const redLed = document.querySelector("#red-led")
 
-setTimeBtn.addEventListener('click',() => {
-	console.log(setTimeBtn)
-	const data = {
-		green: greenLed.value,
-		yellow: yellowLed.value,
-		red: redLed.value
-	}
-	console.log("set time")
-	socket.emit("set-light-time",data)
+setLightBtn.addEventListener('click',() => {
+	console.log(setLightBtn)
+	node = lightNode.value
+	console.log(node)
+	if (node > 10) return
+	socket.emit("set-light-node",node)
+	// socket.emit("set-light-time",data)
 })
 var i;
 	for (let i = 1; i <= 10; i++) {
