@@ -144,5 +144,8 @@ module.exports = function (io, mqtt, activeNode, startTime) {
                 console.log("get line")
             });
         });
+        socket.on("on_key",(data)=>{
+                io.sockets.emit('listen_key',data)
+        });
     })
 }

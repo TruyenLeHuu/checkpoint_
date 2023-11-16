@@ -82,9 +82,6 @@ $.getScript('./configClient/config.js',function(){
     document.getElementById("timerCount").innerHTML =
       "00" + ":" + "00" + ":" + "00";
   
-    $("#btnStartStop").on("click", "#start", function () {
-      socket.emit("start");
-    });
     socket.on("start-res", ( ) => {
       sound_car.play();
       // setTimeout(() => {sound_start.play();}, 0)
@@ -122,9 +119,6 @@ $.getScript('./configClient/config.js',function(){
           }
         }, 4500);
       });
-    });
-    $("#btnStartStop").on("click", "#stop", function () {
-      socket.emit("stop");
     });
     socket.on("stop-res", () => {
       startSignal = false;
@@ -177,9 +171,6 @@ $.getScript('./configClient/config.js',function(){
       // state = false;
       
       console.log("stop");
-    });
-    $("#btnStartStop").on("click", "#refresh", function () {
-      socket.emit("refresh");
     });
     socket.on("refresh-res", () => {
       // clearInterval(delay);
@@ -234,9 +225,6 @@ $.getScript('./configClient/config.js',function(){
       console.log("refresh");
     });
     // Nhấn thi lại
-    $("#restart").click(function () {
-      socket.emit("restart");
-    });
     socket.on("restart-res", () => {
       // clearInterval(delay);
       // startDelay = 0;
@@ -275,9 +263,7 @@ $.getScript('./configClient/config.js',function(){
       $("#turn").html("Lượt " + currentTurn);
       // $('#restart').addClass('disabled');
     });
-    
-    $(document).on("keypress", function (e) { socket.emit("on_key", e.which)})
-    
+ 
     socket.on("listen_key", (data)=>{
       if (data == 97) {
         boardActive--;
@@ -339,7 +325,6 @@ $.getScript('./configClient/config.js',function(){
         sound_eli.play()
       } 
         console.info(teamScore)
-        socket.emit("team-score-record", teamScore);
         $("#plus-"+boardActive).html(" " +((Number($("#plus-"+boardActive+"-0").text()))+(Number($("#plus-"+boardActive+"-1").text()))+(Number($("#plus-"+boardActive+"-2").text()))+(Number($("#plus-"+boardActive+"-3").text()))))
         $("#subtract-"+boardActive).html(" " +((Number($("#subtract-"+boardActive+"-0").text()))+(Number($("#subtract-"+boardActive+"-1").text()))+(Number($("#subtract-"+boardActive+"-2").text()))))
         //   var timeTeam =
@@ -435,27 +420,27 @@ $.getScript('./configClient/config.js',function(){
       startTick = tick;
       console.log(startTick);
     });
-    socket.on("esp-send", (data) => {
-      // console.log(data)
-      const id = Number(data.Data);
-      console.log(id, currentCheckpoint,boardActive )
-      // console.log(id)
-      // var hrTime = process.hrtime()
-      // console.log(Math.round((hrTime[0]-startTime[0]) * 100 + (hrTime[1]-startTime[1]) / 10000000))
-      if (id == currentCheckpoint[boardActive] + 1)
-      {
-        currentTick = data.Tick
-        teamTick = currentTick - startTick
-        currentCheckpoint[boardActive] += 1
-        socket.emit("web-send-record", {
-          team: teamName[boardActive],
-          time: teamTick,
-          cp: currentCheckpoint[boardActive],
-        });
+    // socket.on("esp-send", (data) => {
+    //   // console.log(data)
+    //   const id = Number(data.Data);
+    //   console.log(id, currentCheckpoint,boardActive )
+    //   // console.log(id)
+    //   // var hrTime = process.hrtime()
+    //   // console.log(Math.round((hrTime[0]-startTime[0]) * 100 + (hrTime[1]-startTime[1]) / 10000000))
+    //   if (id == currentCheckpoint[boardActive] + 1)
+    //   {
+    //     currentTick = data.Tick
+    //     teamTick = currentTick - startTick
+    //     currentCheckpoint[boardActive] += 1
+    //     socket.emit("web-send-record", {
+    //       team: teamName[boardActive],
+    //       time: teamTick,
+    //       cp: currentCheckpoint[boardActive],
+    //     });
 
-      }
+    //   }
       
-    });
+    // });
     socket.on("esp-send-1", function (data) {
       console.log("node send esp: " + data.id); //du lieu esp gui
       console.log(data.tick);
