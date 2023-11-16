@@ -40,6 +40,7 @@ var startTime = new Date().getTime();
 var delay = null;
 var timeDelay = 0;
 var startDelay = 0;
+let teamScore = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 let teamName = ["LTK", "NhwngtenLieu", "UTE_AIS", "FPTU_AI"]
 var boardActive = 4;
 $.when(
@@ -301,40 +302,48 @@ $.getScript('./configClient/config.js',function(){
       } 
       if (e.which == 49) {
         $("#plus-"+boardActive+"-0").html(" " + (Number($("#plus-"+boardActive+"-0").text())+1))
+        teamScore[boardActive*7+0] = Number($("#plus-"+boardActive+"-0").text())
         blinkPlusScore("#main-plus-"+boardActive+"-0")
         sound_pass.play()
       } 
       if (e.which == 50) {
         $("#plus-"+boardActive+"-1").html(" " + (Number($("#plus-"+boardActive+"-1").text())+1))
+        teamScore[boardActive*7+1] = Number($("#plus-"+boardActive+"-1").text())
         blinkPlusScore("#main-plus-"+boardActive+"-1")
         sound_pass.play()
       } 
       if (e.which == 51) {
         $("#plus-"+boardActive+"-2").html(" " + (Number($("#plus-"+boardActive+"-2").text())+1))
+        teamScore[boardActive*7+2] = Number($("#plus-"+boardActive+"-2").text())
         blinkPlusScore("#main-plus-"+boardActive+"-2")
         sound_pass.play()
       } 
       if (e.which == 52) {
         $("#plus-"+boardActive+"-3").html(" " + (Number($("#plus-"+boardActive+"-3").text())+1))
+        teamScore[boardActive*7+3] = Number($("#plus-"+boardActive+"-3").text())
         blinkPlusScore("#main-plus-"+boardActive+"-3")
         sound_pass.play()
       } 
       if (e.which == 53) {
         $("#subtract-"+boardActive+"-0").html(" " + (Number($("#subtract-"+boardActive+"-0").text())+1))
+        teamScore[boardActive*7+4] = Number($("#subtract-"+boardActive+"-0").text())
         blinkSubtractScore("#main-subtract-"+boardActive+"-0")
         sound_eli.play()
       } 
       if (e.which == 54) {
         $("#subtract-"+boardActive+"-1").html(" " + (Number($("#subtract-"+boardActive+"-1").text())+1))
+        teamScore[boardActive*7+5] = Number($("#subtract-"+boardActive+"-1").text())
         blinkSubtractScore("#main-subtract-"+boardActive+"-1")
         sound_eli.play()
       } 
       if (e.which == 55) {
         $("#subtract-"+boardActive+"-2").html(" " + (Number($("#subtract-"+boardActive+"-2").text())+1))
+        teamScore[boardActive*7+6] = Number($("#subtract-"+boardActive+"-2").text())
         blinkSubtractScore("#main-subtract-"+boardActive+"-2")
         sound_eli.play()
       } 
-
+        console.info(teamScore)
+        socket.emit("team-score-record", teamScore);
         $("#plus-"+boardActive).html(" " +((Number($("#plus-"+boardActive+"-0").text()))+(Number($("#plus-"+boardActive+"-1").text()))+(Number($("#plus-"+boardActive+"-2").text()))+(Number($("#plus-"+boardActive+"-3").text()))))
         $("#subtract-"+boardActive).html(" " +((Number($("#subtract-"+boardActive+"-0").text()))+(Number($("#subtract-"+boardActive+"-1").text()))+(Number($("#subtract-"+boardActive+"-2").text()))))
         //   var timeTeam =
@@ -617,7 +626,7 @@ $.getScript('./configClient/config.js',function(){
         color: "white"
       })
       setTimeout(()=>{$(elem).css({
-        color: "#60ec65"
+        color: "#6aff6f"
       })}, 500)
     }
     function blinkSubtractScore(elem){
@@ -625,7 +634,7 @@ $.getScript('./configClient/config.js',function(){
         color: "white"
       })
       setTimeout(()=>{$(elem).css({
-        color: "#d45a5a"
+        color: "#e02c2f"
       })}, 500)
     }
     function updateTimeDisplay(number, team) {
@@ -675,13 +684,26 @@ $.getScript('./configClient/config.js',function(){
     // socket.on("Change-team-side", function (data) {
     //   changeTeamSide = data;
     // });
-    // socket.emit("Get-line");
-    // socket.on("List-line", (data) => {
-    //   types = data[0].type;
-    //   map = data[0].flow;
-    //   console.info(map);
-    //   console.info(types);
-    // });
+    socket.emit("get-team-score-record");
+    socket.on("score-record", (data) => {
+      if (data.length) teamScore = data[0].scores;
+      
+      for (var i = 0; i < teamScore.length; i++){
+        // console.info(Math.floor(i))
+        if (i%7 == 0 || i%7 == 1 || i%7 == 2 || i%7 == 3)
+        $("#plus-"+Math.floor(i/7)+"-"+i%7).html(" " +teamScore[i])
+        else 
+        $("#subtract-"+Math.floor(i/7)+"-"+(i%7-4)).html(" " +teamScore[i])
+      }
+      for (var i = 0; i < 4; i++){
+        $("#plus-"+i).html(" " +((Number($("#plus-"+i+"-0").text()))+(Number($("#plus-"+i+"-1").text()))+(Number($("#plus-"+i+"-2").text()))+(Number($("#plus-"+i+"-3").text()))))
+        $("#subtract-"+i).html(" " +((Number($("#subtract-"+i+"-0").text()))+(Number($("#subtract-"+i+"-1").text()))+(Number($("#subtract-"+i+"-2").text()))))
+      }
+      
+      // types = data[0].type;
+      // map = data[0].flow;
+      // console.info(types);
+    });
   });
 });
 
