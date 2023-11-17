@@ -25,7 +25,7 @@ var that = (module.exports = {
     res.render(__basedir + "/views/dual_v2.ejs");
   },
   mainPage: async (req, res, next) => {
-    res.render(__basedir + "/views/dual_view_v2.ejs");
+    res.render(__basedir + "/views/scoreboard_view.ejs");
   },
   addTeam: async (data) => {
     try {
@@ -80,7 +80,7 @@ var that = (module.exports = {
     flow
       .find()
       .then((respond) => {
-        console.log(respond)
+        // console.log(respond)
         return callback(respond);
       })
       .catch((err) => {
@@ -148,7 +148,7 @@ var that = (module.exports = {
     score
       .find()
       .then((respond) => {
-        console.log(respond)
+        // console.log(respond)
         return callback(respond);
       })
       .catch((err) => {

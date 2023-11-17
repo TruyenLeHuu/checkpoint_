@@ -135,9 +135,5 @@ module.exports = function (io, mqtt, activeNode, startTime,lightNode) {
                 console.log("get line")
             });
         });
-        socket.on("set-light-node", (data) => {
-            lightNode.value = data
-            console.log("set light node", lightNode)
-        })
     })
 }
