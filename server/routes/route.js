@@ -9,6 +9,9 @@ const {
   mainPage,
 } = require("../controllers/controller");
 
+let lastTick = 0;
+let currTick = 0;
+
 module.exports = function (io,mqtt, startTime,lightNode) {
   router.get("/", mainPage);
   router.get("/setup", setupPage);
@@ -24,7 +27,12 @@ module.exports = function (io,mqtt, startTime,lightNode) {
       io.sockets.emit("esp-send", req.body);
       res.json({ message: "Send data successful!" });
       if (lightNode.value == req.body.Data) {
-        mqtt.startCrossLight()
+        currTick = Date.now()
+        // console.log(currTick)
+        if (currTick - lastTick > 10000) {
+          mqtt.startCrossLight()
+          lastTick = currTick
+        }
       }
     } catch (err) {
       console.log(err)

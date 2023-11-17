@@ -21,6 +21,10 @@ module.exports = function (io, mqtt, activeNode, startTime,lightNode) {
         //     }
         //     console.log("----------- " + reason + " -------------");
         // });
+        socket.on('set-light-node',function(value) {
+            lightNode.value = value
+            console.log(lightNode)
+        })
         socket.on("Set-range", function (value) {
             nowNode = value.node;
             mqtt.setRange(value);
@@ -135,5 +139,8 @@ module.exports = function (io, mqtt, activeNode, startTime,lightNode) {
                 console.log("get line")
             });
         });
+        socket.on("on_key",(data)=>{
+            io.sockets.emit('listen_key',data)
+    });
     })
 }
