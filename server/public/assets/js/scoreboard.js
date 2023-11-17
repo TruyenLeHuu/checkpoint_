@@ -91,9 +91,10 @@ $.getScript('./configClient/config.js',function(){
       console.log(currentCheckpoint)
     });
     socket.on("start-res", ( ) => {
-      
+      // socket.emit("start")
       sound_car.play();
       // setTimeout(() => {sound_start.play();}, 0)
+      // mqtt
       sound_start.play();
       Start(() => {
         setTimeout(() => {
