@@ -16,6 +16,7 @@ var that = (module.exports = {
     });
   },
   scoreBoard: async (req, res, next) => {
+    console.log("score board")
     res.render(__basedir + "/views/scoreboard.ejs", {
       maxCheckPoints: process.env.maxCheckPoints,
     });

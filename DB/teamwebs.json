@@ -1,0 +1,2593 @@
+[{
+  "_id": {
+    "$oid": "641d680e477b10b1ec20de9d"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 134,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d680e477b10b1ec20de9f"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 151,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d680e477b10b1ec20dea1"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 168,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d680e477b10b1ec20dea3"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 185,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d680f477b10b1ec20dea5"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 283,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6819477b10b1ec20dea7"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 2,
+  "time": 83,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6819477b10b1ec20dea9"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 165,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d681a477b10b1ec20deab"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 187,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d681a477b10b1ec20dead"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 206,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d681a477b10b1ec20deaf"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 225,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d681a477b10b1ec20deb1"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 245,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6823477b10b1ec20deb3"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 3,
+  "time": 71,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6823477b10b1ec20deb5"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 3,
+  "time": 90,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6824477b10b1ec20deb7"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 3,
+  "time": 133,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6824477b10b1ec20deb9"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 3,
+  "time": 161,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6824477b10b1ec20debb"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 3,
+  "time": 185,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6825477b10b1ec20debd"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 3,
+  "time": 222,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6827477b10b1ec20debf"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 3,
+  "time": 497,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69038c42e9fb95647e73"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 31,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69048c42e9fb95647e75"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 49,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69048c42e9fb95647e77"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 66,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69048c42e9fb95647e79"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 82,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69048c42e9fb95647e7b"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 98,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d690c8c42e9fb95647e7d"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 36,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d690c8c42e9fb95647e7f"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 2,
+  "time": 61,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d690e8c42e9fb95647e81"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 228,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d690e8c42e9fb95647e83"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 271,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d690e8c42e9fb95647e85"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 291,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69108c42e9fb95647e87"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 428,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69188c42e9fb95647e89"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 3,
+  "time": 35,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69198c42e9fb95647e8b"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 3,
+  "time": 79,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69198c42e9fb95647e8d"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 3,
+  "time": 112,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69198c42e9fb95647e8f"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 3,
+  "time": 148,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d691a8c42e9fb95647e91"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 3,
+  "time": 186,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d691a8c42e9fb95647e93"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 3,
+  "time": 210,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d691a8c42e9fb95647e95"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 3,
+  "time": 259,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d697e3852ae2a69d9eb83"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 95,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d697f3852ae2a69d9eb85"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 147,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d697f3852ae2a69d9eb87"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 169,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d697f3852ae2a69d9eb89"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 191,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69803852ae2a69d9eb8b"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 244,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69933852ae2a69d9eb8e"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 91,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69933852ae2a69d9eb90"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 135,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69933852ae2a69d9eb92"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 155,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69943852ae2a69d9eb94"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 1,
+  "time": 198,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69943852ae2a69d9eb96"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 228,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69943852ae2a69d9eb98"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 271,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d699c3852ae2a69d9eb9a"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 33,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d699c3852ae2a69d9eb9c"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 65,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d699d3852ae2a69d9eb9e"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 84,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d699d3852ae2a69d9eba0"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 105,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d699d3852ae2a69d9eba2"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 2,
+  "time": 126,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d699d3852ae2a69d9eba4"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 2,
+  "time": 154,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d699e3852ae2a69d9eba6"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 191,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69a53852ae2a69d9eba8"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 3,
+  "time": 28,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69a63852ae2a69d9ebaa"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 3,
+  "time": 52,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69a63852ae2a69d9ebac"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 3,
+  "time": 89,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69a63852ae2a69d9ebae"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 3,
+  "time": 113,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69a63852ae2a69d9ebb0"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 3,
+  "time": 130,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69a73852ae2a69d9ebb2"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 3,
+  "time": 152,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69a73852ae2a69d9ebb4"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 3,
+  "time": 169,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69a73852ae2a69d9ebb6"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 3,
+  "time": 209,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69a83852ae2a69d9ebb8"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 3,
+  "time": 254,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69eaf85cb3280a6b15d9"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 371,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69eaf85cb3280a6b15db"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 392,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69f1f85cb3280a6b15dd"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 1090,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69f1f85cb3280a6b15df"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 1109,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69f2f85cb3280a6b15e1"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 1,
+  "time": 1172,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69f2f85cb3280a6b15e3"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 1,
+  "time": 1202,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69f3f85cb3280a6b15e5"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 1289,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69fbf85cb3280a6b15e7"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 32,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69fbf85cb3280a6b15e9"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 69,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69fbf85cb3280a6b15eb"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 2,
+  "time": 89,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69fbf85cb3280a6b15ed"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 2,
+  "time": 110,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69fcf85cb3280a6b15ef"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 2,
+  "time": 128,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69fcf85cb3280a6b15f1"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 141,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69fcf85cb3280a6b15f3"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 2,
+  "time": 157,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69fcf85cb3280a6b15f5"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 167,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d69fcf85cb3280a6b15f7"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 2,
+  "time": 203,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6aa124abfc987668a8ef"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 149,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6aa124abfc987668a8f1"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 171,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6aa224abfc987668a8f3"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 1,
+  "time": 251,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6aa224abfc987668a8f5"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 1,
+  "time": 268,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6aa224abfc987668a8f7"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 285,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6aa224abfc987668a8f9"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 303,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6aa224abfc987668a8fb"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 1,
+  "time": 315,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6aa224abfc987668a8fd"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 1,
+  "time": 337,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6aa324abfc987668a8ff"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 1,
+  "time": 439,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6aaa24abfc987668a901"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 32,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6aaa24abfc987668a903"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 53,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6aab24abfc987668a905"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 71,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6aab24abfc987668a907"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 90,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6aab24abfc987668a909"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 2,
+  "time": 108,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6aab24abfc987668a90b"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 2,
+  "time": 129,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6aab24abfc987668a90d"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 2,
+  "time": 146,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6aac24abfc987668a90f"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 2,
+  "time": 162,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6aac24abfc987668a911"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 211,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6ae8fa1181e366aa2f2d"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 70,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6ae9fa1181e366aa2f2f"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 160,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6ae9fa1181e366aa2f31"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 180,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6ae9fa1181e366aa2f33"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 196,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6aeafa1181e366aa2f35"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 1,
+  "time": 234,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6aeafa1181e366aa2f37"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 1,
+  "time": 264,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6aeafa1181e366aa2f39"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 294,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6af7fa1181e366aa2f3b"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 62,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6af8fa1181e366aa2f3d"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 2,
+  "time": 104,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6af8fa1181e366aa2f3f"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 2,
+  "time": 151,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6af8fa1181e366aa2f41"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 2,
+  "time": 171,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6af9fa1181e366aa2f43"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 194,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6af9fa1181e366aa2f45"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 214,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6af9fa1181e366aa2f47"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 233,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6afafa1181e366aa2f49"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 2,
+  "time": 295,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6afafa1181e366aa2f4b"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 2,
+  "time": 338,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6b3589f76f5a8d0a5809"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 47,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6b3589f76f5a8d0a580b"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 72,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6b3689f76f5a8d0a580d"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 1,
+  "time": 100,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6b3689f76f5a8d0a580f"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 1,
+  "time": 118,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6b3689f76f5a8d0a5811"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 1,
+  "time": 138,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6b3689f76f5a8d0a5813"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 1,
+  "time": 156,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6b3689f76f5a8d0a5815"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 1,
+  "time": 178,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6b3689f76f5a8d0a5817"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 1,
+  "time": 195,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6b3f89f76f5a8d0a5819"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 33,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6b3f89f76f5a8d0a581b"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 53,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6b3f89f76f5a8d0a581d"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 2,
+  "time": 86,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6b4089f76f5a8d0a581f"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 2,
+  "time": 112,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6b4089f76f5a8d0a5821"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Dương Văn Thì 1",
+  "turn": 2,
+  "time": 139,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6b4089f76f5a8d0a5823"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 165,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6b4089f76f5a8d0a5825"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 188,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d6b4189f76f5a8d0a5827"
+  },
+  "team": "THPT Dương Văn Thì 1",
+  "dualwith": "THPT Ngô Thời Nhiệm 1",
+  "turn": 2,
+  "time": 213,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7c3b05b14e63f493611f"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 0,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7c3b05b14e63f4936121"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 17,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7c3b05b14e63f4936123"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 34,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7c3b05b14e63f4936125"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 50,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7c3b05b14e63f4936127"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 67,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7c4305b14e63f4936129"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 2,
+  "time": 55,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7c4305b14e63f493612b"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 81,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7c4305b14e63f493612d"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 100,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7c4305b14e63f493612f"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 118,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7c4305b14e63f4936131"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 136,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7c4305b14e63f4936133"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 153,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7c6805b14e63f4936138"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Long Trường 1",
+  "turn": 1,
+  "time": 138,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7c6805b14e63f493613a"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Long Trường 1",
+  "turn": 1,
+  "time": 154,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7c6805b14e63f493613c"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Long Trường 1",
+  "turn": 1,
+  "time": 166,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7c6805b14e63f493613e"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Long Trường 1",
+  "turn": 1,
+  "time": 183,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7c6805b14e63f4936140"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Long Trường 1",
+  "turn": 1,
+  "time": 201,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7c6e05b14e63f4936142"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Long Trường 1",
+  "turn": 2,
+  "time": 10,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7c6f05b14e63f4936144"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Long Trường 1",
+  "turn": 2,
+  "time": 28,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7c6f05b14e63f4936146"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Long Trường 1",
+  "turn": 2,
+  "time": 46,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7c6f05b14e63f4936148"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Long Trường 1",
+  "turn": 2,
+  "time": 64,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7c6f05b14e63f493614a"
+  },
+  "team": "THPT Ngô Thời Nhiệm 1",
+  "dualwith": "THPT Long Trường 1",
+  "turn": 2,
+  "time": 81,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7d1537b598e24212aab1"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 21,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7d1537b598e24212aab3"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 39,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7d1537b598e24212aab5"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 54,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7d1637b598e24212aab7"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 70,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7d1637b598e24212aab9"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 86,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7d1d37b598e24212aabb"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 15,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7d1d37b598e24212aabd"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 32,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7d1d37b598e24212aabf"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 49,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7d1d37b598e24212aac1"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 64,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d7d1d37b598e24212aac3"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 90,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d867e65cb66254a00bb4d"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 53,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d867e65cb66254a00bb4f"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 71,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d867e65cb66254a00bb51"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 89,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d867e65cb66254a00bb53"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 106,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d867f65cb66254a00bb55"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 124,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d868665cb66254a00bb57"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 18,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d868665cb66254a00bb59"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 36,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d868665cb66254a00bb5b"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 54,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d868765cb66254a00bb5d"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 72,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d868765cb66254a00bb5f"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 88,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d86e817ef441bbd0caf5c"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 208,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d86e817ef441bbd0caf5e"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 224,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d86e817ef441bbd0caf60"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 241,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d86e917ef441bbd0caf62"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 274,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d86e917ef441bbd0caf64"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 289,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d86ef17ef441bbd0caf66"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 2,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d86ef17ef441bbd0caf68"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 20,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d86ef17ef441bbd0caf6a"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 39,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d86ef17ef441bbd0caf6c"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 57,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d86f017ef441bbd0caf6e"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 74,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d870504a3d8913690375e"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 31,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d870504a3d89136903760"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 48,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d870504a3d89136903762"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 65,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d870604a3d89136903764"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 80,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d870604a3d89136903766"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 96,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d870f04a3d89136903768"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 39,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d870f04a3d8913690376a"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 57,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d871004a3d8913690376c"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 72,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d871004a3d8913690376e"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 90,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "641d871004a3d89136903770"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 108,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6426b2a11364795ea42772aa"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 432,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6426b2a21364795ea42772ac"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 1,
+  "time": 530,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6426b2a31364795ea42772ae"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 1,
+  "time": 596,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6426b2a41364795ea42772b0"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 714,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6426b2bd1364795ea42772b2"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 85,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6426b2be1364795ea42772b4"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 2,
+  "time": 182,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6426b2be1364795ea42772b6"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 2,
+  "time": 259,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6426b2c61364795ea42772b8"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 1001,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6426b2c61364795ea42772ba"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 2,
+  "time": 1038,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6426b2c71364795ea42772bc"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 2,
+  "time": 1117,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6426b2c71364795ea42772be"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 2,
+  "time": 1145,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6426b2cb1364795ea42772c0"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 1520,
+  "cp": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6426b2cb1364795ea42772c2"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 1557,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6426b2cc1364795ea42772c4"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 1594,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6426b2cc1364795ea42772c6"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 1629,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "65178dd07ff2ad72f6140808"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": -9008,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "65178dd17ff2ad72f614080a"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": -8923,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "65178dd27ff2ad72f614080c"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": -8858,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "65178dd67ff2ad72f614080e"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 1,
+  "time": -8402,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "65178dd77ff2ad72f6140810"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 1,
+  "time": -8343,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "65178df07ff2ad72f6140812"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 2,
+  "time": -13105,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "65178df17ff2ad72f6140814"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 2,
+  "time": -13035,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "65178df27ff2ad72f6140816"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 2,
+  "time": -12986,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f6e69e75d44d843a6746"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 1,
+  "time": 2934,
+  "cp": -2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f6e79e75d44d843a6748"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 2956,
+  "cp": -2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f6e89e75d44d843a674a"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 1,
+  "time": 3136,
+  "cp": -1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f6e99e75d44d843a674c"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 3147,
+  "cp": -1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f6ea9e75d44d843a674e"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 3289,
+  "cp": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f6ea9e75d44d843a6750"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 1,
+  "time": 3304,
+  "cp": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f6ef9e75d44d843a6752"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 1,
+  "time": 3806,
+  "cp": -3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f6ef9e75d44d843a6754"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 3814,
+  "cp": -3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f6ef9e75d44d843a6756"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 1,
+  "time": 3833,
+  "cp": -2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f6f09e75d44d843a6758"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 1,
+  "time": 3882,
+  "cp": -2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f6f09e75d44d843a675a"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 3891,
+  "cp": -2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f6f09e75d44d843a675c"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 1,
+  "time": 3892,
+  "cp": -1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f6f49e75d44d843a675e"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 4259,
+  "cp": -1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f6f49e75d44d843a6760"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 1,
+  "time": 4270,
+  "cp": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f6f49e75d44d843a6762"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 4296,
+  "cp": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f6f59e75d44d843a6764"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 1,
+  "time": 4367,
+  "cp": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f6f59e75d44d843a6766"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 4385,
+  "cp": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f6ff9e75d44d843a6768"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 5375,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f6ff9e75d44d843a676a"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 5405,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f7009e75d44d843a676c"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 5481,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f7019e75d44d843a676e"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 5556,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f7019e75d44d843a6770"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 1,
+  "time": 5600,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f71e9e75d44d843a6772"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 2,
+  "time": 1081,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f7219e75d44d843a6774"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 2,
+  "time": 1392,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f7229e75d44d843a6776"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 1503,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f7239e75d44d843a6778"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 1590,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f7249e75d44d843a677a"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 2,
+  "time": 1675,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f7249e75d44d843a677c"
+  },
+  "team": "team1",
+  "dualwith": "team2",
+  "turn": 2,
+  "time": 1712,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f7279e75d44d843a677e"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 2,
+  "time": 2028,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f7289e75d44d843a6780"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 2,
+  "time": 2077,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f7469e75d44d843a6783"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 1,
+  "time": 1061,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f7469e75d44d843a6785"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 1,
+  "time": 1146,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f7479e75d44d843a6787"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 1,
+  "time": 1193,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f7489e75d44d843a6789"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 1,
+  "time": 1247,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6530f7489e75d44d843a678b"
+  },
+  "team": "team2",
+  "dualwith": "team1",
+  "turn": 1,
+  "time": 1327,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6551f32da0bc35fd50c6ce69"
+  },
+  "team": "LTK",
+  "time": 197424,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6551f332a0bc35fd50c6ce6b"
+  },
+  "team": "LTK",
+  "time": 197988,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6551f335a0bc35fd50c6ce6d"
+  },
+  "team": "LTK",
+  "time": 198251,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6551f338a0bc35fd50c6ce6f"
+  },
+  "team": "LTK",
+  "time": 198559,
+  "cp": 4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6551f349a0bc35fd50c6ce71"
+  },
+  "team": "LTK",
+  "time": 200206,
+  "cp": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6551f376a0bc35fd50c6ce73"
+  },
+  "team": "LTK",
+  "time": 248845,
+  "cp": 6,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6551f37aa0bc35fd50c6ce75"
+  },
+  "team": "LTK",
+  "time": 205127,
+  "cp": 7,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6551f37ea0bc35fd50c6ce77"
+  },
+  "team": "LTK",
+  "time": 205493,
+  "cp": 8,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6551f384a0bc35fd50c6ce79"
+  },
+  "team": "LTK",
+  "time": 206117,
+  "cp": 9,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6551f385a0bc35fd50c6ce7b"
+  },
+  "team": "LTK",
+  "time": 206282,
+  "cp": 10,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6551f393a0bc35fd50c6ce7d"
+  },
+  "team": "NhwngtenLieu",
+  "time": 207621,
+  "cp": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6552075dafe364542ae60f87"
+  },
+  "team": "NhwngtenLieu",
+  "time": 714241,
+  "cp": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "65520760afe364542ae60f89"
+  },
+  "team": "NhwngtenLieu",
+  "time": 714561,
+  "cp": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "655207b5afe364542ae60f8b"
+  },
+  "team": "NhwngtenLieu",
+  "time": 723085,
+  "cp": 4,
+  "__v": 0
+}]
