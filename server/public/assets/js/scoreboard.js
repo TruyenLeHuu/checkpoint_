@@ -315,27 +315,27 @@ $.getScript('./configClient/config.js',function(){
         sound_pass.play()
       } 
       if (data == 52) {
-        $("#plus-"+boardActive+"-3").html(" " + (Number($("#plus-"+boardActive+"-3").text())+1))
-        teamScore[boardActive*7+3] = Number($("#plus-"+boardActive+"-3").text())
-        blinkPlusScore("#main-plus-"+boardActive+"-3")
-        sound_pass.play()
-      } 
-      if (data == 53) {
         $("#subtract-"+boardActive+"-0").html(" " + (Number($("#subtract-"+boardActive+"-0").text())+1))
-        teamScore[boardActive*7+4] = Number($("#subtract-"+boardActive+"-0").text())
+        teamScore[boardActive*7+3] = Number($("#subtract-"+boardActive+"-0").text())
         blinkSubtractScore("#main-subtract-"+boardActive+"-0")
         sound_eli.play()
       } 
-      if (data == 54) {
+      if (data == 53) {
         $("#subtract-"+boardActive+"-1").html(" " + (Number($("#subtract-"+boardActive+"-1").text())+1))
-        teamScore[boardActive*7+5] = Number($("#subtract-"+boardActive+"-1").text())
+        teamScore[boardActive*7+4] = Number($("#subtract-"+boardActive+"-1").text())
         blinkSubtractScore("#main-subtract-"+boardActive+"-1")
         sound_eli.play()
       } 
-      if (data == 55) {
+      if (data == 54) {
         $("#subtract-"+boardActive+"-2").html(" " + (Number($("#subtract-"+boardActive+"-2").text())+1))
-        teamScore[boardActive*7+6] = Number($("#subtract-"+boardActive+"-2").text())
+        teamScore[boardActive*7+5] = Number($("#subtract-"+boardActive+"-2").text())
         blinkSubtractScore("#main-subtract-"+boardActive+"-2")
+        sound_eli.play()
+      } 
+      if (data == 55) {
+        $("#subtract-"+boardActive+"-3").html(" " + (Number($("#subtract-"+boardActive+"-3").text())+1))
+        teamScore[boardActive*7+6] = Number($("#subtract-"+boardActive+"-3").text())
+        blinkSubtractScore("#main-subtract-"+boardActive+"-3")
         sound_eli.play()
       } 
       if (data == 122) {
@@ -351,25 +351,25 @@ $.getScript('./configClient/config.js',function(){
         teamScore[boardActive*7+2] = Number($("#plus-"+boardActive+"-2").text())
       } 
       if (data == 118) {
-        $("#plus-"+boardActive+"-3").html(" " + (Number($("#plus-"+boardActive+"-3").text())-1))
-        teamScore[boardActive*7+3] = Number($("#plus-"+boardActive+"-3").text())
+        $("#subtract-"+boardActive+"-0").html(" " + (Number($("#subtract-"+boardActive+"-0").text())-1))
+        teamScore[boardActive*7+3] = Number($("#subtract-"+boardActive+"-0").text())
       } 
       if (data == 98) {
-        $("#subtract-"+boardActive+"-0").html(" " + (Number($("#subtract-"+boardActive+"-0").text())-1))
-        teamScore[boardActive*7+4] = Number($("#subtract-"+boardActive+"-0").text())
+        $("#subtract-"+boardActive+"-1").html(" " + (Number($("#subtract-"+boardActive+"-1").text())-1))
+        teamScore[boardActive*7+4] = Number($("#subtract-"+boardActive+"-1").text())
       } 
       if (data == 110) {
-        $("#subtract-"+boardActive+"-1").html(" " + (Number($("#subtract-"+boardActive+"-1").text())-1))
-        teamScore[boardActive*7+5] = Number($("#subtract-"+boardActive+"-1").text())
+        $("#subtract-"+boardActive+"-2").html(" " + (Number($("#subtract-"+boardActive+"-2").text())-1))
+        teamScore[boardActive*7+5] = Number($("#subtract-"+boardActive+"-2").text())
       } 
       if (data == 109) {
-        $("#subtract-"+boardActive+"-2").html(" " + (Number($("#subtract-"+boardActive+"-2").text())-1))
-        teamScore[boardActive*7+6] = Number($("#subtract-"+boardActive+"-2").text())
+        $("#subtract-"+boardActive+"-3").html(" " + (Number($("#subtract-"+boardActive+"-3").text())-1))
+        teamScore[boardActive*7+6] = Number($("#subtract-"+boardActive+"-3").text())
       } 
         console.info(teamScore)
         socket.emit("team-score-record", teamScore);
-        $("#plus-"+boardActive).html(" " +((Number($("#plus-"+boardActive+"-0").text()))+(Number($("#plus-"+boardActive+"-1").text()))+(Number($("#plus-"+boardActive+"-2").text()))+(Number($("#plus-"+boardActive+"-3").text()))))
-        $("#subtract-"+boardActive).html(" " +((Number($("#subtract-"+boardActive+"-0").text()))+(Number($("#subtract-"+boardActive+"-1").text()))+(Number($("#subtract-"+boardActive+"-2").text()))))
+        $("#plus-"+boardActive).html(" " +((Number($("#plus-"+boardActive+"-0").text()))+(Number($("#plus-"+boardActive+"-1").text()))+(Number($("#plus-"+boardActive+"-2").text()))))
+        $("#subtract-"+boardActive).html(" " +((Number($("#subtract-"+boardActive+"-0").text()))+(Number($("#subtract-"+boardActive+"-1").text()))+(Number($("#subtract-"+boardActive+"-2").text()))+(Number($("#subtract-"+boardActive+"-3").text()))))
         //   var timeTeam =
       //     distanceTime.mil +
       //     distanceTime.second * 100 +
@@ -714,14 +714,14 @@ $.getScript('./configClient/config.js',function(){
       
       for (var i = 0; i < teamScore.length; i++){
         // console.info(Math.floor(i))
-        if (i%7 == 0 || i%7 == 1 || i%7 == 2 || i%7 == 3)
+        if (i%7 == 0 || i%7 == 1 || i%7 == 2)
         $("#plus-"+Math.floor(i/7)+"-"+i%7).html(" " +teamScore[i])
         else 
-        $("#subtract-"+Math.floor(i/7)+"-"+(i%7-4)).html(" " +teamScore[i])
+        $("#subtract-"+Math.floor(i/7)+"-"+(i%7-3)).html(" " +teamScore[i])
       }
       for (var i = 0; i < 4; i++){
-        $("#plus-"+i).html(" " +((Number($("#plus-"+i+"-0").text()))+(Number($("#plus-"+i+"-1").text()))+(Number($("#plus-"+i+"-2").text()))+(Number($("#plus-"+i+"-3").text()))))
-        $("#subtract-"+i).html(" " +((Number($("#subtract-"+i+"-0").text()))+(Number($("#subtract-"+i+"-1").text()))+(Number($("#subtract-"+i+"-2").text()))))
+        $("#plus-"+i).html(" " +((Number($("#plus-"+i+"-0").text()))+(Number($("#plus-"+i+"-1").text()))+(Number($("#plus-"+i+"-2").text()))))
+        $("#subtract-"+i).html(" " +((Number($("#subtract-"+i+"-0").text()))+(Number($("#subtract-"+i+"-1").text()))+(Number($("#subtract-"+i+"-2").text()))+(Number($("#subtract-"+i+"-3").text()))))
       }
       
       // types = data[0].type;
