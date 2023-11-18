@@ -11,7 +11,7 @@ var maxTurn = 10;
 var currentCheckpoint1 = 0;
 var currentCheckpoint2 = 0;
 var currentTurnTeam = [1,1,1,1]
-let currentCheckpoint = [1,-1,-1,-1]
+let currentCheckpoint = [-1,-1,-1,-1]
 var numCheckpointt1 = 0;
 var numCheckpointt2 = 0;
 var outlineTeam1 = false;
@@ -101,7 +101,7 @@ $.getScript('./configClient/config.js',function(){
             // socket.emit("control-sign", { node: "5", sign: "1" }); //open gate
             // socket.emit("Buzzer");
             /* reset for new turn */
-            currentCheckpoint1 = 0;
+            currentCheckpoint[boardActive] = 0;
             $("#start").removeClass("btn-success").addClass("btn-danger");
             $("#start").html("DỪNG");
             $("#start").attr("id", "stop");

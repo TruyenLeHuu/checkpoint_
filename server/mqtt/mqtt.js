@@ -50,12 +50,15 @@ module.exports = function (io, activeNode) {
                 break;
         }
     });
-
+    exports.startCrossLight = function(data) {
+        client.publish('cross-light',JSON.stringify(data),{qos:1, retain: false})
+        console.log("Cross light")
+    }
     exports.setLight = function (data) {
         client.publish('light',JSON.stringify(data),{qos:1, retain: false})
     }
     exports.sendStartTraffic = function(data) {
-        client.publish('light-start',JSON.stringify(data),{qos:1, retain: false})
+        client.publish('CEEC-light-start',JSON.stringify(data),{qos:1, retain: false})
     }
     exports.setTrafficTime = function (data) {
         client.publish('light-time',JSON.stringify(data),{qos:1, retain: false})

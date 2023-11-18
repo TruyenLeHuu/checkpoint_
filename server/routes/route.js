@@ -8,8 +8,10 @@ const {
   sendData,
   mainPage,
 } = require("../controllers/controller");
+lastTick = 0
+currentTick = 0
 
-module.exports = function (io, startTime) {
+module.exports = function (io, startTime,lightNode,mqtt) {
   router.get("/", mainPage);
   router.get("/setup", setupPage);
   router.get("/dual", dualPage);
@@ -22,6 +24,14 @@ module.exports = function (io, startTime) {
       console.log("Esp send " + req.body.Data);
       io.sockets.emit("esp-send", req.body);
       res.json({ message: "Send data successful!" });
+      if (lightNode.value == req.body.Data) {
+        currTick = Date.now()
+        // console.log(currTick)
+        if (currTick - lastTick > 10000) {
+          mqtt.startCrossLight()
+          lastTick = currTick
+        }
+      }
     } catch (err) {
       console.log(err)
       res.json({ message: "Error" });

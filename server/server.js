@@ -24,15 +24,18 @@ appExpress.set("view engine", "ejs");
 appExpress.set("views", "./views");
 // Add router resource for client
 appExpress.use(express.static("./public"));
+var activeNode = new Set();
+var lightNode = {value: 0}
+//MQTT
+const mqtt = require('./mqtt/mqtt')(io, activeNode, startTime);
 // Import routes
-const route = require('./routes/route')(io, startTime);
+const route = require('./routes/route')(io, startTime,lightNode,mqtt);
 // Route middleware
 appExpress.use('/', route);
 // Config body parser
 appExpress.use(bodyParser.urlencoded({ extended: true, limit: "30mb" }));
 appExpress.use(bodyParser.json());
 
-var activeNode = new Set();
 // let LightObj = {
 //     Green: 30000,
 //     Red: 3000,
@@ -53,12 +56,10 @@ console.log("Max number check points: " + process.env.maxCheckPoints);
 
 
 
-//MQTT
-const mqtt = require('./mqtt/mqtt')(io, activeNode, startTime);
 // Start and connect mongoDB and server
 
 // Import socket io for server
-require('./helper/socket-io')(io, mqtt, activeNode, startTime);
+require('./helper/socket-io')(io, mqtt, activeNode,lightNode, startTime);
 
 global._io = io;
 
