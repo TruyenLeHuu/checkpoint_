@@ -1,5 +1,5 @@
 const db = require('../controllers/controller')
-module.exports = function (io, mqtt, activeNode, startTime,lightNode) {
+module.exports = function (io, mqtt, activeNode, startTime) {
     var nowNode = 0;
     io.on("connection", function (socket) {
         console.log("Socket connected")
@@ -21,10 +21,6 @@ module.exports = function (io, mqtt, activeNode, startTime,lightNode) {
         //     }
         //     console.log("----------- " + reason + " -------------");
         // });
-        socket.on('set-light-node',function(value) {
-            lightNode.value = value
-            console.log(lightNode)
-        })
         socket.on("Set-range", function (value) {
             nowNode = value.node;
             mqtt.setRange(value);
@@ -66,6 +62,15 @@ module.exports = function (io, mqtt, activeNode, startTime,lightNode) {
             });
             
         })
+        socket.on("team-score-record", async(data) =>{
+            db.addRecordScore(data)
+            // console.log(data)
+        })
+        socket.on("get-team-score-record",()=>{
+            db.getScore((scores)=>{
+                io.sockets.emit('score-record',scores)
+            });
+        });
         socket.on('Change-flow',  (data)  =>  {
             // console.log(data)
             db.addFlow(data);
@@ -140,7 +145,7 @@ module.exports = function (io, mqtt, activeNode, startTime,lightNode) {
             });
         });
         socket.on("on_key",(data)=>{
-            io.sockets.emit('listen_key',data)
-    });
+                io.sockets.emit('listen_key',data)
+        });
     })
 }

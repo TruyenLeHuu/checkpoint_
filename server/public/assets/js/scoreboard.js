@@ -11,7 +11,7 @@ var maxTurn = 10;
 var currentCheckpoint1 = 0;
 var currentCheckpoint2 = 0;
 var currentTurnTeam = [1,1,1,1]
-let currentCheckpoint = [-1,-1,-1,-1]
+let currentCheckpoint = [1,-1,-1,-1]
 var numCheckpointt1 = 0;
 var numCheckpointt2 = 0;
 var outlineTeam1 = false;
@@ -84,17 +84,10 @@ $.getScript('./configClient/config.js',function(){
   
     $("#btnStartStop").on("click", "#start", function () {
       socket.emit("start");
-      currentCheckpoint.forEach((checkpoint,idx,array) => {
-        array[idx] = 0
-        console.log(array[idx])
-      })
-      console.log(currentCheckpoint)
     });
     socket.on("start-res", ( ) => {
-      // socket.emit("start")
       sound_car.play();
       // setTimeout(() => {sound_start.play();}, 0)
-      // mqtt
       sound_start.play();
       Start(() => {
         setTimeout(() => {

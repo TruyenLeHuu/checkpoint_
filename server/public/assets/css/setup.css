@@ -7,8 +7,8 @@ div {
     border-color: rgb(66, 235, 80); 
 }
 #input-led {
-    width: 50px;
-    margin-left: 10px;
+    width: 100px;
+    margin-left: 15px;
 }
 #setup {
     border-style: groove;

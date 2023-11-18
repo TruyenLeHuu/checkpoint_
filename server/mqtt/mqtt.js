@@ -23,7 +23,6 @@ module.exports = function (io, activeNode) {
             case 'ESP-connect':
                 console.log("connect: " + message.toString());
                 activeNode.add(message.toString());
-                console.log(activeNode)
                 io.sockets.emit('ESP-connect', message.toString());
                 break;
             case 'ESP-disconnect':
@@ -57,10 +56,6 @@ module.exports = function (io, activeNode) {
     }
     exports.sendStartTraffic = function(data) {
         client.publish('light-start',JSON.stringify(data),{qos:1, retain: false})
-    }
-    exports.startCrossLight = function(data) {
-        client.publish('cross-light',JSON.stringify(data),{qos:1, retain: false})
-        console.log("Cross light")
     }
     exports.setTrafficTime = function (data) {
         client.publish('light-time',JSON.stringify(data),{qos:1, retain: false})

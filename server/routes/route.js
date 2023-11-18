@@ -9,10 +9,7 @@ const {
   mainPage,
 } = require("../controllers/controller");
 
-let lastTick = 0;
-let currTick = 0;
-
-module.exports = function (io,mqtt, startTime,lightNode) {
+module.exports = function (io, startTime) {
   router.get("/", mainPage);
   router.get("/setup", setupPage);
   router.get("/dual", dualPage);
@@ -21,19 +18,10 @@ module.exports = function (io,mqtt, startTime,lightNode) {
   router.post("/add_flow", addFlow);
   router.post("/send-data", (req, res, next) => {
     try {
-      // js = JSON.stringify(req.body)
-      console.log(lightNode)
+      js = JSON.stringify(req.body)
       console.log("Esp send " + req.body.Data);
       io.sockets.emit("esp-send", req.body);
       res.json({ message: "Send data successful!" });
-      if (lightNode.value == req.body.Data) {
-        currTick = Date.now()
-        // console.log(currTick)
-        if (currTick - lastTick > 10000) {
-          mqtt.startCrossLight()
-          lastTick = currTick
-        }
-      }
     } catch (err) {
       console.log(err)
       res.json({ message: "Error" });
