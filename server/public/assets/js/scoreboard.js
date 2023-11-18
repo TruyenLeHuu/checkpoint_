@@ -338,6 +338,34 @@ $.getScript('./configClient/config.js',function(){
         blinkSubtractScore("#main-subtract-"+boardActive+"-2")
         sound_eli.play()
       } 
+      if (data == 122) {
+        $("#plus-"+boardActive+"-0").html(" " + (Number($("#plus-"+boardActive+"-0").text())-1))
+        teamScore[boardActive*7+0] = Number($("#plus-"+boardActive+"-0").text())
+      } 
+      if (data == 120) {
+        $("#plus-"+boardActive+"-1").html(" " + (Number($("#plus-"+boardActive+"-1").text())-1))
+        teamScore[boardActive*7+1] = Number($("#plus-"+boardActive+"-1").text())
+      } 
+      if (data == 99) {
+        $("#plus-"+boardActive+"-2").html(" " + (Number($("#plus-"+boardActive+"-2").text())-1))
+        teamScore[boardActive*7+2] = Number($("#plus-"+boardActive+"-2").text())
+      } 
+      if (data == 118) {
+        $("#plus-"+boardActive+"-3").html(" " + (Number($("#plus-"+boardActive+"-3").text())-1))
+        teamScore[boardActive*7+3] = Number($("#plus-"+boardActive+"-3").text())
+      } 
+      if (data == 98) {
+        $("#subtract-"+boardActive+"-0").html(" " + (Number($("#subtract-"+boardActive+"-0").text())-1))
+        teamScore[boardActive*7+4] = Number($("#subtract-"+boardActive+"-0").text())
+      } 
+      if (data == 110) {
+        $("#subtract-"+boardActive+"-1").html(" " + (Number($("#subtract-"+boardActive+"-1").text())-1))
+        teamScore[boardActive*7+5] = Number($("#subtract-"+boardActive+"-1").text())
+      } 
+      if (data == 109) {
+        $("#subtract-"+boardActive+"-2").html(" " + (Number($("#subtract-"+boardActive+"-2").text())-1))
+        teamScore[boardActive*7+6] = Number($("#subtract-"+boardActive+"-2").text())
+      } 
         console.info(teamScore)
         socket.emit("team-score-record", teamScore);
         $("#plus-"+boardActive).html(" " +((Number($("#plus-"+boardActive+"-0").text()))+(Number($("#plus-"+boardActive+"-1").text()))+(Number($("#plus-"+boardActive+"-2").text()))+(Number($("#plus-"+boardActive+"-3").text()))))
